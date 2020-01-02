@@ -41,21 +41,24 @@ public class EvaluationFragment extends Fragment {
         //Inflate the view
         View convertView = inflater.inflate(R.layout.evaluation_fragment_layout,container,false);
 
+        //Set up the view and adapter
         expandableListView = (ExpandableListView) convertView.findViewById(R.id.expandableListView_id);
         expandableListAdapter = new EvaluationListAdapter(getContext(), data);
         expandableListView.setAdapter(expandableListAdapter);
 
+        //Set up the long click for individual tasks
         expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+
+                    //Get the category and the task
                     int groupPosition = ExpandableListView.getPackedPositionGroup(id);
                     int childPosition = ExpandableListView.getPackedPositionChild(id);
 
-                    // You now have everything that you would as if this was an OnChildClickListener()
-                    // Add your logic here.
-                    System.out.println("Long Click!!!");
+                    //Get the task from the evaluation data
                     Task tempTask = data.getTaskFromCategory(groupPosition,childPosition);
+                    //Change the flag and update the view to be highighted
                     Boolean flagged = tempTask.getFlagged();
                     if(flagged == Boolean.TRUE){
                         tempTask.setFlagged(Boolean.FALSE);

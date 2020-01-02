@@ -68,6 +68,9 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         descriptionView.setText(expandedListTask.getDescription());
         scoreView.setText(String.valueOf(expandedListTask.getScore()));
 
+        // Set the color of the task if it is flagged
+        //TODO: Make this link up with the EvaluationFragment long click listener
+        // Probably in the res->values->colors.xml file
         if(expandedListTask.getFlagged()) {
             convertView.setBackgroundColor(Color.GRAY);
         } else {
