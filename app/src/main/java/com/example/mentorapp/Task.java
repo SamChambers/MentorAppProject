@@ -17,7 +17,7 @@ public class Task {
     public Task(){
         this.description = "No Description";
         this.score = 0;
-        this.comments = new ArrayList<String>();
+        this.comments = new ArrayList<>();
         this.flagged = false;
     }
 
@@ -25,7 +25,7 @@ public class Task {
     public Task(String description){
         this.description = description;
         this.score = 0;
-        this.comments = new ArrayList<String>();
+        this.comments = new ArrayList<>();
         this.flagged = false;
     }
 

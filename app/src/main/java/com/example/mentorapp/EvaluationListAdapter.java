@@ -1,11 +1,13 @@
 package com.example.mentorapp;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -45,13 +47,15 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         // Get the task to be placed on the view
-        final Task expandedListText = (Task) getChild(listPosition, expandedListPosition);
+        final Task expandedListTask = (Task) getChild(listPosition, expandedListPosition);
         // If we need to make a new view, load it
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.task_layout, null);
         }
+
+
 
         // Connect to the objects in the view
         TextView descriptionView = (TextView) convertView.findViewById(R.id.text_description_id);
@@ -61,8 +65,14 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         Button commentButtonView = (Button) convertView.findViewById(R.id.button_comment_id);
 
         // Set the description and the score
-        descriptionView.setText(expandedListText.getDescription());
-        scoreView.setText(String.valueOf(expandedListText.getScore()));
+        descriptionView.setText(expandedListTask.getDescription());
+        scoreView.setText(String.valueOf(expandedListTask.getScore()));
+
+        if(expandedListTask.getFlagged()) {
+            convertView.setBackgroundColor(Color.GRAY);
+        } else {
+            convertView.setBackgroundColor(Color.WHITE);
+        }
 
         // Tag the location to the buttons so they know which task they are associated with
         Pair<Integer, Integer> locationPair = new Pair<Integer, Integer>(listPosition, expandedListPosition);

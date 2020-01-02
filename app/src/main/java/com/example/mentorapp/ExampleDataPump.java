@@ -12,6 +12,10 @@ public class ExampleDataPump {
         data.addTask("Errands", new Task("Pick up dry cleaning"));
         data.addTask("Errands", new Task("Get milk"));
 
+        data.addCategory("Other");
+        data.addTask("Other", new Task("Cut the grass"));
+        data.addTask("Other", new Task("Get gas from the gas station"));
+
         return data;
     }
 }
