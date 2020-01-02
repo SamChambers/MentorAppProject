@@ -76,4 +76,8 @@ public class Task {
     public Boolean getFlagged(){
         return this.flagged;
     }
+
+    public void addComment(String comment){
+        this.comments.add(comment);
+    }
 }

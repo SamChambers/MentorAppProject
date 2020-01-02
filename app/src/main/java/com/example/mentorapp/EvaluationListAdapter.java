@@ -10,6 +10,12 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import android.app.AlertDialog;
+import android.widget.EditText;
+import android.text.InputType;
+import android.content.DialogInterface;
+
+
 public class EvaluationListAdapter extends BaseExpandableListAdapter {
 
     // Private variables
@@ -52,6 +58,7 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         TextView scoreView = (TextView) convertView.findViewById(R.id.text_score_id);
         Button plusButtonView = (Button) convertView.findViewById(R.id.button_plus_id);
         Button minusButtonView = (Button) convertView.findViewById(R.id.button_minus_id);
+        Button commentButtonView = (Button) convertView.findViewById(R.id.button_comment_id);
 
         // Set the description and the score
         descriptionView.setText(expandedListText.getDescription());
@@ -61,6 +68,7 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         Pair<Integer, Integer> locationPair = new Pair<Integer, Integer>(listPosition, expandedListPosition);
         plusButtonView.setTag(locationPair);
         minusButtonView.setTag(locationPair);
+        commentButtonView.setTag(locationPair);
 
         // Set the plus button listener
         plusButtonView.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +107,45 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
                 notifyDataSetChanged();
             }
         });
+
+        commentButtonView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Get the task location
+                Pair<Integer,Integer> locationPair = (Pair<Integer, Integer>) v.getTag();
+                final Integer listPosition = locationPair.first;
+                final Integer expandedListPosition = locationPair.second;
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                final Task tempTask = data.getTaskFromCategory(listPosition,expandedListPosition);
+                builder.setTitle(tempTask.getDescription());
+
+                // Set up the input
+                final EditText input = new EditText(context);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String m_Text = input.getText().toString();
+                        tempTask.addComment(m_Text);
+                        data.setTask(listPosition,expandedListPosition,tempTask);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
 
         return convertView;
     }
