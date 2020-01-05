@@ -10,18 +10,21 @@ public class Category {
     private List<Task> taskList;
     private String categoryTitle;
     private float calculatedScore;
+    private float weight;
 
     //Basic constructor
     public Category(String groupName){
         this.categoryTitle = groupName;
         this.taskList = new ArrayList<>();
+        this.weight = 1;
         updateScore();
     }
 
     //Full constructor
-    public Category(List<Task> tasks, String groupName){
+    public Category(List<Task> tasks, String groupName, float weight){
         this.taskList = tasks;
         this.categoryTitle = groupName;
+        this.weight = weight;
         updateScore();
     }
 
@@ -33,13 +36,14 @@ public class Category {
 
         //Loop through all the tasks
         for(int i = 0; i < numberOfTasks; ++i){
-            totalValue += this.taskList.get(i).getScore();
+            totalValue += this.taskList.get(i).getAggregateScore();
         }
-        this.calculatedScore = totalValue/numberOfTasks;
+        this.calculatedScore = (totalValue/numberOfTasks)*this.weight;
     }
 
     //Get score
     public Float getScore(){
+        updateScore();
         return this.calculatedScore;
     }
 
@@ -92,4 +96,5 @@ public class Category {
     public void setCategoryTitle(String categoryName) {
         this.categoryTitle = categoryName;
     }
+
 }

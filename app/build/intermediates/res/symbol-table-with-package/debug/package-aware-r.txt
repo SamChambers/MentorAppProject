@@ -1048,6 +1048,7 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id add_comment_menu_item_id
 id alertTitle
 id all
 id always
@@ -1059,6 +1060,7 @@ id blocking
 id bottom
 id buttonPanel
 id button_comment_id
+id button_delete_comment_id
 id button_minus_id
 id button_options_id
 id button_plus_id
@@ -1123,8 +1125,12 @@ id line3
 id linearLayout
 id linearLayout2
 id linearLayout3
+id linearLayout4
+id linearLayout5
+id linearLayout6
 id listMode
 id listTitle
+id list_comments_id
 id list_item
 id masked
 id message
@@ -1140,6 +1146,7 @@ id normal
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id one
 id outline
 id packed
 id parallax
@@ -1207,16 +1214,21 @@ id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id text_category_score_id
+id text_comment_id
+id text_comments_view_no_comments_id
 id text_description_id
 id text_input_password_toggle
 id text_score_id
 id textinput_counter
 id textinput_error
 id textinput_helper_text
+id three
 id time
 id title
 id titleDividerNoCustom
 id title_template
+id toolbar
 id top
 id topPanel
 id touch_outside
@@ -1225,6 +1237,7 @@ id transition_layout_save
 id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
+id two
 id uniform
 id unlabeled
 id up
@@ -1284,6 +1297,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
 layout category_layout
+layout comment_layout
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar
@@ -1312,6 +1326,9 @@ layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 layout task_layout
+layout view_task_comments_layout
+menu task_options_menu_layout
+menu view_comments_options_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 string abc_action_bar_home_description
@@ -1376,6 +1393,7 @@ style Animation_AppCompat_DropDownUp
 style Animation_AppCompat_Tooltip
 style Animation_Design_BottomSheetDialog
 style AppTheme
+style AppThemeNoToolbar
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
 style Base_Animation_AppCompat_Dialog

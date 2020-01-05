@@ -6,25 +6,29 @@ import java.util.List;
 public class Evaluation{
 
     // Internal Variables
-    private String title; // This should eventually be changed potentially???
+    private String official; // This should eventually be changed potentially???
     private List<Category> data;
     private List<String> categories;
     private Float calculatedScore;
 
+    private int evaluationPosition;
+
     //Basic constructor
-    public Evaluation(){
+    public Evaluation(int evaluationPosition){
         this.data = new ArrayList<Category>();
-        this.title = "No Title";
+        this.official = "Unknown Official";
+        this.evaluationPosition = evaluationPosition;
         this.calculatedScore = Float.valueOf(0);
         this.categories = new ArrayList<String>();
     }
 
     //Full constructor
-    public Evaluation(List<Category> data, String title){
+    public Evaluation(List<Category> data, String official, int evaluationPosition){
         this.data = data;
-        this.title = title;
+        this.official = official;
+        this.evaluationPosition = evaluationPosition;
         this.calculateScore();
-        updateCategories();
+        this.updateCategories();
     }
 
     // Calculate the score for the game
@@ -113,4 +117,19 @@ public class Evaluation{
         getCategoryFromPosition(categoryPosition).setTask(position, task);
     }
 
+    public void setOfficial(String official){
+        this.official = official;
+    }
+
+    public String getOfficial(){
+        return this.official;
+    }
+
+    public void setEvaluationPosition(int position){
+        this.evaluationPosition=position;
+    }
+
+    public int getEvaluationPosition() {
+        return evaluationPosition;
+    }
 }

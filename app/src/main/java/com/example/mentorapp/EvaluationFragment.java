@@ -1,5 +1,6 @@
 package com.example.mentorapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,21 +18,23 @@ public class EvaluationFragment extends Fragment {
 
     //Variables to hold information on the expandable list view
     // These will be set in the create view
-    ExpandableListView expandableListView;
-    ExpandableListAdapter expandableListAdapter;
+    private ExpandableListView expandableListView;
+    private ExpandableListAdapter expandableListAdapter;
 
     //Variable to hold the evaluation information
     // This will be set in the constructor
-    Evaluation data;
+    private Evaluation data;
+
 
     //Basic constructor for testing (Pull from sample data pump)
-    public EvaluationFragment(){
-        this.data = ExampleDataPump.getData();
-    }
+    //public EvaluationFragment(){
+    //    this.data = ExampleDataPump.getData();
+    //}
 
     //Constructor with the data being passed in
     public EvaluationFragment(Evaluation evaluation){
         this.data = evaluation;
+
     }
 
     //Set the adapter for the expandable list view
@@ -42,9 +45,10 @@ public class EvaluationFragment extends Fragment {
         View convertView = inflater.inflate(R.layout.evaluation_fragment_layout,container,false);
 
         //Set up the view and adapter
-        expandableListView = (ExpandableListView) convertView.findViewById(R.id.expandableListView_id);
-        expandableListAdapter = new EvaluationListAdapter(getContext(), data);
-        expandableListView.setAdapter(expandableListAdapter);
+        this.expandableListView = (ExpandableListView) convertView.findViewById(R.id.expandableListView_id);
+        this.expandableListAdapter = new EvaluationListAdapter(getContext(), data);
+        this.expandableListView.setAdapter(expandableListAdapter);
+
 
         //Set up the long click for individual tasks
         expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -58,7 +62,7 @@ public class EvaluationFragment extends Fragment {
 
                     //Get the task from the evaluation data
                     Task tempTask = data.getTaskFromCategory(groupPosition,childPosition);
-                    //Change the flag and update the view to be highighted
+                    //Change the flag and update the view to be highlighted
                     Boolean flagged = tempTask.getFlagged();
                     if(flagged == Boolean.TRUE){
                         tempTask.setFlagged(Boolean.FALSE);
@@ -76,5 +80,17 @@ public class EvaluationFragment extends Fragment {
         });
 
         return convertView;
+    }
+
+    public ExpandableListAdapter getAdapter(){
+        return this.expandableListAdapter;
+    }
+
+    public String getDataTitle(){
+        return data.getOfficial();
+    }
+
+    public ExpandableListAdapter getExpandableListAdapter() {
+        return expandableListAdapter;
     }
 }

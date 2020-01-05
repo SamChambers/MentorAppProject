@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
-INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
-INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
-INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
+ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
 MERGED from [com.google.android.material:material:1.0.0] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.0.2] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/697f71c0c12135256cbfe98df498a7e4/appcompat-1.0.2/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/3ec6fa8458ddbe732478393a9f9e6c77/constraintlayout-1.1.3/AndroidManifest.xml:2:1-11:12
@@ -35,25 +35,25 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/jamestesta/.gradle
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/63647da4654da12a6f2785cfbbad8123/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/733fc1d306cee2c05d3e1fb0b7527020/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/fdd65d8b6066fd289a68b42931dc03a2/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
-INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
-INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
-INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
 	package
 		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:3:5-36
 		INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml
-		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
+		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
 		INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml
-		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-21:12
+		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:1-24:12
 		INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:5:5-19:19
+ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:5:5-22:19
 MERGED from [com.google.android.material:material:1.0.0] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.0.0] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/jamestesta/.gradle/caches/transforms-2/files-2.1/3ec6fa8458ddbe732478393a9f9e6c77/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
@@ -90,6 +90,12 @@ category#android.intent.category.LAUNCHER
 ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:16:17-77
 	android:name
 		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:16:27-74
+activity#com.example.mentorapp.ViewTaskCommentsActivity
+ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:19:9-21:20
+	android:theme
+		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:20:13-53
+	android:name
+		ADDED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:19:19-59
 uses-sdk
 INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml

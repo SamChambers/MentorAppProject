@@ -1,17 +1,19 @@
 package com.example.mentorapp;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
 
 // This class will hold the most basic information for the tasks
-public class Task {
+public class Task implements Serializable {
 
     //Internal Variables
     private String description;
     private Integer score;
     private List<String> comments;
     private Boolean flagged;
+    private Float weight;
 
     //Basic constructor
     public Task(){
@@ -19,6 +21,7 @@ public class Task {
         this.score = 0;
         this.comments = new ArrayList<>();
         this.flagged = false;
+        this.weight = Float.valueOf(1);
     }
 
     //Constructor with just the description
@@ -27,14 +30,16 @@ public class Task {
         this.score = 0;
         this.comments = new ArrayList<>();
         this.flagged = false;
+        this.weight = Float.valueOf(1);
     }
 
     //Full constructor
-    public Task(String description, Integer score, List<String> comments, Boolean flagged){
+    public Task(String description, Integer score, List<String> comments, Boolean flagged, Float weight){
         this.description = description;
         this.score = score;
         this.comments = comments;
         this.flagged = flagged;
+        this.weight = weight;
     }
 
     // Set score
@@ -79,5 +84,29 @@ public class Task {
 
     public void addComment(String comment){
         this.comments.add(comment);
+    }
+
+    public void switchFlagged(){
+        if(this.flagged){
+            this.flagged = Boolean.FALSE;
+        } else {
+            this.flagged = Boolean.TRUE;
+        }
+    }
+
+    public void increaseScore(Integer amount){
+        this.score += amount;
+    }
+
+    public Integer numberOfComments(){
+        return this.comments.size();
+    }
+
+    public void removeComment(Integer position){
+        this.comments.remove(position);
+    }
+
+    public Float getAggregateScore(){
+        return this.score*this.weight;
     }
 }

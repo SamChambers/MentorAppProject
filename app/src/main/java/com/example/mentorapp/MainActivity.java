@@ -1,10 +1,19 @@
 package com.example.mentorapp;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
+import android.app.Activity;
+import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
     //Holds the evaluation fragments
     ViewPager viewPager;
 
+    //Holds the game info along with the evaluations
+    Game game;
+
+    private String fragments [] = {"Referee 1", "Referee 2","Referee 3", "Referee 4"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,9 +35,18 @@ public class MainActivity extends AppCompatActivity {
         //Set the content view
         setContentView(R.layout.activity_main);
 
+        ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
+        for(int i=0; i < fragments.length; ++i){
+            Evaluation eval = ExampleDataPump.getData(i);
+            eval.setOfficial(fragments[i]);
+            evaluations.add(eval);
+        }
+
+        this.game = new Game("Example Game", evaluations);
+
         //Set the pager and the adapter
         viewPager = (ViewPager) findViewById(R.id.viewPagerID);
-        viewPager.setAdapter(new EvaluationFragmentAdapter(getSupportFragmentManager(),getApplicationContext()));
+        viewPager.setAdapter(new EvaluationFragmentAdapter(getSupportFragmentManager(),getApplicationContext(), this.game));
 
         //Set the tabs and hook it up to the view pager
         tabLayout = (TabLayout) findViewById(R.id.tabView_layout_id);
@@ -51,6 +74,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        System.out.println("Request Code: " + String.valueOf(requestCode));
+
+
+        ArrayList<String> comments = (ArrayList<String>) data.getSerializableExtra("UpdatedComments");
+        Integer category = (Integer) data.getSerializableExtra("Category");
+        Integer position = (Integer) data.getSerializableExtra("Position");
+        Integer evaluation = (Integer) data.getSerializableExtra("Evaluation");
+
+        game.getEvaluationFromPosition(evaluation).getTaskFromCategory(category,position).setComments(comments);
+
+        EvaluationFragmentAdapter tempAdapter = (EvaluationFragmentAdapter) viewPager.getAdapter();
+        tempAdapter.notifyChangeInPosition();
+    }
 }
