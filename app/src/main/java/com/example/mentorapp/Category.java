@@ -1,10 +1,11 @@
 package com.example.mentorapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 //This class will hold information on a category of tasks
-public class Category {
+public class Category implements Serializable {
 
     //Internal Variables
     private List<Task> taskList;

@@ -1,9 +1,10 @@
 package com.example.mentorapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Evaluation{
+public class Evaluation implements Serializable {
 
     // Internal Variables
     private String official; // This should eventually be changed potentially???
@@ -64,6 +65,10 @@ public class Evaluation{
     // Get categories
     public List<String> getCategoriesList(){
         return this.categories;
+    }
+
+    public List<Category> getCategories(){
+        return this.data;
     }
 
     // Get the category from the position

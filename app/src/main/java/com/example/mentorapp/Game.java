@@ -1,8 +1,9 @@
 package com.example.mentorapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Serializable {
 
     //Internal variables
     private String identifier; //TODO: Hook this up somehow

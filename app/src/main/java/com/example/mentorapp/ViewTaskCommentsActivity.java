@@ -35,6 +35,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
     Integer evaluation;
 
     ListView commentsListView;
+    TextView noCommentsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,31 +48,22 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
         this.evaluation = (Integer) getIntent().getSerializableExtra("Evaluation");
 
 
+
         setContentView(R.layout.view_task_comments_layout);
 
-        commentsListView = (ListView) findViewById(R.id.list_comments_id);
-        TextView noCommentsTextView = (TextView) findViewById(R.id.text_comments_view_no_comments_id);
+        this.commentsListView = (ListView) findViewById(R.id.list_comments_id);
+        this.noCommentsTextView = (TextView) findViewById(R.id.text_comments_view_no_comments_id);
 
         Context context = getApplicationContext();
         commentsListView.setAdapter(new CommentsListAdapter(context, this.comments, noCommentsTextView));
 
-        if(this.comments.size() > 0) {
-            commentsListView.setVisibility(View.VISIBLE);
-            noCommentsTextView.setVisibility(View.INVISIBLE);
-        } else {
-            commentsListView.setVisibility(View.INVISIBLE);
-            noCommentsTextView.setVisibility(View.VISIBLE);
-        }
+        setVisibility();
 
         ActionBar actionBar = getSupportActionBar();
 
         Toolbar mToolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(mToolbar);
 
-
-
-        System.out.println("Evaluation thinks its: " + String.valueOf(evaluation));
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +88,6 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(this.description);
-
-
 
         return true;
     }
@@ -127,6 +117,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     String m_Text = input.getText().toString();
                     comments.add(m_Text);
+                    setVisibility();
                     CommentsListAdapter tempAdapter =(CommentsListAdapter) commentsListView.getAdapter();
                     tempAdapter.notifyDataSetChanged();
                 }
@@ -144,5 +135,16 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    void setVisibility(){
+        if(this.comments.size() > 0) {
+            commentsListView.setVisibility(View.VISIBLE);
+            noCommentsTextView.setVisibility(View.INVISIBLE);
+        } else {
+            commentsListView.setVisibility(View.INVISIBLE);
+            noCommentsTextView.setVisibility(View.VISIBLE);
+        }
+    }
 }
+
 

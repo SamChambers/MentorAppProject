@@ -5,12 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import android.app.Activity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Spinner;
+import android.view.MenuInflater;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -26,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     //Holds the game info along with the evaluations
     Game game;
 
-    private String fragments [] = {"Referee 1", "Referee 2","Referee 3", "Referee 4"};
+
+    private String fragments[] = {"Referee 1", "Referee 2", "Referee 3", "Referee 4"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
-        for(int i=0; i < fragments.length; ++i){
+        for (int i = 0; i < fragments.length; ++i) {
             Evaluation eval = ExampleDataPump.getData(i);
             eval.setOfficial(fragments[i]);
             evaluations.add(eval);
@@ -46,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the pager and the adapter
         viewPager = (ViewPager) findViewById(R.id.viewPagerID);
-        viewPager.setAdapter(new EvaluationFragmentAdapter(getSupportFragmentManager(),getApplicationContext(), this.game));
+        viewPager.setAdapter(new EvaluationFragmentAdapter(getSupportFragmentManager(), getApplicationContext(), this.game));
 
         //Set the tabs and hook it up to the view pager
         tabLayout = (TabLayout) findViewById(R.id.tabView_layout_id);
@@ -75,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     @Override
@@ -90,9 +97,48 @@ public class MainActivity extends AppCompatActivity {
         Integer position = (Integer) data.getSerializableExtra("Position");
         Integer evaluation = (Integer) data.getSerializableExtra("Evaluation");
 
-        game.getEvaluationFromPosition(evaluation).getTaskFromCategory(category,position).setComments(comments);
+        game.getEvaluationFromPosition(evaluation).getTaskFromCategory(category, position).setComments(comments);
 
         EvaluationFragmentAdapter tempAdapter = (EvaluationFragmentAdapter) viewPager.getAdapter();
         tempAdapter.notifyChangeInPosition();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //PopupMenu menu = new PopupMenu(this, );
+
+        String menuOptions[] = {"Present","Options"};
+
+        for (int i=0; i<menuOptions.length; ++i) {
+            menu.add(menuOptions[i]);
+        }
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (String.valueOf(item.getTitle())){
+            case "Present":
+                goToPresent();
+                break;
+            default:
+                Toast.makeText(
+                        this,
+                        "You Clicked : " + item.getTitle(),
+                        Toast.LENGTH_SHORT
+                ).show();
+        }
+
+        return true;
+    }
+
+    private void goToPresent(){
+        Intent intent = new Intent(this,PresentActivity.class);
+
+        intent.putExtra("MyGame", this.game);
+
+        startActivity(intent);
     }
 }

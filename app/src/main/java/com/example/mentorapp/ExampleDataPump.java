@@ -13,6 +13,11 @@ public class ExampleDataPump {
         data.addTask("Errands", new Task("Get milk"));
         data.getTaskFromCategory("Errands",1).addComment("Example Comment!");
 
+        data.addCategory("Errands2");
+        data.addTask("Errands2", new Task("Pick up dry cleaning, and do something else because we need a really long description for testing!"));
+        data.addTask("Errands2", new Task("Get milk"));
+        data.getTaskFromCategory("Errands2",1).addComment("Example Comment!");
+
         data.addCategory("Other");
         data.addTask("Other", new Task("Cut the grass"));
         data.addTask("Other", new Task("Get gas from the gas station"));

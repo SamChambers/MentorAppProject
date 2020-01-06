@@ -19,6 +19,9 @@
         <activity android:name=".ViewTaskCommentsActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
+        <activity android:name=".PresentActivity"
+            android:theme="@style/AppThemeNoToolbar">
+        </activity>
     </application>
 
 </manifest>

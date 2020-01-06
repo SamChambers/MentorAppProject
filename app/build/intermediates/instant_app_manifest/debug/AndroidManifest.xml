@@ -30,6 +30,10 @@
             android:name="com.example.mentorapp.ViewTaskCommentsActivity"
             android:theme="@style/AppThemeNoToolbar" >
         </activity>
+        <activity
+            android:name="com.example.mentorapp.PresentActivity"
+            android:theme="@style/AppThemeNoToolbar" >
+        </activity>
     </application>
 
 </manifest>
