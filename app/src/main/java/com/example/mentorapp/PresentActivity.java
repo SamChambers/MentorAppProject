@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup.LayoutParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -53,6 +54,8 @@ public class PresentActivity extends AppCompatActivity {
         LinearLayout allList = (LinearLayout) findViewById(R.id.linear_layout_all_layout_id);
         LinearLayout flaggedList = (LinearLayout) findViewById(R.id.linear_layout_flagged_layout_id);
 
+        TextView flaggedHeaderTextView = (TextView) findViewById(R.id.text_present_flagged_header_id);
+
         ActionBar actionBar = getSupportActionBar();
         Toolbar mToolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(mToolbar);
@@ -69,6 +72,15 @@ public class PresentActivity extends AppCompatActivity {
 
         fillLinearView(allPresentation, allList);
         fillLinearView(flaggedPresentation, flaggedList);
+
+        if(flaggedPresentation.getCategories().size() == 0){
+            flaggedHeaderTextView.setVisibility(View.INVISIBLE);
+            LayoutParams params = (LayoutParams) flaggedHeaderTextView.getLayoutParams();
+            params.height = 0;
+            flaggedHeaderTextView.setLayoutParams(params);
+        } else {
+            flaggedHeaderTextView.setVisibility(View.VISIBLE);
+        }
         //this.textListView.setAdapter(new PresentationAdapter(getApplicationContext(),allPresentation));
     }
 
