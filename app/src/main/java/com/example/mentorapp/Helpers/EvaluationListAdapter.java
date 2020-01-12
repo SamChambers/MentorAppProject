@@ -1,8 +1,6 @@
-package com.example.mentorapp;
+package com.example.mentorapp.Helpers;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,24 +9,25 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.view.MenuItem;
-import android.content.Intent;
 import android.app.Activity;
 
 import android.app.AlertDialog;
-import android.widget.EditText;
 import android.text.InputType;
 import android.content.DialogInterface;
 
+import com.example.mentorapp.Activities.ViewTaskCommentsActivity;
+import com.example.mentorapp.Category;
+import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.R;
+import com.example.mentorapp.Task;
+
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class EvaluationListAdapter extends BaseExpandableListAdapter {
@@ -339,7 +338,7 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         }
         //Connect to the title text box
         TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
-        TextView scoreTextView = (TextView) convertView.findViewById(R.id.text_category_score_id);
+        TextView scoreTextView = (TextView) convertView.findViewById(R.id.template_text_category_name_id);
         //Set the title
         listTitleTextView.setTypeface(null, Typeface.BOLD);
         listTitleTextView.setText(listTitle);
@@ -362,7 +361,7 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
 
 
     private void goToCommentsPage(Integer listPosition, Integer expandedListPosition){
-        Intent intent = new Intent(this.context,ViewTaskCommentsActivity.class);
+        Intent intent = new Intent(this.context, ViewTaskCommentsActivity.class);
         ArrayList<String> myComments = (ArrayList<String>)data.getTaskFromCategory(listPosition,expandedListPosition).getComments();
         intent.putExtra("MyComments", myComments);
         intent.putExtra("MyDescription", data.getTaskFromCategory(listPosition,expandedListPosition).getDescription());

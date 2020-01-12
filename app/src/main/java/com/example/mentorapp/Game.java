@@ -10,13 +10,13 @@ public class Game implements Serializable {
     private ArrayList<Evaluation> evaluationsList;
 
     //Basic constructor
-    Game(){
+    public Game(){
         this.identifier = "";
         this.evaluationsList = new ArrayList<Evaluation>();
     }
 
     //Full constructor
-    Game(String id, ArrayList<Evaluation> evaluationsList){
+    public Game(String id, ArrayList<Evaluation> evaluationsList){
         this.identifier = id;
         this.evaluationsList = evaluationsList;
     }
@@ -54,5 +54,9 @@ public class Game implements Serializable {
             //this.evaluationsList.get(i).setTitle(String.valueOf(i));
             this.evaluationsList.get(i).setEvaluationPosition(i);
         }
+    }
+
+    public void addEvaluation(Evaluation newEval){
+        this.evaluationsList.add(newEval);
     }
 }

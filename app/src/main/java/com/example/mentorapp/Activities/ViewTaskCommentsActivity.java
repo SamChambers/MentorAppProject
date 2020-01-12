@@ -1,4 +1,4 @@
-package com.example.mentorapp;
+package com.example.mentorapp.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
 import android.content.Context;
 import android.view.View;
 //import android.app.ActionBar;
@@ -17,12 +16,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import android.widget.Toast;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mentorapp.Helpers.CommentsListAdapter;
+import com.example.mentorapp.R;
 
 import java.util.ArrayList;
 
@@ -100,7 +101,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.add_comment_menu_item_id) {
+        if (id == R.id.add_category_menu_item_id) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
             builder.setTitle("Add Comment");

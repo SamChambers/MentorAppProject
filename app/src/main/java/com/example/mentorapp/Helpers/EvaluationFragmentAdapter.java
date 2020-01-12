@@ -1,4 +1,4 @@
-package com.example.mentorapp;
+package com.example.mentorapp.Helpers;
 
 import android.content.Context;
 
@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.mentorapp.Game;
+import com.example.mentorapp.Helpers.EvaluationFragment;
 
 //Class to load the evaluation fragments
 public class EvaluationFragmentAdapter extends FragmentPagerAdapter{

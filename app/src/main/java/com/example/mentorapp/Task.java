@@ -33,6 +33,14 @@ public class Task implements Serializable {
         this.weight = Float.valueOf(1);
     }
 
+    public Task(String description, Float weight){
+        this.description = description;
+        this.score = 0;
+        this.comments = new ArrayList<>();
+        this.flagged = false;
+        this.weight = weight;
+    }
+
     //Full constructor
     public Task(String description, Integer score, List<String> comments, Boolean flagged, Float weight){
         this.description = description;

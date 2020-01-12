@@ -1,4 +1,4 @@
-package com.example.mentorapp;
+package com.example.mentorapp.Activities;
 
 import android.app.AlertDialog;
 import android.app.Presentation;
@@ -33,7 +33,12 @@ import android.view.ViewGroup.LayoutParams;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.mentorapp.Category;
+import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.Game;
 import com.example.mentorapp.Presentation.*;
+import com.example.mentorapp.R;
+import com.example.mentorapp.Task;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

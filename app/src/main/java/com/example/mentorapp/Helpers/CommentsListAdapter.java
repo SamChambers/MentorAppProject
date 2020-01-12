@@ -1,4 +1,4 @@
-package com.example.mentorapp;
+package com.example.mentorapp.Helpers;
 
 import android.content.Context;
 import android.nfc.Tag;
@@ -15,6 +15,8 @@ import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.mentorapp.R;
 
 import java.util.ArrayList;
 import java.util.List;

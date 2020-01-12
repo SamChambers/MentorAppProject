@@ -1,5 +1,7 @@
 package com.example.mentorapp;
 
+import android.util.Pair;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,23 @@ public class Evaluation implements Serializable {
     //Full constructor
     public Evaluation(List<Category> data, String official, int evaluationPosition){
         this.data = data;
+        this.official = official;
+        this.evaluationPosition = evaluationPosition;
+        this.calculateScore();
+        this.updateCategories();
+    }
+
+    public Evaluation(Template template, String official, int evaluationPosition){
+        this.data = new ArrayList<>();
+        for(TemplateCategory tc:template.getCategories()){
+            Category cat = new Category(tc.getName());
+            for(TemplateTask details:tc.getTasks()){
+                Task task = new Task(details.getDescription(),details.getWeight());
+                cat.addTask(task);
+            }
+            this.data.add(cat);
+        }
+
         this.official = official;
         this.evaluationPosition = evaluationPosition;
         this.calculateScore();
@@ -137,4 +156,5 @@ public class Evaluation implements Serializable {
     public int getEvaluationPosition() {
         return evaluationPosition;
     }
+
 }

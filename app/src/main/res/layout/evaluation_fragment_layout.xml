@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <ExpandableListView
-        android:id="@+id/expandableListView_id"
+        android:id="@+id/template_expandableListView_id"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:divider="@android:color/darker_gray"

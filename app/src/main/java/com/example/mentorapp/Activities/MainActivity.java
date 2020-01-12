@@ -1,24 +1,24 @@
-package com.example.mentorapp;
+package com.example.mentorapp.Activities;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
+import com.example.mentorapp.ExampleDataPump;
+import com.example.mentorapp.Game;
+import com.example.mentorapp.R;
+import com.example.mentorapp.Template;
 import com.google.android.material.tabs.TabLayout;
-import android.app.Activity;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Spinner;
-import android.view.MenuInflater;
 import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
         for (int i = 0; i < fragments.length; ++i) {
-            Evaluation eval = ExampleDataPump.getData(i);
-            eval.setOfficial(fragments[i]);
+            Evaluation eval = new Evaluation(ExampleDataPump.getTemplate(),fragments[i],i);
             evaluations.add(eval);
         }
 
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //PopupMenu menu = new PopupMenu(this, );
 
-        String menuOptions[] = {"Present","Options"};
+        String menuOptions[] = {"Present","Options", "Template Demo"};
 
         for (int i=0; i<menuOptions.length; ++i) {
             menu.add(menuOptions[i]);
@@ -123,6 +122,12 @@ public class MainActivity extends AppCompatActivity {
             case "Present":
                 goToPresent();
                 break;
+            case "Options":
+                goToOptions();
+                break;
+            case "Template Demo":
+                goToCreateTemplate();
+                break;
             default:
                 Toast.makeText(
                         this,
@@ -135,10 +140,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToPresent(){
-        Intent intent = new Intent(this,PresentActivity.class);
-
+        Intent intent = new Intent(this, PresentActivity.class);
         intent.putExtra("MyGame", this.game);
+        startActivity(intent);
+    }
 
+    private void goToOptions(){
+        Intent intent = new Intent(this, GameOptionsActivity.class);
+        intent.putExtra("MyGame", this.game);
+        startActivity(intent);
+    }
+
+    //TODO: Delete this once we create the main thread
+    private void goToCreateTemplate(){
+        Intent intent = new Intent(this, EditTemplateActivity.class);
+        intent.putExtra("Template", ExampleDataPump.getTemplate());
+        //intent.putExtra("Template", new Template("Template Name"));
         startActivity(intent);
     }
 }

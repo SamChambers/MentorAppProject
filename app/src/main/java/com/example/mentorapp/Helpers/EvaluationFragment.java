@@ -1,6 +1,5 @@
-package com.example.mentorapp;
+package com.example.mentorapp.Helpers;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +12,10 @@ import android.widget.ExpandableListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.R;
+import com.example.mentorapp.Task;
 
 public class EvaluationFragment extends Fragment {
 
@@ -45,7 +48,7 @@ public class EvaluationFragment extends Fragment {
         View convertView = inflater.inflate(R.layout.evaluation_fragment_layout,container,false);
 
         //Set up the view and adapter
-        this.expandableListView = (ExpandableListView) convertView.findViewById(R.id.expandableListView_id);
+        this.expandableListView = (ExpandableListView) convertView.findViewById(R.id.template_expandableListView_id);
         this.expandableListAdapter = new EvaluationListAdapter(getContext(), data);
         this.expandableListView.setAdapter(expandableListAdapter);
 

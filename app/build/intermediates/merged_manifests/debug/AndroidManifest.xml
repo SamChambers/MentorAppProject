@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.mentorapp.MainActivity" >
+        <activity android:name="com.example.mentorapp.Activities.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,11 +26,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.mentorapp.ViewTaskCommentsActivity"
+            android:name="com.example.mentorapp.Activities.ViewTaskCommentsActivity"
             android:theme="@style/AppThemeNoToolbar" >
         </activity>
         <activity
-            android:name="com.example.mentorapp.PresentActivity"
+            android:name="com.example.mentorapp.Activities.PresentActivity"
+            android:theme="@style/AppThemeNoToolbar" >
+        </activity>
+        <activity
+            android:name="com.example.mentorapp.Activities.GameOptionsActivity"
+            android:theme="@style/AppThemeNoToolbar" >
+        </activity>
+        <activity
+            android:name="com.example.mentorapp.Activities.EditTemplateActivity"
             android:theme="@style/AppThemeNoToolbar" >
         </activity>
     </application>
