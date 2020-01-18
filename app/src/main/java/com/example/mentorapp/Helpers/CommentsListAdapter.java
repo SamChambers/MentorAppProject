@@ -1,12 +1,10 @@
 package com.example.mentorapp.Helpers;
 
 import android.content.Context;
-import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.content.Context;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Button;
@@ -19,7 +17,6 @@ import androidx.annotation.Nullable;
 import com.example.mentorapp.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CommentsListAdapter extends ArrayAdapter<String> {
 
@@ -46,7 +43,7 @@ public class CommentsListAdapter extends ArrayAdapter<String> {
             convertView = layoutInflater.inflate(R.layout.comment_layout, null);
         }
 
-        TextView commentTextView = (TextView) convertView.findViewById(R.id.text_comment_id);
+        TextView commentTextView = (TextView) convertView.findViewById(R.id.text_template_name_id);
         Button deleteButtonView = (Button) convertView.findViewById(R.id.button_delete_comment_id);
 
         commentTextView.setText(commentToShow);
@@ -72,7 +69,7 @@ public class CommentsListAdapter extends ArrayAdapter<String> {
                                 //comments.remove(commentToShow);
                                 comments.remove(position);
                                 notifyDataSetChanged();
-                                ListView commentsListView = (ListView) parent.findViewById(R.id.list_comments_id);
+                                ListView commentsListView = (ListView) parent.findViewById(R.id.list_templates_id);
                                 if(comments.size() > 0) {
                                     commentsListView.setVisibility(View.VISIBLE);
                                     noCommentsView.setVisibility(View.INVISIBLE);

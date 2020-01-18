@@ -28,6 +28,9 @@
         <activity android:name=".Activities.EditTemplateActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
+        <activity android:name=".Activities.ListTemplatesActivity"
+            android:theme="@style/AppThemeNoToolbar">
+        </activity>
     </application>
 
 </manifest>

@@ -52,7 +52,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
 
         setContentView(R.layout.view_task_comments_layout);
 
-        this.commentsListView = (ListView) findViewById(R.id.list_comments_id);
+        this.commentsListView = (ListView) findViewById(R.id.list_templates_id);
         this.noCommentsTextView = (TextView) findViewById(R.id.text_comments_view_no_comments_id);
 
         Context context = getApplicationContext();
@@ -62,7 +62,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        Toolbar mToolbar = findViewById(R.id.toolbar);
+        Toolbar mToolbar = findViewById(R.id.toolbar_list_templates_id);
         setSupportActionBar(mToolbar);
 
 

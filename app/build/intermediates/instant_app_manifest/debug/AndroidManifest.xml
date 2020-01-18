@@ -42,6 +42,10 @@
             android:name="com.example.mentorapp.Activities.EditTemplateActivity"
             android:theme="@style/AppThemeNoToolbar" >
         </activity>
+        <activity
+            android:name="com.example.mentorapp.Activities.ListTemplatesActivity"
+            android:theme="@style/AppThemeNoToolbar" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package com.example.mentorapp;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,6 +9,9 @@ public class Template implements Serializable {
 
     // A template will be a list of categories (Strings), that hold
     // tasks (Strings), that will have weights
+
+    //DB Variables
+    private Integer id;
 
     private ArrayList<TemplateCategory> categories;
     private String name;
@@ -66,6 +71,19 @@ public class Template implements Serializable {
             }
         }
         return null;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
 

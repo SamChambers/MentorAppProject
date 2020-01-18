@@ -1049,6 +1049,7 @@ id actions
 id activity_chooser_view_content
 id add
 id add_category_menu_item_id
+id add_template_menu_item_id
 id alertTitle
 id all
 id always
@@ -1061,6 +1062,7 @@ id bottom
 id buttonPanel
 id button_comment_id
 id button_delete_comment_id
+id button_delete_template
 id button_delete_template_category_id
 id button_delete_template_task_id
 id button_minus_id
@@ -1147,9 +1149,9 @@ id linear_layout_present_scroll_view_id
 id linear_layout_stats_id
 id listMode
 id listTitle
-id list_comments_id
 id list_item
 id list_participant_design_id
+id list_templates_id
 id masked
 id message
 id middle
@@ -1241,7 +1243,6 @@ id textView3
 id textView4
 id textView5
 id text_category_selector
-id text_comment_id
 id text_comments_view_no_comments_id
 id text_description_id
 id text_input_password_toggle
@@ -1266,10 +1267,10 @@ id time
 id title
 id titleDividerNoCustom
 id title_template
-id toolbar
 id toolbar2
 id toolbar3
 id toolbar_edit_template_id
+id toolbar_list_templates_id
 id top
 id topPanel
 id touch_outside
@@ -1355,6 +1356,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
 layout evaluation_fragment_layout
+layout list_templates_layout
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
 layout notification_action
@@ -1376,10 +1378,12 @@ layout support_simple_spinner_dropdown_item
 layout task_layout
 layout template_add_task_alert_layout
 layout template_category_layout
+layout template_layout
 layout template_task_layout
 layout view_task_comments_layout
 menu edit_template_menu
 menu game_options_menu
+menu list_templates_options_menu
 menu task_options_menu_layout
 menu view_comments_options_menu
 mipmap ic_launcher

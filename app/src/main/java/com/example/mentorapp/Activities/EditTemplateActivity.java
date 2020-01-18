@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 
 public class EditTemplateActivity extends AppCompatActivity {
 
@@ -62,13 +66,30 @@ public class EditTemplateActivity extends AppCompatActivity {
         buttonAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addCategory();
+            }
+        });
 
+        buttonAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(template.getCategories().size() < 1){
+                    return;
+                }
+                addTask();
+            }
+        });
+
+        this.templateNameView.setText(this.template.getName());
+        this.templateNameView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditTemplateActivity.this);
-
-                builder.setTitle("Add Category");
+                builder.setTitle("Change Title");
 
                 // Set up the input
                 final EditText input = new EditText(context);
+                input.setText(template.getName());
                 // Specify the type of input expected
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
@@ -78,11 +99,9 @@ public class EditTemplateActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String m_Text = input.getText().toString();
-                        template.addCategory(m_Text);
-                        TemplateListAdapter tla = (TemplateListAdapter) expandableList.getExpandableListAdapter();
-                        tla.notifyDataSetChanged();
+                        template.setName(m_Text);
+                        templateNameView.setText(m_Text);
 
-                        System.out.println(template.getCategories().size());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -92,53 +111,13 @@ public class EditTemplateActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.show();
+                AlertDialog mAlertDialog = builder.create();
+                mAlertDialog.show();
             }
         });
 
-        buttonAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                LayoutInflater inflater = getLayoutInflater();
-                View dialogLayout = inflater.inflate(R.layout.template_add_task_alert_layout, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditTemplateActivity.this);
-                builder.setView(dialogLayout);
-                builder.setTitle("Add Task");
 
-                final Spinner spinner = (Spinner) dialogLayout.findViewById(R.id.spinner_template_category_id);
-                final EditText description = (EditText) dialogLayout.findViewById(R.id.text_template_description_id);
-                final EditText weight = (EditText) dialogLayout.findViewById(R.id.text_template_weight_id);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                        android.R.layout.simple_spinner_item, template.getCategoryNames());
-
-                spinner.setAdapter(adapter);
-
-                // Set up the buttons
-                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String descriptionText = description.getText().toString();
-                        Float weightText = Float.parseFloat(weight.getText().toString());
-                        String categorySelection = spinner.getSelectedItem().toString();
-                        template.getCategory(categorySelection).addTask(descriptionText,weightText);
-                        TemplateListAdapter tla = (TemplateListAdapter) expandableList.getExpandableListAdapter();
-                        tla.notifyDataSetChanged();
-
-                        System.out.println(template.getCategories().size());
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-            }
-        });
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -177,40 +156,84 @@ public class EditTemplateActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.add_category_menu_item_id) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-            builder.setTitle("Add Category");
-
-            // Set up the input
-            final EditText input = new EditText(getApplicationContext());
-            // Specify the type of input expected
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-            builder.setView(input);
-
-            // Set up the buttons
-            builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String m_Text = input.getText().toString();
-                    template.addCategory(m_Text);
-                    CommentsListAdapter tempAdapter =(CommentsListAdapter) expandableList.getAdapter();
-                    tempAdapter.notifyDataSetChanged();
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            builder.show();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addCategory(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditTemplateActivity.this);
+
+        builder.setTitle("Add Category");
+
+        // Set up the input
+        final EditText input = new EditText(context);
+        // Specify the type of input expected
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String m_Text = input.getText().toString();
+                template.addCategory(m_Text);
+                TemplateListAdapter tla = (TemplateListAdapter) expandableList.getExpandableListAdapter();
+                tla.notifyDataSetChanged();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog mAlertDialog = builder.create();
+        mAlertDialog.show();
+
+
+
+
+    }
+
+    private void addTask(){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.template_add_task_alert_layout, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditTemplateActivity.this);
+        builder.setView(dialogLayout);
+        builder.setTitle("Add Task");
+
+        final Spinner spinner = (Spinner) dialogLayout.findViewById(R.id.spinner_template_category_id);
+        final EditText description = (EditText) dialogLayout.findViewById(R.id.text_template_description_id);
+        final EditText weight = (EditText) dialogLayout.findViewById(R.id.text_template_weight_id);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+                android.R.layout.simple_spinner_item, template.getCategoryNames());
+
+        spinner.setAdapter(adapter);
+
+        // Set up the buttons
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String descriptionText = description.getText().toString();
+                Float weightText = Float.parseFloat(weight.getText().toString());
+                String categorySelection = spinner.getSelectedItem().toString();
+                template.getCategory(categorySelection).addTask(descriptionText,weightText);
+                TemplateListAdapter tla = (TemplateListAdapter) expandableList.getExpandableListAdapter();
+                tla.notifyDataSetChanged();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }
 

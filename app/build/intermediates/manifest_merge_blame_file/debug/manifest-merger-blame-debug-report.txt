@@ -11,7 +11,7 @@
 9-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml
 10
 11    <application
-11-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:5:5-31:19
+11-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:5:5-34:19
 12        android:allowBackup="true"
 12-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -70,6 +70,13 @@
 42            android:theme="@style/AppThemeNoToolbar" >
 42-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:29:13-53
 43        </activity>
-44    </application>
-45
-46</manifest>
+44        <activity
+44-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:31:9-33:20
+45            android:name="com.example.mentorapp.Activities.ListTemplatesActivity"
+45-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:31:19-67
+46            android:theme="@style/AppThemeNoToolbar" >
+46-->/Users/jamestesta/Desktop/mentor_app/app/src/main/AndroidManifest.xml:32:13-53
+47        </activity>
+48    </application>
+49
+50</manifest>

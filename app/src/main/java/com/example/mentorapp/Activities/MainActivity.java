@@ -1,6 +1,7 @@
 package com.example.mentorapp.Activities;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.mentorapp.DataBase.TemplateDBHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
 import com.example.mentorapp.ExampleDataPump;
@@ -21,7 +23,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,11 +38,16 @@ public class MainActivity extends AppCompatActivity {
     Game game;
 
 
+
+
+
     private String fragments[] = {"Referee 1", "Referee 2", "Referee 3", "Referee 4"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         //Set the content view
         setContentView(R.layout.activity_main);
@@ -90,16 +99,19 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("Request Code: " + String.valueOf(requestCode));
 
+        switch (requestCode) {
+            case 100:
+                ArrayList<String> comments = (ArrayList<String>) data.getSerializableExtra("UpdatedComments");
+                Integer category = (Integer) data.getSerializableExtra("Category");
+                Integer position = (Integer) data.getSerializableExtra("Position");
+                Integer evaluation = (Integer) data.getSerializableExtra("Evaluation");
 
-        ArrayList<String> comments = (ArrayList<String>) data.getSerializableExtra("UpdatedComments");
-        Integer category = (Integer) data.getSerializableExtra("Category");
-        Integer position = (Integer) data.getSerializableExtra("Position");
-        Integer evaluation = (Integer) data.getSerializableExtra("Evaluation");
+                game.getEvaluationFromPosition(evaluation).getTaskFromCategory(category, position).setComments(comments);
 
-        game.getEvaluationFromPosition(evaluation).getTaskFromCategory(category, position).setComments(comments);
-
-        EvaluationFragmentAdapter tempAdapter = (EvaluationFragmentAdapter) viewPager.getAdapter();
-        tempAdapter.notifyChangeInPosition();
+                EvaluationFragmentAdapter tempAdapter = (EvaluationFragmentAdapter) viewPager.getAdapter();
+                tempAdapter.notifyChangeInPosition();
+                break;
+        }
     }
 
     @Override
@@ -111,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0; i<menuOptions.length; ++i) {
             menu.add(menuOptions[i]);
         }
-
 
         return true;
     }
@@ -153,9 +164,28 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO: Delete this once we create the main thread
     private void goToCreateTemplate(){
-        Intent intent = new Intent(this, EditTemplateActivity.class);
-        intent.putExtra("Template", ExampleDataPump.getTemplate());
-        //intent.putExtra("Template", new Template("Template Name"));
+        Intent intent = new Intent(this, ListTemplatesActivity.class);
         startActivity(intent);
+        /*
+        TemplateDBHelper tdbh = new TemplateDBHelper(this);
+        List<Template> tempList = tdbh.allTemplates();
+        Template template;
+        if (tempList.size() == 0){
+            template = new Template("New Template");
+        } else {
+            template = tempList.get(0);
+        }
+
+
+
+        Intent intent = new Intent(this, EditTemplateActivity.class);
+        intent.putExtra("Template", template);
+
+        int requestCode = 200;
+
+
+        startActivityForResult(intent,requestCode);
+
+         */
     }
 }
