@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabView_layout_id);
         tabLayout.setupWithViewPager(viewPager);
 
+
+
         //Set the functions that happen when you click on the tabs
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 

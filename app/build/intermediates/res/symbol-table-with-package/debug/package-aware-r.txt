@@ -1175,6 +1175,7 @@ id parentPanel
 id parent_matrix
 id percent
 id pin
+id presentation_list_view_id
 id progress_circular
 id progress_horizontal
 id radio
@@ -1227,6 +1228,7 @@ id submenuarrow
 id submit_area
 id tabMode
 id tabView_layout_id
+id tabView_present_layout_id
 id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
@@ -1267,10 +1269,10 @@ id time
 id title
 id titleDividerNoCustom
 id title_template
-id toolbar2
 id toolbar3
 id toolbar_edit_template_id
 id toolbar_list_templates_id
+id toolbar_present_id
 id top
 id topPanel
 id touch_outside
@@ -1285,6 +1287,7 @@ id unlabeled
 id up
 id useLogo
 id viewPagerID
+id viewPager_present_ID
 id view_offset_helper
 id visible
 id withText
@@ -1370,7 +1373,9 @@ layout present_category_layout
 layout present_comment_layout
 layout present_detail_layout
 layout present_game_layout
+layout present_game_with_fragments_layout
 layout present_stats_layout
+layout presentation_fragment_layout
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material

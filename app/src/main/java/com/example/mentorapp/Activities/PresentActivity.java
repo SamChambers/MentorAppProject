@@ -31,22 +31,26 @@ import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 
 import com.example.mentorapp.Category;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Game;
+import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
 import com.example.mentorapp.Presentation.*;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Task;
+import com.google.android.material.tabs.TabLayout;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PresentActivity extends AppCompatActivity {
 
-    Game game;
-    //LinearLayout textLinearView;
+    private Game game;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +58,54 @@ public class PresentActivity extends AppCompatActivity {
 
         this.game = (Game) getIntent().getSerializableExtra("MyGame");
 
-        setContentView(R.layout.present_game_layout);
+        setContentView(R.layout.present_game_with_fragments_layout);
 
-        LinearLayout allList = (LinearLayout) findViewById(R.id.linear_layout_all_layout_id);
-        LinearLayout flaggedList = (LinearLayout) findViewById(R.id.linear_layout_flagged_layout_id);
+        this.tabLayout = (TabLayout) findViewById(R.id.tabView_present_layout_id);
+        this.viewPager = (ViewPager) findViewById(R.id.viewPager_present_ID);
 
-        TextView flaggedHeaderTextView = (TextView) findViewById(R.id.text_present_flagged_header_id);
+        PresentationStorage ps;
+        ArrayList<PresentationStorage> presentationList = new ArrayList<>();
+        if (this.game.getEvaluationCount() > 1) {
+            ps = convertEvaluationToPresentation(this.game.getEvaluationsList());
+            presentationList.add(ps);
+            ps.setTitle("All");
+        }
+        for(Evaluation e : this.game.getEvaluationsList()) {
+            ArrayList<Evaluation> el = new ArrayList<Evaluation>();
+            el.add(e);
+            ps = convertEvaluationToPresentation(el);
+            ps.setTitle(e.getOfficial());
+            presentationList.add(ps);
+        }
+
+        this.viewPager.setAdapter(new PresentationFragmentAdapter(getSupportFragmentManager(), getApplicationContext(), presentationList));
+        this.tabLayout.setupWithViewPager(viewPager);
+
+        //Set the functions that happen when you click on the tabs
+        this.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            //When you click on the tab
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            //When you click on a different tab
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                return;
+            }
+
+            //When you click on the tab when its already selected
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+        });
+
 
         ActionBar actionBar = getSupportActionBar();
-        Toolbar mToolbar = findViewById(R.id.toolbar2);
+        Toolbar mToolbar = findViewById(R.id.toolbar_present_id);
         setSupportActionBar(mToolbar);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -72,21 +115,9 @@ public class PresentActivity extends AppCompatActivity {
             }
         });
 
-        PresentationStorage allPresentation = convertGameToPresentation(this.game);
-        PresentationStorage flaggedPresentation = allPresentation.getFlaggedPresentationStorage();
 
-        fillLinearView(allPresentation, allList);
-        fillLinearView(flaggedPresentation, flaggedList);
 
-        if(flaggedPresentation.getCategories().size() == 0){
-            flaggedHeaderTextView.setVisibility(View.INVISIBLE);
-            LayoutParams params = (LayoutParams) flaggedHeaderTextView.getLayoutParams();
-            params.height = 0;
-            flaggedHeaderTextView.setLayoutParams(params);
-        } else {
-            flaggedHeaderTextView.setVisibility(View.VISIBLE);
-        }
-        //this.textListView.setAdapter(new PresentationAdapter(getApplicationContext(),allPresentation));
+
     }
 
     @Override
@@ -107,13 +138,13 @@ public class PresentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private PresentationStorage convertGameToPresentation(Game game){
+    private PresentationStorage convertEvaluationToPresentation(ArrayList<Evaluation> evaluationList){
 
         PresentationStorage presentation = new PresentationStorage();
 
         String tempString = "";
 
-        for (Evaluation currentEvaluation:game.getEvaluationsList()) {
+        for (Evaluation currentEvaluation:evaluationList) {
             String evaluationName = currentEvaluation.getOfficial();
 
             for(Category currentCategory:currentEvaluation.getCategories()){
@@ -152,51 +183,7 @@ public class PresentActivity extends AppCompatActivity {
 
     }
 
-    private void fillLinearView(PresentationStorage presentation, LinearLayout linearLayout){
 
-        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-        ViewGroup vg = (ViewGroup)linearLayout;
-
-        for (CategoryPresentation currentCategory:presentation.getCategories()){
-            // Add the category sections
-            View categoryView = getLayoutInflater().inflate(R.layout.present_category_layout,vg,false);
-            TextView categoryNameView = (TextView)categoryView.findViewById(R.id.text_present_category_name_id);
-            categoryNameView.setText(currentCategory.getCategory());
-            linearLayout.addView(categoryView);
-
-            // Add the task sections
-            for(TaskPresentation currentTask:currentCategory.getTaskPresentations()){
-                View taskView = getLayoutInflater().inflate(R.layout.present_detail_layout,vg,false);
-                TextView taskNameView = (TextView)taskView.findViewById(R.id.text_present_detail_id);
-                LinearLayout statsLinearLayoutView = (LinearLayout)taskView.findViewById(R.id.linear_layout_stats_id);
-                taskNameView.setText(currentTask.getDescription());
-                linearLayout.addView(taskView);
-
-                //Add the officials stats
-                for (DetailPresentation currentDetail:currentTask.getStats()){
-                    View detailView = getLayoutInflater().inflate(R.layout.present_stats_layout,vg,false);
-                    TextView officialNameView = (TextView)detailView.findViewById(R.id.text_present_name_id);
-                    TextView officialScoreView = (TextView)detailView.findViewById(R.id.text_present_score_id);
-                    LinearLayout commentsLinearLayoutView = (LinearLayout)detailView.findViewById(R.id.linear_layout_comments_id);
-                    officialNameView.setText(currentDetail.getOfficial());
-                    officialScoreView.setText("(" + currentDetail.getScore()+")");
-                    if(currentDetail.getFlagged()){
-                        detailView.setBackgroundColor(Color.GRAY);
-                    }
-                    statsLinearLayoutView.addView(detailView);
-
-                    //Add the comments
-                    for(String currentComment:currentDetail.getComments()){
-                        View commentView = getLayoutInflater().inflate(R.layout.present_comment_layout,vg,false);
-                        TextView commentTextView = (TextView)commentView.findViewById(R.id.text_present_comment_id);
-                        commentTextView.setText(currentComment);
-                        commentsLinearLayoutView.addView(commentView);
-                    }
-                }
-            }
-        }
-
-    }
 
 
 

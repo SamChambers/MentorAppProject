@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class PresentationStorage {
     ArrayList<CategoryPresentation> categories;
+    private String title = "Off";
 
     public PresentationStorage(){
         this.categories = new ArrayList<>();
@@ -66,5 +67,13 @@ public class PresentationStorage {
             tasks += category.taskPresentations.size();
         }
         return tasks;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
