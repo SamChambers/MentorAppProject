@@ -6,25 +6,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mentorapp.Helpers.CommentsListAdapter;
 import com.example.mentorapp.Helpers.TemplateListAdapter;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
@@ -33,9 +28,6 @@ import com.example.mentorapp.Template;
 //import android.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.view.inputmethod.InputMethodManager;
 
 public class EditTemplateActivity extends AppCompatActivity {
 
@@ -54,10 +46,10 @@ public class EditTemplateActivity extends AppCompatActivity {
 
         this.template = (Template) getIntent().getSerializableExtra("Template");
 
-        setContentView(R.layout.create_template_layout);
+        setContentView(R.layout.edit_template_layout);
 
-        this.expandableList = findViewById(R.id.template_expandableListView_id);
-        this.templateNameView = findViewById(R.id.text_template_name_id);
+        this.expandableList = findViewById(R.id.editTemplate_expandableListView);
+        this.templateNameView = findViewById(R.id.comment_textView_templateName);
         Button buttonAddCategory = findViewById(R.id.button_template_add_category_id);
         Button buttonAddTask = findViewById(R.id.button_template_add_task_id);
 
@@ -121,7 +113,7 @@ public class EditTemplateActivity extends AppCompatActivity {
 
 
         ActionBar actionBar = getSupportActionBar();
-        Toolbar mToolbar = findViewById(R.id.toolbar_edit_template_id);
+        Toolbar mToolbar = findViewById(R.id.editTemplate_toolbar);
         setSupportActionBar(mToolbar);
 
 

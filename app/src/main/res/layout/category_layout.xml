@@ -3,13 +3,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout6"
+    android:id="@+id/category_constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#16D6D6D6">
 
     <TextView
-        android:id="@+id/listTitle"
+        android:id="@+id/category_textView_listTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -24,14 +24,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/template_text_category_name_id"
+        android:id="@+id/category_textView_templateTextCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@id/listTitle"
+        app:layout_constraintBottom_toBottomOf="@id/category_textView_listTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/listTitle" />
+        app:layout_constraintTop_toTopOf="@id/category_textView_listTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
