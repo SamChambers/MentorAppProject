@@ -1,13 +1,9 @@
-package com.example.mentorapp;
-
-import android.provider.ContactsContract;
+package com.example.mentorapp.Official;
 
 import com.google.gson.Gson;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
 
 
 public class Official implements Serializable {

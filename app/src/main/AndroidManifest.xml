@@ -31,6 +31,12 @@
         <activity android:name=".Activities.ListTemplatesActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
+        <activity android:name=".Activities.ListOfficialsActivity"
+            android:theme="@style/AppThemeNoToolbar">
+        </activity>
+        <activity android:name=".Activities.EditOfficialActivity"
+            android:theme="@style/AppThemeNoToolbar">
+        </activity>
     </application>
 
 </manifest>

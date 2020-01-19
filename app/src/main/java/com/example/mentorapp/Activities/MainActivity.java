@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //PopupMenu menu = new PopupMenu(this, );
 
-        String menuOptions[] = {"Present","Options", "Template Demo"};
+        String menuOptions[] = {"Present","Options", "Template Demo", "Official Demo"};
 
         for (int i=0; i<menuOptions.length; ++i) {
             menu.add(menuOptions[i]);
@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "Template Demo":
                 goToCreateTemplate();
+                break;
+            case "Official Demo":
+                goToOfficials();
                 break;
             default:
                 Toast.makeText(
@@ -164,30 +167,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //TODO: Delete this once we create the main thread
+    //TODO: Delete these once we create the main thread
     private void goToCreateTemplate(){
         Intent intent = new Intent(this, ListTemplatesActivity.class);
         startActivity(intent);
-        /*
-        TemplateDBHelper tdbh = new TemplateDBHelper(this);
-        List<Template> tempList = tdbh.allTemplates();
-        Template template;
-        if (tempList.size() == 0){
-            template = new Template("New Template");
-        } else {
-            template = tempList.get(0);
-        }
+    }
 
-
-
-        Intent intent = new Intent(this, EditTemplateActivity.class);
-        intent.putExtra("Template", template);
-
-        int requestCode = 200;
-
-
-        startActivityForResult(intent,requestCode);
-
-         */
+    private void goToOfficials(){
+        Intent intent = new Intent(this, ListOfficialsActivity.class);
+        startActivity(intent);
     }
 }

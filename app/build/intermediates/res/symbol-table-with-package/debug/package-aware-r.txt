@@ -1049,6 +1049,7 @@ id actions
 id activity_chooser_view_content
 id add
 id add_category_menu_item_id
+id add_official_menu_item_id
 id add_template_menu_item_id
 id alertTitle
 id all
@@ -1150,6 +1151,7 @@ id linear_layout_stats_id
 id listMode
 id listTitle
 id list_item
+id list_officials_id
 id list_participant_design_id
 id list_templates_id
 id masked
@@ -1248,6 +1250,7 @@ id text_category_selector
 id text_comments_view_no_comments_id
 id text_description_id
 id text_input_password_toggle
+id text_official_name_id
 id text_options_game_name_id
 id text_present_all_header_id
 id text_present_category_name_id
@@ -1270,7 +1273,9 @@ id title
 id titleDividerNoCustom
 id title_template
 id toolbar3
+id toolbar_edit_official_id
 id toolbar_edit_template_id
+id toolbar_list_officals_id
 id toolbar_list_templates_id
 id toolbar_present_id
 id top
@@ -1343,6 +1348,7 @@ layout abc_tooltip
 layout activity_main
 layout category_layout
 layout comment_layout
+layout create_official_layout
 layout create_template_layout
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
@@ -1359,6 +1365,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
 layout evaluation_fragment_layout
+layout list_officals_layout
 layout list_templates_layout
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
@@ -1368,6 +1375,7 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout official_layout
 layout options_layout
 layout present_category_layout
 layout present_comment_layout
@@ -1386,8 +1394,10 @@ layout template_category_layout
 layout template_layout
 layout template_task_layout
 layout view_task_comments_layout
+menu edit_official_menu
 menu edit_template_menu
 menu game_options_menu
+menu list_officials_options_menu
 menu list_templates_options_menu
 menu task_options_menu_layout
 menu view_comments_options_menu

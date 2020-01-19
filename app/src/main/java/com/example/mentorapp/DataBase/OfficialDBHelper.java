@@ -6,8 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.mentorapp.Official;
-import com.example.mentorapp.Template;
+import com.example.mentorapp.Official.Official;
 import com.google.gson.Gson;
 
 import java.util.LinkedList;
@@ -33,7 +32,7 @@ public class OfficialDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATION_TABLE = "CREATE TABLE Template (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
+        String CREATION_TABLE = "CREATE TABLE Official (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
                 "name TEXT, " + "dob_year Integer, " + "dob_month Integer, "+
                 "start_date Integer, " + "start_year Integer, " +
                 "official Text )";
