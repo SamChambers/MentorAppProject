@@ -95,31 +95,19 @@ public class ListOfficialsActivity extends AppCompatActivity {
 
         switch (requestCode){
             case 400:
-                Official tempOfficial  = (Official) data.getSerializableExtra("Official");
-
-                if(tempOfficial.getId() == null){
-                    this.TDBH.addOfficial(tempOfficial);
-                } else {
-                    this.TDBH.updateOfficial(tempOfficial);
-                }
 
                 OfficialsListAdapter OLA = (OfficialsListAdapter) this.officialListView.getAdapter();
                 OLA.updateList();
                 OLA.notifyDataSetChanged();
-
-                System.out.println(this.TDBH.allOfficials().size());
-
-
                 break;
         }
     }
 
 
     private void addNewOfficial(){
-        Intent intent = new Intent(context, EditOfficialActivity.class);
+        Intent intent = new Intent(context, ViewOfficialActivity.class);
         intent.putExtra("Official", new Official("New Official"));
         int requestCode = 400;
-
 
         startActivityForResult(intent,requestCode);
     }

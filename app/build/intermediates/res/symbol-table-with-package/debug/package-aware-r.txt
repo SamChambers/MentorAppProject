@@ -1063,9 +1063,11 @@ id bottom
 id buttonPanel
 id button_comment_id
 id button_delete_comment_id
+id button_delete_official_id
 id button_delete_template
 id button_delete_template_category_id
 id button_delete_template_task_id
+id button_edit_official_id
 id button_minus_id
 id button_options_id
 id button_plus_id
@@ -1082,6 +1084,7 @@ id clip_vertical
 id collapseActionView
 id constraintLayout
 id constraintLayout2
+id constraint_layout_edit_official_main_id
 id container
 id content
 id contentPanel
@@ -1135,6 +1138,10 @@ id linearLayout10
 id linearLayout11
 id linearLayout12
 id linearLayout13
+id linearLayout14
+id linearLayout15
+id linearLayout16
+id linearLayout17
 id linearLayout2
 id linearLayout3
 id linearLayout4
@@ -1145,6 +1152,7 @@ id linearLayout8
 id linearLayout9
 id linear_layout_all_layout_id
 id linear_layout_comments_id
+id linear_layout_exit_official_id
 id linear_layout_flagged_layout_id
 id linear_layout_present_scroll_view_id
 id linear_layout_stats_id
@@ -1216,6 +1224,10 @@ id snackbar_text
 id snap
 id snapMargins
 id spacer
+id spinner_dob_month
+id spinner_dob_year
+id spinner_exp_month
+id spinner_exp_year
 id spinner_template_category_id
 id split_action_bar
 id spread
@@ -1249,8 +1261,21 @@ id textView5
 id text_category_selector
 id text_comments_view_no_comments_id
 id text_description_id
+id text_edit_official_age
+id text_edit_official_email
+id text_edit_official_email_id
+id text_edit_official_name
+id text_edit_official_name_id
+id text_edit_official_officating_exp
 id text_input_password_toggle
+id text_official_age
+id text_official_age_id
+id text_official_email
+id text_official_email_id
+id text_official_name
 id text_official_name_id
+id text_official_officating_exp
+id text_official_officiating_exp_id
 id text_options_game_name_id
 id text_present_all_header_id
 id text_present_category_name_id
@@ -1278,6 +1303,7 @@ id toolbar_edit_template_id
 id toolbar_list_officals_id
 id toolbar_list_templates_id
 id toolbar_present_id
+id toolbar_view_official_id
 id top
 id topPanel
 id touch_outside
@@ -1393,6 +1419,7 @@ layout template_add_task_alert_layout
 layout template_category_layout
 layout template_layout
 layout template_task_layout
+layout view_official_layout
 layout view_task_comments_layout
 menu edit_official_menu
 menu edit_template_menu
@@ -1401,6 +1428,7 @@ menu list_officials_options_menu
 menu list_templates_options_menu
 menu task_options_menu_layout
 menu view_comments_options_menu
+menu view_official_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 string abc_action_bar_home_description

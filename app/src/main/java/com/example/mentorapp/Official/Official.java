@@ -78,5 +78,23 @@ public class Official implements Serializable {
         return gson.toJson(this);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setDob(MonthYear dob) {
+        this.dob = dob;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEvaluationsList(ArrayList<Integer> evaluationsList) {
+        this.evaluationsList = evaluationsList;
+    }
+
+    public void setStartedOfficiating(MonthYear startedOfficiating) {
+        this.startedOfficiating = startedOfficiating;
+    }
 }

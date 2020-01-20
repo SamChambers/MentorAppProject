@@ -6,12 +6,12 @@ public class MonthYear implements Serializable {
     private Integer month;
     private Integer year;
 
-    MonthYear(){
-        this.month = 1;
-        this.year = 1990;
+    public MonthYear(){
+        this.month = null;
+        this.year = null;
     }
 
-    MonthYear(Integer month, Integer year){
+    public MonthYear(Integer month, Integer year){
         this.month = month;
         this.year = year;
     }

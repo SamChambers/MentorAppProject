@@ -7,14 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.mentorapp.Activities.EditOfficialActivity;
 import com.example.mentorapp.Activities.EditTemplateActivity;
-import com.example.mentorapp.DataBase.TemplateDBHelper;
+import com.example.mentorapp.Activities.ViewOfficialActivity;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
@@ -34,8 +34,6 @@ public class OfficialsListAdapter extends ArrayAdapter<Template> {
         this.context = context;
         this.TDBH = tdbh;
         updateList();
-        System.out.println("Size of officials list");
-        System.out.println(this.officialsList.size());
     }
 
     @NonNull
@@ -53,14 +51,15 @@ public class OfficialsListAdapter extends ArrayAdapter<Template> {
             convertView = layoutInflater.inflate(R.layout.official_layout, null);
         }
 
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.text_official_name_id);
+        TextView nameTextView = (TextView) convertView.findViewById(R.id.text_official_name);
         nameTextView.setText(official.getName());
         convertView.setTag(position);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //goToViewOfficial((int)v.getTag());
+                goToViewOfficial((int)v.getTag());
+                //goToEditOfficial((int)v.getTag());
             }
         });
 
@@ -75,16 +74,16 @@ public class OfficialsListAdapter extends ArrayAdapter<Template> {
         return this.officialsList.size();
     }
 
-    private void goToEditTemplate(int position){
-        Intent intent = new Intent(context, EditTemplateActivity.class);
-        intent.putExtra("Official", officialsList.get(position));
-        int requestCode = 300;
-
-        ((Activity) context).startActivityForResult(intent,requestCode);
-    }
 
     public void updateList(){
         this.officialsList = TDBH.allOfficials();
     }
+
+    private void goToViewOfficial(int position){
+        Intent intent = new Intent(context, ViewOfficialActivity.class);
+        intent.putExtra("Official", this.officialsList.get(position));
+        ((Activity) this.context).startActivityForResult(intent, 400);
+    }
+
 
 }

@@ -37,6 +37,9 @@
         <activity android:name=".Activities.EditOfficialActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
+        <activity android:name=".Activities.ViewOfficialActivity"
+            android:theme="@style/AppThemeNoToolbar">
+        </activity>
     </application>
 
 </manifest>

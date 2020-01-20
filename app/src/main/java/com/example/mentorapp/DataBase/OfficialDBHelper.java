@@ -69,10 +69,10 @@ public class OfficialDBHelper extends SQLiteOpenHelper {
 
         Integer id_value = Integer.parseInt(cursor.getString(0));
         String name = cursor.getString(1);
-        Integer dob_year = Integer.parseInt(cursor.getString(2));
-        Integer dob_month = Integer.parseInt(cursor.getString(3));
-        Integer start_year = Integer.parseInt(cursor.getString(4));
-        Integer start_month = Integer.parseInt(cursor.getString(5));
+        Integer dob_year = cursor.getString(2) == null ? null : Integer.parseInt(cursor.getString(2));
+        Integer dob_month = cursor.getString(3) == null ? null : Integer.parseInt(cursor.getString(3));
+        Integer start_year = cursor.getString(4) == null ? null : Integer.parseInt(cursor.getString(4));
+        Integer start_month = cursor.getString(5) == null ? null : Integer.parseInt(cursor.getString(5));
         String json = cursor.getString(6);
 
         Gson gson = new Gson();
@@ -95,10 +95,10 @@ public class OfficialDBHelper extends SQLiteOpenHelper {
             do {
                 Integer id_value = Integer.parseInt(cursor.getString(0));
                 String name = cursor.getString(1);
-                Integer dob_year = Integer.parseInt(cursor.getString(2));
-                Integer dob_month = Integer.parseInt(cursor.getString(3));
-                Integer start_year = Integer.parseInt(cursor.getString(4));
-                Integer start_month = Integer.parseInt(cursor.getString(5));
+                Integer dob_year = cursor.getString(2) == null ? null : Integer.parseInt(cursor.getString(2));
+                Integer dob_month = cursor.getString(3) == null ? null : Integer.parseInt(cursor.getString(3));
+                Integer start_year = cursor.getString(4) == null ? null : Integer.parseInt(cursor.getString(4));
+                Integer start_month = cursor.getString(5) == null ? null : Integer.parseInt(cursor.getString(5));
                 String json = cursor.getString(6);
 
                 official = gson.fromJson(json, Official.class);
@@ -111,7 +111,7 @@ public class OfficialDBHelper extends SQLiteOpenHelper {
         return officials;
     }
 
-    public void addOfficial(Official official) {
+    public Long addOfficial(Official official) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, official.getName());
@@ -121,8 +121,9 @@ public class OfficialDBHelper extends SQLiteOpenHelper {
         values.put(KEY_START_MONTH, official.getStartedOfficiating().getMonth());
         values.put(KEY_OFFICIAL, official.toJson());
         // insert
-        db.insert(TABLE_NAME,null, values);
+        long id = db.insert(TABLE_NAME,null, values);
         db.close();
+        return id;
     }
 
     public int updateOfficial(Official official) {
