@@ -83,14 +83,14 @@ public class EditOfficialActivity extends AppCompatActivity {
             spinnerDOBYear.setSelection(0);
         } else {
             spinnerDOBMonth.setSelection(this.official.getDob().getMonth());
-            spinnerDOBYear.setSelection(this.official.getDob().getYear());
+            spinnerDOBYear.setSelection(years.indexOf(this.official.getDob().getYear().toString()));
         }
         if (this.official.getStartedOfficiating().getYear() == null || this.official.getStartedOfficiating().getMonth() == null){
             spinnerExpMonth.setSelection(0);
             spinnerExpYear.setSelection(0);
         } else {
             spinnerExpMonth.setSelection(this.official.getStartedOfficiating().getMonth());
-            spinnerExpYear.setSelection(this.official.getStartedOfficiating().getYear());
+            spinnerExpYear.setSelection(years.indexOf(this.official.getStartedOfficiating().getYear().toString()));
         }
 
         ActionBar actionBar = getSupportActionBar();
