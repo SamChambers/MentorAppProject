@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -100,12 +101,7 @@ public class EditOfficialActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                saveOfficial();
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("Official",official);
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                backFunction();
             }
         });
 
@@ -171,6 +167,21 @@ public class EditOfficialActivity extends AppCompatActivity {
         } else {
             ODBH.updateOfficial(this.official);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        backFunction();
+
+    }
+
+    private void backFunction(){
+        saveOfficial();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("Official",official);
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 }
 

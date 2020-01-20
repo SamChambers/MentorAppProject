@@ -120,10 +120,7 @@ public class EditTemplateActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("Template",template);
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                backFunction();
             }
         });
 
@@ -226,6 +223,18 @@ public class EditTemplateActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        backFunction();
+    }
+
+    private void backFunction(){
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("Template",template);
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 }
 

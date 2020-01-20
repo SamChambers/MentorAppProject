@@ -104,8 +104,6 @@ public class ListTemplatesActivity extends AppCompatActivity {
             case 200:
                 Template tempTemplate  = (Template) data.getSerializableExtra("Template");
 
-                System.out.println("Template");
-                System.out.println(tempTemplate.toJson());
                 if(tempTemplate.getId() == null){
                     System.out.println("New template");
                     this.DBH.addTemplate(tempTemplate);
@@ -126,7 +124,6 @@ public class ListTemplatesActivity extends AppCompatActivity {
         Intent intent = new Intent(context, EditTemplateActivity.class);
         intent.putExtra("Template", new Template("New Template"));
         int requestCode = 200;
-
 
         startActivityForResult(intent,requestCode);
     }
