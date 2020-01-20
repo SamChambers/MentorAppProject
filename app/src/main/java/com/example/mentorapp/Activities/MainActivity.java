@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
         for (int i = 0; i < fragments.length; ++i) {
-            Evaluation eval = new Evaluation(ExampleDataPump.getTemplate(),fragments[i],i);
+            Evaluation eval = new Evaluation(ExampleDataPump.getTemplate(),i);
             evaluations.add(eval);
         }
 

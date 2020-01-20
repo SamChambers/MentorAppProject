@@ -74,7 +74,7 @@ public class PresentActivity extends AppCompatActivity {
             ArrayList<Evaluation> el = new ArrayList<Evaluation>();
             el.add(e);
             ps = convertEvaluationToPresentation(el);
-            ps.setTitle(e.getOfficial());
+            ps.setTitle(e.getOfficialName(getApplicationContext()));
             presentationList.add(ps);
         }
 
@@ -145,7 +145,7 @@ public class PresentActivity extends AppCompatActivity {
         String tempString = "";
 
         for (Evaluation currentEvaluation:evaluationList) {
-            String evaluationName = currentEvaluation.getOfficial();
+            String evaluationName = currentEvaluation.getOfficialName(getApplicationContext());
 
             for(Category currentCategory:currentEvaluation.getCategories()){
                 String categoryName = currentCategory.getTitle();

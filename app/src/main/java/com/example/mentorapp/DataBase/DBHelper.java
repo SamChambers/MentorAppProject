@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.Template;
 import com.google.gson.Gson;
@@ -37,6 +38,12 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String[] Template_COLUMNS = { Template_KEY_ID, Template_KEY_NAME,
             Template_KEY_TEMPLATE};
 
+    private static final String Evaluation_TABLE_NAME = "Evaluation";
+    private static final String Evaluation_KEY_ID = "id";
+    private static final String Evaluation_KEY_OFFICIAL = "official_id";
+    private static final String Evaluation_KEY_EVALUATION = "evaluation";
+    private static final String[] Evaluation_COLUMNS = { Evaluation_KEY_ID, Evaluation_KEY_OFFICIAL, Evaluation_KEY_EVALUATION};
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -48,8 +55,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 "start_date Integer, " + "start_year Integer, " +
                 "official Text )";
         String Template_CREATION_TABLE = "CREATE TABLE Template (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, " + "template TEXT )";
+        String Evaluation_CREATION_TABLE = "CREATE TABLE Evaluation (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "official_id INTEGER, " + "evaluation TEXT )";
+
         db.execSQL(Official_CREATION_TABLE);
         db.execSQL(Template_CREATION_TABLE);
+        db.execSQL(Evaluation_CREATION_TABLE);
     }
 
     @Override
@@ -57,6 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // you can implement here migration process
         db.execSQL("DROP TABLE IF EXISTS " + Official_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Template_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Evaluation_TABLE_NAME);
         this.onCreate(db);
     }
 
@@ -244,5 +255,89 @@ public class DBHelper extends SQLiteOpenHelper {
         return i;
     }
 
+
+    public void deleteEvaluation(Evaluation evaluation) {
+        // Get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Evaluation_TABLE_NAME, "id = ?", new String[] { String.valueOf(evaluation.getId()) });
+        db.close();
+    }
+
+    public Evaluation getEvaluation(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(Evaluation_TABLE_NAME, // a. table
+                Evaluation_COLUMNS, // b. column names
+                " id = ?", // c. selections
+                new String[] { String.valueOf(id) }, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Integer id_value = Integer.parseInt(cursor.getString(0));
+        Integer officialID = Integer.parseInt(cursor.getString(1));
+        String json = cursor.getString(2);
+
+        Gson gson = new Gson();
+        Evaluation evaluation = gson.fromJson(json, Evaluation.class);
+        evaluation.setId(id_value);
+
+        return evaluation;
+    }
+
+    public List<Evaluation> allEvaluations() {
+
+        List<Evaluation> evaluations = new LinkedList<Evaluation>();
+        String query = "SELECT  * FROM " + Evaluation_TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Evaluation evaluation = null;
+        Gson gson = new Gson();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Integer id_value = Integer.parseInt(cursor.getString(0));
+                Integer officialID = Integer.parseInt(cursor.getString(1));
+                String json = cursor.getString(2);
+
+                evaluation = gson.fromJson(json, Evaluation.class);
+                evaluation.setId(id_value);
+
+                evaluations.add(evaluation);
+
+            } while (cursor.moveToNext());
+        }
+
+        return evaluations;
+    }
+
+    public void addEvaluation(Evaluation evaluation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Evaluation_KEY_OFFICIAL, evaluation.getOfficialId());
+        values.put(Evaluation_KEY_EVALUATION, evaluation.toJson());
+
+        db.insert(Evaluation_TABLE_NAME,null, values);
+        db.close();
+    }
+
+    public int updateEvaluation(Evaluation evaluation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Evaluation_KEY_OFFICIAL, evaluation.getOfficialId());
+        values.put(Evaluation_KEY_EVALUATION, evaluation.toJson());
+
+        int i = db.update(Evaluation_TABLE_NAME, // table
+                values, // column/value
+                "id = ?", // selections
+                new String[] { String.valueOf(evaluation.getId()) });
+
+        db.close();
+
+        return i;
+    }
 
 }

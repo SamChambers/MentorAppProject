@@ -90,7 +90,7 @@ public class EvaluationFragment extends Fragment {
     }
 
     public String getDataTitle(){
-        return data.getOfficial();
+        return data.getOfficialName(this.getContext());
     }
 
     public ExpandableListAdapter getExpandableListAdapter() {

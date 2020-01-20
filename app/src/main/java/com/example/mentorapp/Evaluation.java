@@ -1,6 +1,11 @@
 package com.example.mentorapp;
 
+import android.content.Context;
 import android.util.Pair;
+
+import com.example.mentorapp.DataBase.DBHelper;
+import com.example.mentorapp.Official.Official;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,8 +13,11 @@ import java.util.List;
 
 public class Evaluation implements Serializable {
 
+    // DB Variables
+    private Integer id;
+    private Integer OfficialId;
+
     // Internal Variables
-    private String official; // This should eventually be changed potentially???
     private List<Category> data;
     private List<String> categories;
     private Float calculatedScore;
@@ -19,22 +27,20 @@ public class Evaluation implements Serializable {
     //Basic constructor
     public Evaluation(int evaluationPosition){
         this.data = new ArrayList<Category>();
-        this.official = "Unknown Official";
         this.evaluationPosition = evaluationPosition;
         this.calculatedScore = Float.valueOf(0);
         this.categories = new ArrayList<String>();
     }
 
     //Full constructor
-    public Evaluation(List<Category> data, String official, int evaluationPosition){
+    public Evaluation(List<Category> data, int evaluationPosition){
         this.data = data;
-        this.official = official;
         this.evaluationPosition = evaluationPosition;
         this.calculateScore();
         this.updateCategories();
     }
 
-    public Evaluation(Template template, String official, int evaluationPosition){
+    public Evaluation(Template template, int evaluationPosition){
         this.data = new ArrayList<>();
         for(TemplateCategory tc:template.getCategories()){
             Category cat = new Category(tc.getName());
@@ -45,7 +51,6 @@ public class Evaluation implements Serializable {
             this.data.add(cat);
         }
 
-        this.official = official;
         this.evaluationPosition = evaluationPosition;
         this.calculateScore();
         this.updateCategories();
@@ -141,12 +146,17 @@ public class Evaluation implements Serializable {
         getCategoryFromPosition(categoryPosition).setTask(position, task);
     }
 
-    public void setOfficial(String official){
-        this.official = official;
-    }
 
-    public String getOfficial(){
-        return this.official;
+    public String getOfficialName(Context context){
+        String officialName;
+        if(this.OfficialId != null) {
+            DBHelper DBH = new DBHelper(context);
+            Official official = DBH.getOfficial(this.OfficialId);
+            officialName = official.getName();
+        } else {
+            officialName = "Official";
+        }
+        return officialName;
     }
 
     public void setEvaluationPosition(int position){
@@ -157,4 +167,24 @@ public class Evaluation implements Serializable {
         return evaluationPosition;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getOfficialId() {
+        return OfficialId;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setOfficialId(Integer officialId) {
+        OfficialId = officialId;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 }

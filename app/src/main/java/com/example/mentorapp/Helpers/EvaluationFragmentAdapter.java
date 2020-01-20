@@ -17,18 +17,21 @@ public class EvaluationFragmentAdapter extends FragmentPagerAdapter{
 
     private Game game;
     private long baseId;
+    private Context context;
 
 
     //Standard constructor
     public EvaluationFragmentAdapter(FragmentManager supportFragmentManager, Context applicationContext){
         super(supportFragmentManager);
         this.game = new Game();
+        this.context = applicationContext;
     }
 
     //Full constructor
     public EvaluationFragmentAdapter(FragmentManager supportFragmentManager, Context applicationContext, Game game){
         super(supportFragmentManager);
         this.game = game;
+        this.context = applicationContext;
     }
 
     //When the fragment first gets called
@@ -45,7 +48,7 @@ public class EvaluationFragmentAdapter extends FragmentPagerAdapter{
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return this.game.getEvaluationFromPosition(position).getOfficial();
+        return this.game.getEvaluationFromPosition(position).getOfficialName(this.context);
     }
 
     @Override

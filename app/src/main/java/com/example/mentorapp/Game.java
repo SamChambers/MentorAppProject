@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Game implements Serializable {
 
     //Internal variables
-    private String identifier; //TODO: Hook this up somehow
+    private String identifier;
     private ArrayList<Evaluation> evaluationsList;
 
     //Basic constructor
