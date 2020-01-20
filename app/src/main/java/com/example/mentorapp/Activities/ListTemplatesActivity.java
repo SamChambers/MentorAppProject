@@ -16,6 +16,7 @@ import com.example.mentorapp.DataBase.TemplateDBHelper;
 import com.example.mentorapp.Helpers.TemplatesListAdapter;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
@@ -60,6 +61,14 @@ public class ListTemplatesActivity extends AppCompatActivity {
             }
         });
 
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewTemplate();
+            }
+        });
     }
 
     @Override

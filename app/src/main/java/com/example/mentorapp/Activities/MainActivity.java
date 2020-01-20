@@ -1,7 +1,6 @@
 package com.example.mentorapp.Activities;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,13 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.mentorapp.DataBase.TemplateDBHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
 import com.example.mentorapp.ExampleDataPump;
 import com.example.mentorapp.Game;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Template;
 import com.google.android.material.tabs.TabLayout;
 
 import android.view.Menu;
@@ -23,9 +20,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    //placeholder - hardcoded referee names
+    //to be replaced with officials in database once implemented
     private String fragments[] = {"Referee 1", "Referee 2", "Referee 3", "Referee 4"};
 
     @Override
@@ -61,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
         this.game = new Game("Example Game", evaluations);
 
         //Set the pager and the adapter
-        viewPager = (ViewPager) findViewById(R.id.viewPagerID);
+        viewPager = (ViewPager) findViewById(R.id.main_viewPager);
         viewPager.setAdapter(new EvaluationFragmentAdapter(getSupportFragmentManager(), getApplicationContext(), this.game));
 
         //Set the tabs and hook it up to the view pager
-        tabLayout = (TabLayout) findViewById(R.id.tabView_layout_id);
+        tabLayout = (TabLayout) findViewById(R.id.main_tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
 
