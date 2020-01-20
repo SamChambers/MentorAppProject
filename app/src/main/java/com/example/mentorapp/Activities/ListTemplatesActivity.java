@@ -12,7 +12,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mentorapp.DataBase.TemplateDBHelper;
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Helpers.TemplatesListAdapter;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
@@ -22,14 +22,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import android.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class ListTemplatesActivity extends AppCompatActivity {
 
     ListView templateListView;
     Context context;
-    TemplateDBHelper TDBH;
+    DBHelper DBH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +37,11 @@ public class ListTemplatesActivity extends AppCompatActivity {
 
         setContentView(R.layout.list_templates_layout);
 
-        this.TDBH = new TemplateDBHelper(this);
+        this.DBH = new DBHelper(this);
 
         this.templateListView = findViewById(R.id.list_templates_id);
 
-        templateListView.setAdapter(new TemplatesListAdapter(this,this.TDBH));
+        templateListView.setAdapter(new TemplatesListAdapter(this,this.DBH));
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -110,10 +108,10 @@ public class ListTemplatesActivity extends AppCompatActivity {
                 System.out.println(tempTemplate.toJson());
                 if(tempTemplate.getId() == null){
                     System.out.println("New template");
-                    this.TDBH.addTemplate(tempTemplate);
+                    this.DBH.addTemplate(tempTemplate);
                 } else {
                     System.out.println("Old template");
-                    this.TDBH.updateTemplate(tempTemplate);
+                    this.DBH.updateTemplate(tempTemplate);
                 }
 
                 TemplatesListAdapter TLA = (TemplatesListAdapter) this.templateListView.getAdapter();

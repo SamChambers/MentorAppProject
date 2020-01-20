@@ -12,13 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mentorapp.Activities.EditOfficialActivity;
-import com.example.mentorapp.Activities.EditTemplateActivity;
 import com.example.mentorapp.Activities.ViewOfficialActivity;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
-import com.example.mentorapp.DataBase.OfficialDBHelper;
+import com.example.mentorapp.DataBase.DBHelper;
 
 import java.util.List;
 
@@ -26,10 +24,10 @@ public class OfficialsListAdapter extends ArrayAdapter<Template> {
 
     private List<Official> officialsList;
     private Context context;
-    private OfficialDBHelper TDBH;
+    private DBHelper TDBH;
 
 
-    public OfficialsListAdapter(Context context, OfficialDBHelper tdbh){
+    public OfficialsListAdapter(Context context, DBHelper tdbh){
         super(context,0);
         this.context = context;
         this.TDBH = tdbh;

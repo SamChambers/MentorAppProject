@@ -14,12 +14,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mentorapp.DataBase.OfficialDBHelper;
-import com.example.mentorapp.DataBase.TemplateDBHelper;
-import com.example.mentorapp.Helpers.TemplatesListAdapter;
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Template;
 import com.example.mentorapp.Helpers.OfficialsListAdapter;
 
 //import android.app.ActionBar;
@@ -29,7 +26,7 @@ public class ListOfficialsActivity extends AppCompatActivity {
 
     ListView officialListView;
     Context context;
-    OfficialDBHelper TDBH;
+    DBHelper TDBH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,7 @@ public class ListOfficialsActivity extends AppCompatActivity {
 
         setContentView(R.layout.list_officals_layout);
 
-        this.TDBH = new OfficialDBHelper(this.context);
+        this.TDBH = new DBHelper(this.context);
 
         this.officialListView = findViewById(R.id.list_officials_id);
 

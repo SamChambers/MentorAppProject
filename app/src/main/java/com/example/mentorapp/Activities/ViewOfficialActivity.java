@@ -15,7 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mentorapp.DataBase.OfficialDBHelper;
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Official.MonthYear;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
@@ -46,8 +46,8 @@ public class ViewOfficialActivity extends AppCompatActivity {
         buttonDeleteOfficialView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OfficialDBHelper ODBH = new OfficialDBHelper(context);
-                ODBH.deleteOne(official);
+                DBHelper ODBH = new DBHelper(context);
+                ODBH.deleteOfficial(official);
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
@@ -166,7 +166,7 @@ public class ViewOfficialActivity extends AppCompatActivity {
         switch (requestCode){
             case 500:
                 Official returnedOfficial = (Official) data.getExtras().getSerializable("Official");
-                OfficialDBHelper ODBH = new OfficialDBHelper(context);
+                DBHelper ODBH = new DBHelper(context);
                 this.official = ODBH.getOfficial(returnedOfficial.getId());
                 updateViews();
                 break;

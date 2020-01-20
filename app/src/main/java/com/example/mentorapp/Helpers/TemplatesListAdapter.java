@@ -1,16 +1,13 @@
 package com.example.mentorapp.Helpers;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
 
@@ -18,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.mentorapp.Activities.EditTemplateActivity;
-import com.example.mentorapp.DataBase.TemplateDBHelper;
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
 
@@ -26,10 +23,10 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
 
     private List<Template> templatesList;
     private Context context;
-    private TemplateDBHelper TDBH;
+    private DBHelper TDBH;
 
 
-    public TemplatesListAdapter(Context context, TemplateDBHelper tdbh){
+    public TemplatesListAdapter(Context context, DBHelper tdbh){
         super(context,0);
         this.context = context;
         this.TDBH = tdbh;
@@ -51,7 +48,7 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
         }
 
         Button deleteButton = (Button) convertView.findViewById(R.id.button_delete_template);
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.text_template_name_id);
+        TextView nameTextView = (TextView) convertView.findViewById(R.id.comment_textView_templateName);
         nameTextView.setText(template.getName());
         convertView.setTag(position);
         deleteButton.setTag(position);
@@ -67,7 +64,7 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
             @Override
             public void onClick(View v) {
                 int position = (int)v.getTag();
-                TDBH.deleteOne(templatesList.get(position));
+                TDBH.deleteTemplate(templatesList.get(position));
                 updateList();
                 notifyDataSetChanged();
             }

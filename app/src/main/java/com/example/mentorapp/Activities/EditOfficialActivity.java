@@ -1,35 +1,24 @@
 package com.example.mentorapp.Activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.mentorapp.DataBase.OfficialDBHelper;
-import com.example.mentorapp.Helpers.TemplateListAdapter;
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Official.MonthYear;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Template;
 
 import java.util.ArrayList;
 
@@ -37,7 +26,6 @@ import java.util.ArrayList;
 //import android.widget.Toolbar;
 import java.util.Arrays;
 import java.util.Calendar;
-import android.view.inputmethod.InputMethodManager;
 
 public class EditOfficialActivity extends AppCompatActivity {
 
@@ -174,7 +162,7 @@ public class EditOfficialActivity extends AppCompatActivity {
         official.setDob(dob);
         official.setStartedOfficiating(exp);
 
-        OfficialDBHelper ODBH = new OfficialDBHelper(context);
+        DBHelper ODBH = new DBHelper(context);
         if(this.official.getId() == null){
             Long newId = ODBH.addOfficial(this.official);
             this.official.setId(newId.intValue());
