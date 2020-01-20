@@ -337,8 +337,8 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.category_layout, null);
         }
         //Connect to the title text box
-        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
-        TextView scoreTextView = (TextView) convertView.findViewById(R.id.template_text_category_name_id);
+        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.category_textView_listTitle);
+        TextView scoreTextView = (TextView) convertView.findViewById(R.id.category_textView_templateTextCategoryName);
         //Set the title
         listTitleTextView.setTypeface(null, Typeface.BOLD);
         listTitleTextView.setText(listTitle);

@@ -48,7 +48,7 @@ public class EvaluationFragment extends Fragment {
         View convertView = inflater.inflate(R.layout.evaluation_fragment_layout,container,false);
 
         //Set up the view and adapter
-        this.expandableListView = (ExpandableListView) convertView.findViewById(R.id.template_expandableListView_id);
+        this.expandableListView = (ExpandableListView) convertView.findViewById(R.id.editTemplate_expandableListView);
         this.expandableListAdapter = new EvaluationListAdapter(getContext(), data);
         this.expandableListView.setAdapter(expandableListAdapter);
 

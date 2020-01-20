@@ -118,7 +118,7 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.template_category_layout, null);
         }
         //Connect to the title text box
-        TextView categoryNameTextView = (TextView) convertView.findViewById(R.id.template_text_category_name_id);
+        TextView categoryNameTextView = (TextView) convertView.findViewById(R.id.category_textView_templateTextCategoryName);
         Button deleteCategoryButton = (Button) convertView.findViewById(R.id.button_delete_template_category_id);
         //Set the title
         categoryNameTextView.setText(tc.getName());

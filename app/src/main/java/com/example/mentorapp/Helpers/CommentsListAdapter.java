@@ -44,7 +44,7 @@ public class CommentsListAdapter extends ArrayAdapter<String> {
         }
 
         TextView commentTextView = (TextView) convertView.findViewById(R.id.text_template_name_id);
-        Button deleteButtonView = (Button) convertView.findViewById(R.id.button_delete_comment_id);
+        Button deleteButtonView = (Button) convertView.findViewById(R.id.comment_button_deleteComment);
 
         commentTextView.setText(commentToShow);
 
