@@ -22,7 +22,6 @@ public class TemplateDBHelper extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_TEMPLATE = "template";
     private static final String[] COLUMNS = { KEY_ID, KEY_NAME, KEY_TEMPLATE};
-    private static final String Example = "Example";
 
     public TemplateDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
