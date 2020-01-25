@@ -1,47 +1,30 @@
 package com.example.mentorapp.Activities;
 
-import android.app.AlertDialog;
-import android.app.Presentation;
-import android.content.DialogInterface;
-import android.graphics.Color;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
-import android.content.Context;
 import android.view.View;
 //import android.app.ActionBar;
-import android.content.Intent;
 //import android.widget.Toolbar;
-import android.app.Activity;
-import android.widget.TextView;
-import android.text.method.ScrollingMovementMethod;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import android.widget.Toast;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.example.mentorapp.Category;
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.ExampleDataPump;
 import com.example.mentorapp.Game;
-import com.example.mentorapp.Presentation.*;
+import com.example.mentorapp.Helpers.OptionsEvaluationsListAdapter;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Task;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class GameOptionsActivity extends AppCompatActivity {
 
@@ -67,8 +50,31 @@ public class GameOptionsActivity extends AppCompatActivity {
             }
         });
 
-        //LinearLayout allList = (LinearLayout) findViewById(R.id.linear_layout_all_layout_id);
-        //LinearLayout flaggedList = (LinearLayout) findViewById(R.id.linear_layout_flagged_layout_id);
+        final DBHelper dbh = new DBHelper(getApplicationContext());
+
+        final ListView evaluationList = (ListView) findViewById(R.id.game_options_listView_evaluationslist_id);
+        evaluationList.setAdapter(new OptionsEvaluationsListAdapter(getApplicationContext(), dbh, this.game.getEvaluationsList()));
+
+        Button addEvaluationButton = (Button) findViewById(R.id.game_options_button_addEvaluation_id);
+        addEvaluationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                game.addEvaluation(new Evaluation(ExampleDataPump.getTemplate(), game.getEvaluationCount()));
+                game.updateEvaluationPositions();
+                OptionsEvaluationsListAdapter adapter = (OptionsEvaluationsListAdapter)evaluationList.getAdapter();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("Game",game);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+            }
+        });
     }
 
     @Override

@@ -68,6 +68,10 @@ public class EvaluationFragmentAdapter extends FragmentPagerAdapter{
             game.getEvaluationsList().get(i).setEvaluationPosition(i);
         }
     }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }
 
 

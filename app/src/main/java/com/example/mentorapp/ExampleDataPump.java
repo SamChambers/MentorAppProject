@@ -6,6 +6,8 @@ public class ExampleDataPump {
     public static Evaluation getEvaluation(int position) {
         Evaluation data = new Evaluation(position);
 
+        data.setTemplateName("Data Pump Evaluation");
+
         data.addCategory("House");
         //data.addTask("House", new Task("Clean Room"));
         //data.addTask("House", new Task("Make Bed"));

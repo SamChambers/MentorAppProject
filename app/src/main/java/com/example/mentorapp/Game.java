@@ -47,9 +47,10 @@ public class Game implements Serializable {
 
     public void removeEvaluation(int position){
         this.evaluationsList.remove(position);
+        //this.updateEvaluationPositions();
     }
 
-    private void updateEvaluationPositions(){
+    public void updateEvaluationPositions(){
         for (int i=0; i<this.evaluationsList.size(); ++i){
             //this.evaluationsList.get(i).setTitle(String.valueOf(i));
             this.evaluationsList.get(i).setEvaluationPosition(i);
@@ -58,5 +59,6 @@ public class Game implements Serializable {
 
     public void addEvaluation(Evaluation newEval){
         this.evaluationsList.add(newEval);
+        //this.updateEvaluationPositions();
     }
 }

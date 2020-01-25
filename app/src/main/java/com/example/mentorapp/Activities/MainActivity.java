@@ -8,10 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
 import com.example.mentorapp.ExampleDataPump;
 import com.example.mentorapp.Game;
+import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -20,6 +22,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,9 +51,16 @@ public class MainActivity extends AppCompatActivity {
         //Set the content view
         setContentView(R.layout.activity_main);
 
+        DBHelper dbh = new DBHelper(getApplicationContext());
+
+        List<Official> officials = dbh.allOfficials();
+
         ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
         for (int i = 0; i < fragments.length; ++i) {
             Evaluation eval = new Evaluation(ExampleDataPump.getTemplate(),i);
+            if (i < officials.size()){
+                eval.setOfficialId(officials.get(i).getId());
+            }
             evaluations.add(eval);
         }
 
@@ -108,6 +119,14 @@ public class MainActivity extends AppCompatActivity {
                 EvaluationFragmentAdapter tempAdapter = (EvaluationFragmentAdapter) viewPager.getAdapter();
                 tempAdapter.notifyChangeInPosition();
                 break;
+            case 800:
+                this.game = (Game) data.getSerializableExtra("Game");
+                System.out.println(this.game.getEvaluationCount());
+                this.game.updateEvaluationPositions();
+                EvaluationFragmentAdapter tempAdapter2 = (EvaluationFragmentAdapter) viewPager.getAdapter();
+                tempAdapter2.setGame(this.game);
+                tempAdapter2.notifyChangeInPosition();
+                break;
         }
     }
 
@@ -159,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
     private void goToOptions(){
         Intent intent = new Intent(this, GameOptionsActivity.class);
         intent.putExtra("MyGame", this.game);
-        startActivity(intent);
+        startActivityForResult(intent, 800);
     }
 
     //TODO: Delete these once we create the main thread

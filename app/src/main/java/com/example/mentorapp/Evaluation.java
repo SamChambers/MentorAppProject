@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Evaluation implements Serializable {
@@ -16,6 +17,8 @@ public class Evaluation implements Serializable {
     // DB Variables
     private Integer id;
     private Integer OfficialId;
+    private String templateName;
+    private Date creationDate;
 
     // Internal Variables
     private List<Category> data;
@@ -30,6 +33,7 @@ public class Evaluation implements Serializable {
         this.evaluationPosition = evaluationPosition;
         this.calculatedScore = Float.valueOf(0);
         this.categories = new ArrayList<String>();
+        setCreationDate(new Date());
     }
 
     //Full constructor
@@ -38,6 +42,7 @@ public class Evaluation implements Serializable {
         this.evaluationPosition = evaluationPosition;
         this.calculateScore();
         this.updateCategories();
+        setCreationDate(new Date());
     }
 
     public Evaluation(Template template, int evaluationPosition){
@@ -49,11 +54,14 @@ public class Evaluation implements Serializable {
                 cat.addTask(task);
             }
             this.data.add(cat);
+
         }
+        this.templateName = template.getName();
 
         this.evaluationPosition = evaluationPosition;
         this.calculateScore();
         this.updateCategories();
+        setCreationDate(new Date());
     }
 
     // Calculate the score for the game
@@ -186,5 +194,21 @@ public class Evaluation implements Serializable {
     public String toJson(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public String getTemplateName() {
+        return templateName;
     }
 }
