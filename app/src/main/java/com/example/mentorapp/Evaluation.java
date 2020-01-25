@@ -57,7 +57,6 @@ public class Evaluation implements Serializable {
 
         }
         this.templateName = template.getName();
-
         this.evaluationPosition = evaluationPosition;
         this.calculateScore();
         this.updateCategories();
@@ -68,12 +67,19 @@ public class Evaluation implements Serializable {
     public void calculateScore(){
         Float totalValue = Float.valueOf(0);
         Integer numberOfCategories = this.data.size();
+        System.out.println("Number of Categories");
+        System.out.println(numberOfCategories);
+        if (numberOfCategories == 0){
+            this.calculatedScore = totalValue;
+            return;
+        }
 
         //Loop through all the categories
         for(int i = 0; i < numberOfCategories; ++i){
             totalValue += this.data.get(i).getScore();
         }
         this.calculatedScore = totalValue/numberOfCategories;
+
     }
 
     // Get score
@@ -157,12 +163,14 @@ public class Evaluation implements Serializable {
 
     public String getOfficialName(Context context){
         String officialName;
+        System.out.println("Official Name");
+        System.out.println(this.OfficialId);
         if(this.OfficialId != null) {
             DBHelper DBH = new DBHelper(context);
             Official official = DBH.getOfficial(this.OfficialId);
             officialName = official.getName();
         } else {
-            officialName = "Official";
+            officialName = "Unknown";
         }
         return officialName;
     }
@@ -192,6 +200,18 @@ public class Evaluation implements Serializable {
     }
 
     public String toJson(){
+        // DB Variables
+        System.out.println(id);
+        System.out.println(OfficialId);
+        System.out.println(templateName);
+        System.out.println(creationDate);
+
+        // Internal Variables
+        System.out.println(data);
+        System.out.println(categories);
+        System.out.println(calculatedScore);
+
+        System.out.println(evaluationPosition);
         Gson gson = new Gson();
         return gson.toJson(this);
     }

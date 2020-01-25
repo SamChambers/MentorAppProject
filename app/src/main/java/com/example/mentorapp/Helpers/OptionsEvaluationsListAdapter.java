@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.example.mentorapp.Activities.EditTemplateActivity;
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
 
@@ -52,6 +53,11 @@ public class OptionsEvaluationsListAdapter extends ArrayAdapter<Evaluation> {
         TextView officialNameTextView = (TextView) convertView.findViewById(R.id.options_textView_officialName_id);
         TextView creationDateTextView = (TextView) convertView.findViewById(R.id.options_textView_creationDate_id);
         TextView templateNameTextView = (TextView) convertView.findViewById(R.id.options_textView_evaluationName_id);
+
+        List<Official> officialList = this.TDBH.allOfficials();
+        for (Official official:officialList){
+            System.out.println(official.getId());
+        }
 
         officialNameTextView.setText(evaluation.getOfficialName(this.context));
         creationDateTextView.setText(evaluation.getCreationDate().toString());

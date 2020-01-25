@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         List<Official> officials = dbh.allOfficials();
 
         ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
+        /*
         for (int i = 0; i < fragments.length; ++i) {
             Evaluation eval = new Evaluation(ExampleDataPump.getTemplate(),i);
             if (i < officials.size()){
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
             evaluations.add(eval);
         }
-
+        */
         this.game = new Game("Example Game", evaluations);
 
         //Set the pager and the adapter

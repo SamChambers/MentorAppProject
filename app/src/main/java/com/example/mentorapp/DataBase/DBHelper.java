@@ -89,8 +89,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 null, // g. order by
                 null); // h. limit
 
-        if (cursor != null)
+        if (cursor != null) {
             cursor.moveToFirst();
+        }
 
         Integer id_value = Integer.parseInt(cursor.getString(0));
         String name = cursor.getString(1);
@@ -314,14 +315,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return evaluations;
     }
 
-    public void addEvaluation(Evaluation evaluation) {
+    public Long addEvaluation(Evaluation evaluation) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Evaluation_KEY_OFFICIAL, evaluation.getOfficialId());
         values.put(Evaluation_KEY_EVALUATION, evaluation.toJson());
 
-        db.insert(Evaluation_TABLE_NAME,null, values);
+        Long id = db.insert(Evaluation_TABLE_NAME,null, values);
         db.close();
+        return id;
     }
 
     public int updateEvaluation(Evaluation evaluation) {
