@@ -19,6 +19,7 @@ import com.example.mentorapp.Game;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Helpers.OfficialsListAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
@@ -59,6 +60,14 @@ public class ListOfficialsActivity extends AppCompatActivity {
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
+            }
+        });
+
+        FloatingActionButton fab_addNewOfficial = (FloatingActionButton) findViewById(R.id.officials_fab_addNew);
+        fab_addNewOfficial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewOfficial();
             }
         });
 

@@ -48,7 +48,7 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
         }
 
         Button deleteButton = (Button) convertView.findViewById(R.id.button_delete_template);
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.comment_textView_templateName);
+        TextView nameTextView = (TextView) convertView.findViewById(R.id.template_textView_templateName);
         nameTextView.setText(template.getName());
         convertView.setTag(position);
         deleteButton.setTag(position);

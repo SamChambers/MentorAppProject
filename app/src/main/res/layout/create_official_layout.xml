@@ -78,34 +78,30 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Age"
+                android:text="Birthday"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spinner_dob_month"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/text_editOfficial_Dob"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/spinner_dob_year"
+                app:layout_constraintEnd_toStartOf="@+id/viewOfficial_imageButton_agePicker"
+                app:layout_constraintStart_toEndOf="@+id/text_edit_official_age"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spinner_dob_year"
-                android:layout_width="0dp"
+            <ImageButton
+                android:id="@+id/viewOfficial_imageButton_agePicker"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:srcCompat="@android:drawable/ic_menu_my_calendar"
+                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,34 +114,31 @@
                 android:id="@+id/text_edit_official_officating_exp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Officiating Experience"
+                android:text="Started Officiating:"
                 app:layout_constraintBaseline_toBaselineOf="@+id/text_official_officiating_exp_id"
                 app:layout_constraintEnd_toStartOf="@+id/text_official_officiating_exp_id"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <Spinner
-                android:id="@+id/spinner_exp_month"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/text_editOfficial_Started"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/spinner_exp_year"
+                app:layout_constraintEnd_toStartOf="@+id/viewOfficial_imageButton_expPicker"
+                app:layout_constraintStart_toEndOf="@+id/text_edit_official_officating_exp"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spinner_exp_year"
-                android:layout_width="0dp"
+            <ImageButton
+                android:id="@+id/viewOfficial_imageButton_expPicker"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:srcCompat="@android:drawable/ic_menu_my_calendar"
+                tools:ignore="MissingConstraints" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

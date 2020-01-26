@@ -19,6 +19,7 @@ import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Official.MonthYear;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
@@ -78,6 +79,14 @@ public class ViewOfficialActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab_editOfficial = (FloatingActionButton) findViewById(R.id.viewOfficial_fab_editOfficial);
+        fab_editOfficial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToEditOfficial();
+            }
+        });
+
         if (this.official.getId() == null){
             goToEditOfficial();
         }
@@ -118,12 +127,13 @@ public class ViewOfficialActivity extends AppCompatActivity {
         nameView.setText(this.official.getName());
 
         MonthYear dob = this.official.getDob();
+
         if(dob.getYear() == null || dob.getMonth() == null){
             ageView.setText("");
         } else {
             Calendar today = Calendar.getInstance();
             System.out.println(dob.getYear());
-            Integer years = today.get(Calendar.YEAR)-dob.getYear();
+            Integer years = dob.getYear();
             Integer months = today.get(Calendar.MONTH)-dob.getMonth()+1;
             if(months < 0){
                 years -= 1;
@@ -138,7 +148,7 @@ public class ViewOfficialActivity extends AppCompatActivity {
             experienceView.setText("");
         } else {
             Calendar today = Calendar.getInstance();
-            Integer years = today.get(Calendar.YEAR)-exp.getYear();
+            Integer years = exp.getYear();
             Integer months = today.get(Calendar.MONTH)-exp.getMonth()+1;
             if(months < 0){
                 years -= 1;
