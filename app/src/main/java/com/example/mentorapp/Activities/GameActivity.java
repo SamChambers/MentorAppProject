@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.Helpers.EvaluationFragment;
 import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
 import com.example.mentorapp.Game;
 import com.example.mentorapp.Official.Official;
@@ -33,34 +34,34 @@ public class GameActivity extends AppCompatActivity {
     TabLayout tabLayout;
     //Holds the evaluation fragments
     ViewPager viewPager;
+    EvaluationFragmentAdapter EFA;
 
     //Holds the game info along with the evaluations
     Game game;
 
+    DBHelper dbh;
 
-
-
-    //placeholder - hardcoded referee names
-    //to be replaced with officials in database once implemented
-    private String fragments[] = {"Referee 1", "Referee 2", "Referee 3", "Referee 4"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         //Set the content view
         setContentView(R.layout.game_layout);
 
+        this.dbh = new DBHelper(this);
+
         this.game = (Game) getIntent().getSerializableExtra("Game");
-        if (this.game.getEvaluationCount() < 1){
-            //goToOptions();
+        if (this.game.getId() == null){
+            Long gameId = dbh.addGame(this.game);
+            this.game.setId(gameId.intValue());
+            goToOptions();
         }
 
         //Set the pager and the adapter
         viewPager = (ViewPager) findViewById(R.id.main_viewPager);
-        viewPager.setAdapter(new EvaluationFragmentAdapter(getSupportFragmentManager(), getApplicationContext(), this.game));
+        this.EFA = new EvaluationFragmentAdapter(getSupportFragmentManager(), getApplicationContext(), this.game);
+        viewPager.setAdapter(this.EFA);
 
         //Set the tabs and hook it up to the view pager
         tabLayout = (TabLayout) findViewById(R.id.main_tabLayout);

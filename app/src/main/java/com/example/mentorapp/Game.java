@@ -1,5 +1,7 @@
 package com.example.mentorapp;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,6 +10,8 @@ public class Game implements Serializable {
     //Internal variables
     private String identifier;
     private ArrayList<Evaluation> evaluationsList;
+
+    private Integer id;
 
     //Basic constructor
     public Game(){
@@ -60,5 +64,18 @@ public class Game implements Serializable {
     public void addEvaluation(Evaluation newEval){
         this.evaluationsList.add(newEval);
         //this.updateEvaluationPositions();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

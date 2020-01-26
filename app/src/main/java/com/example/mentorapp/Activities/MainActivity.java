@@ -30,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button listGameButton = findViewById(R.id.main_button_all_games_id);
+        listGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listGame();
+            }
+        });
+
         Button newTemplateButton = findViewById(R.id.main_button_new_template_id);
         newTemplateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +74,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void newGame(){
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("Game", new Game());
+        Intent intent = new Intent(this, ListGamesActivity.class);
+        intent.putExtra("NewGame", Boolean.TRUE);
+        startActivity(intent);
+    }
+
+    private void listGame(){
+        Intent intent = new Intent(this, ListGamesActivity.class);
+        intent.putExtra("NewGame", Boolean.FALSE);
         startActivity(intent);
     }
 

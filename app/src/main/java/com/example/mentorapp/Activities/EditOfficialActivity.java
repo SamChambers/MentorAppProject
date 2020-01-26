@@ -3,6 +3,7 @@ package com.example.mentorapp.Activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -38,13 +39,12 @@ public class EditOfficialActivity extends AppCompatActivity {
 
     Official official;
 
-    int exp_year = 1;
-    int exp_month = 1;
-    int dob_year = 1;
-    int dob_month = 1;
 
     TextView dobView;
     TextView startedView;
+
+    String[] months = new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
+            "AUG", "SEP", "OCT", "NOV", "DEC"};
 
     Context context;
 
@@ -60,6 +60,8 @@ public class EditOfficialActivity extends AppCompatActivity {
         EditText emailView = findViewById(R.id.text_edit_official_email_id);
         ImageButton imageButton_dobPicker = findViewById(R.id.viewOfficial_imageButton_agePicker);
         ImageButton imageButton_expPicker = findViewById(R.id.viewOfficial_imageButton_expPicker);
+        dobView = findViewById(R.id.text_editOfficial_Dob);
+        startedView = findViewById(R.id.text_editOfficial_Started);
 
         nameView.setText(this.official.getName());
 
@@ -69,13 +71,15 @@ public class EditOfficialActivity extends AppCompatActivity {
                 pickDateDOB();
             }
         });
-
         imageButton_expPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickDateExp();
             }
         });
+
+        setDob();
+        setExp();
 
         ActionBar actionBar = getSupportActionBar();
         Toolbar mToolbar = findViewById(R.id.toolbar_edit_official_id);
@@ -110,19 +114,18 @@ public class EditOfficialActivity extends AppCompatActivity {
         builder.setView(dialogLayout);
         builder.setTitle("Pick a date");
 
-        NumberPicker np_dobMonth = dialogLayout.findViewById(R.id.datePicker_numberPicker_month);
-        NumberPicker np_dobYear = dialogLayout.findViewById(R.id.datePicker_numberPicker_year);
+        final NumberPicker np_dobMonth = dialogLayout.findViewById(R.id.datePicker_numberPicker_month);
+        final NumberPicker np_dobYear = dialogLayout.findViewById(R.id.datePicker_numberPicker_year);
 
         np_dobMonth.setWrapSelectorWheel(false);
         np_dobYear.setWrapSelectorWheel(false);
 
         np_dobMonth.setMinValue(1);
         np_dobMonth.setMaxValue(12);
-        np_dobMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
-                "AUG", "SEP", "OCT", "NOV", "DEC"});
+        np_dobMonth.setDisplayedValues(months);
 
         Calendar today = Calendar.getInstance();
-        int todayYear = today.get(Calendar.YEAR);
+        final int todayYear = today.get(Calendar.YEAR);
 
         ArrayList<String> years = new ArrayList<>();
         for (int i = 0; i < 100; ++i) {
@@ -132,22 +135,21 @@ public class EditOfficialActivity extends AppCompatActivity {
         np_dobYear.setMinValue(1);
         np_dobYear.setMaxValue(100);
 
-        np_dobMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        np_dobYear.setValue(todayYear-this.official.getDob().getYear()+1);
+        np_dobMonth.setValue(this.official.getDob().getMonth());
+
+        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                System.out.println(newVal);
-                official.getStartedOfficiating().setMonth(newVal);
-                dob_month = newVal;
-                updateViews();
+            public void onClick(DialogInterface dialog, int which) {
+                official.getDob().setYear(todayYear-(np_dobYear.getValue()-1));
+                official.getDob().setMonth(np_dobMonth.getValue());
+                setDob();
             }
         });
-        np_dobYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                System.out.println(newVal);
-                official.getStartedOfficiating().setYear(newVal);
-                dob_year = newVal;
-                updateViews();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
         });
 
@@ -162,15 +164,14 @@ public class EditOfficialActivity extends AppCompatActivity {
         builder.setTitle("Pick a date");
 
         final NumberPicker np_expMonth = dialogLayout.findViewById(R.id.datePicker_numberPicker_month);
-        NumberPicker np_expYear = dialogLayout.findViewById(R.id.datePicker_numberPicker_year);
+        final NumberPicker np_expYear = dialogLayout.findViewById(R.id.datePicker_numberPicker_year);
 
         np_expMonth.setWrapSelectorWheel(false);
         np_expYear.setWrapSelectorWheel(false);
 
         np_expMonth.setMinValue(1);
         np_expMonth.setMaxValue(12);
-        np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
-                "AUG", "SEP", "OCT", "NOV", "DEC"});
+        np_expMonth.setDisplayedValues(months);
 
         final Calendar today = Calendar.getInstance();
         final int todayYear = today.get(Calendar.YEAR);
@@ -183,26 +184,21 @@ public class EditOfficialActivity extends AppCompatActivity {
         np_expYear.setMinValue(1);
         np_expYear.setMaxValue(100);
 
-        np_expMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        np_expYear.setValue(todayYear-this.official.getStartedOfficiating().getYear());
+        np_expMonth.setValue(this.official.getStartedOfficiating().getMonth()-1);
+
+        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                System.out.println(newVal);
-                official.getStartedOfficiating().setMonth(Integer.getInteger(years.get(newVal)));
-                exp_month = newVal;
-                updateViews();
+            public void onClick(DialogInterface dialog, int which) {
+                official.getStartedOfficiating().setYear(todayYear-(np_expYear.getValue()-1));
+                official.getStartedOfficiating().setMonth(np_expMonth.getValue());
+                setExp();
             }
         });
-        np_expYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                System.out.println(Integer.getInteger(years.get(newVal)));
-/*                Integer year = Integer.getInteger(years.get(newVal));
-                if(year == Integer.valueOf(todayYear)) {
-
-                }*/
-                official.getStartedOfficiating().setYear(Integer.getInteger(years.get(newVal)));
-                exp_year = newVal;
-                updateViews();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
         });
 
@@ -219,14 +215,6 @@ public class EditOfficialActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateViews() {
-
-/*        Integer month = th
-is.official.getDob().getMonth();
-        Integer year = this.official.getDob().getYear();
-        String dob = this.official.getDob().getMonth() + " " + String.valueOf(this.official.getDob().getYear());
-        dobView.setText(dob);*/
-    }
 
     private void saveOfficial(){
 
@@ -235,12 +223,6 @@ is.official.getDob().getMonth();
 
         official.setEmail(String.valueOf(emailView.getText()));
         official.setName(String.valueOf(nameView.getText()));
-
-
-        MonthYear exp = new MonthYear(exp_month,exp_year);
-        MonthYear dob = new MonthYear(dob_month,dob_year);
-        this.official.setDob(dob);
-        this.official.setStartedOfficiating(exp);
 
         System.out.println("Started officiating");
         System.out.println(this.official.getStartedOfficiating().getYear());
@@ -256,40 +238,6 @@ is.official.getDob().getMonth();
         }
     }
 
-/*    private void setMonths() {
-        np_expMonth.setMaxValue(today.get(Calendar.MONTH));
-        switch(today.get(Calendar.MONTH)) {
-            case 1:
-                np_expMonth.setDisplayedValues(new String[] {"JAN"});
-            case 2:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB"});
-            case 3:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR"});
-            case 4:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR"});
-            case 5:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY"});
-            case 6:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN"});
-            case 7:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL"});
-            case 8:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
-                        "AUG"});
-            case 9:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
-                        "AUG", "SEP");
-            case 10:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
-                        "AUG", "SEP", "OCT"});
-            case 11:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
-                        "AUG", "SEP", "OCT", "NOV"});
-            case 12:
-                np_expMonth.setDisplayedValues(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL",
-                        "AUG", "SEP", "OCT", "NOV", "DEC"});
-                    }
-    }*/
 
     @Override
     public void onBackPressed() {
@@ -304,5 +252,15 @@ is.official.getDob().getMonth();
         returnIntent.putExtra("Official",official);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
+    }
+
+    private void setDob(){
+        System.out.println(this.official.getDob().getMonth());
+        System.out.println(this.official.getDob().getYear());
+        this.dobView.setText(months[this.official.getDob().getMonth()-1] + ", " + this.official.getDob().getYear().toString());
+    }
+
+    private void setExp(){
+        this.startedView.setText(months[this.official.getStartedOfficiating().getMonth()-1] + ", " + this.official.getStartedOfficiating().getYear().toString());
     }
 }
