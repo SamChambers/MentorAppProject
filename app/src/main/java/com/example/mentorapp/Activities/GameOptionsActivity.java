@@ -97,7 +97,7 @@ public class GameOptionsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(this.game.getIdentifier());
+        getSupportActionBar().setTitle("Game Options");
 
         return true;
     }

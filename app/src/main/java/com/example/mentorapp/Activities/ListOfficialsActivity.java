@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mentorapp.DataBase.DBHelper;
+import com.example.mentorapp.Game;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Helpers.OfficialsListAdapter;
@@ -31,8 +32,12 @@ public class ListOfficialsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.context = getApplicationContext();
+
+        Boolean newOfficial = (Boolean) getIntent().getSerializableExtra("NewOfficial");
+        if(newOfficial){
+            addNewOfficial();
+        }
 
         setContentView(R.layout.list_officals_layout);
 

@@ -40,6 +40,9 @@
         <activity android:name=".Activities.ViewOfficialActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
+        <activity android:name=".Activities.GameActivity"
+            android:theme="@style/AppThemeNoToolbar">
+        </activity>
     </application>
 
 </manifest>

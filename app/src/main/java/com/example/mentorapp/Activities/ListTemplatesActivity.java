@@ -32,8 +32,12 @@ public class ListTemplatesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.context = getApplicationContext();
+
+        Boolean newTemplate = (Boolean) getIntent().getSerializableExtra("NewTemplate");
+        if(newTemplate){
+            addNewTemplate();
+        }
 
         setContentView(R.layout.list_templates_layout);
 
