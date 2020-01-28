@@ -3,8 +3,8 @@ package com.example.mentorapp;
 import android.content.Context;
 
 public class ExampleDataPump {
-    public static Evaluation getEvaluation(int position) {
-        Evaluation data = new Evaluation(position);
+    public static Evaluation getEvaluation() {
+        Evaluation data = new Evaluation();
 
         data.setTemplateName("Data Pump Evaluation");
 

@@ -25,27 +25,23 @@ public class Evaluation implements Serializable {
     private List<String> categories;
     private Float calculatedScore;
 
-    private int evaluationPosition;
-
     //Basic constructor
-    public Evaluation(int evaluationPosition){
+    public Evaluation(){
         this.data = new ArrayList<Category>();
-        this.evaluationPosition = evaluationPosition;
         this.calculatedScore = Float.valueOf(0);
         this.categories = new ArrayList<String>();
         setCreationDate(new Date());
     }
 
     //Full constructor
-    public Evaluation(List<Category> data, int evaluationPosition){
+    public Evaluation(List<Category> data){
         this.data = data;
-        this.evaluationPosition = evaluationPosition;
         this.calculateScore();
         this.updateCategories();
         setCreationDate(new Date());
     }
 
-    public Evaluation(Template template, int evaluationPosition){
+    public Evaluation(Template template){
         this.data = new ArrayList<>();
         for(TemplateCategory tc:template.getCategories()){
             Category cat = new Category(tc.getName());
@@ -57,7 +53,6 @@ public class Evaluation implements Serializable {
 
         }
         this.templateName = template.getName();
-        this.evaluationPosition = evaluationPosition;
         this.calculateScore();
         this.updateCategories();
         setCreationDate(new Date());
@@ -175,14 +170,6 @@ public class Evaluation implements Serializable {
         return officialName;
     }
 
-    public void setEvaluationPosition(int position){
-        this.evaluationPosition=position;
-    }
-
-    public int getEvaluationPosition() {
-        return evaluationPosition;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -200,18 +187,6 @@ public class Evaluation implements Serializable {
     }
 
     public String toJson(){
-        // DB Variables
-        System.out.println(id);
-        System.out.println(OfficialId);
-        System.out.println(templateName);
-        System.out.println(creationDate);
-
-        // Internal Variables
-        System.out.println(data);
-        System.out.println(categories);
-        System.out.println(calculatedScore);
-
-        System.out.println(evaluationPosition);
         Gson gson = new Gson();
         return gson.toJson(this);
     }

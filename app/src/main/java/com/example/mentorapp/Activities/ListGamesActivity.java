@@ -38,7 +38,7 @@ public class ListGamesActivity extends AppCompatActivity {
 
         Boolean newGame = (Boolean) getIntent().getSerializableExtra("NewGame");
         if(newGame){
-            //addNewGame();
+            addNewGame();
         }
 
         setContentView(R.layout.list_games_layout);

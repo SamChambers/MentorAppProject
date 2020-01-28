@@ -135,8 +135,10 @@ public class EditOfficialActivity extends AppCompatActivity {
         np_dobYear.setMinValue(1);
         np_dobYear.setMaxValue(100);
 
-        np_dobYear.setValue(todayYear-this.official.getDob().getYear()+1);
-        np_dobMonth.setValue(this.official.getDob().getMonth());
+        if(this.official.getDob().getMonth()!=null && this.official.getDob().getMonth()!=null) {
+            np_dobYear.setValue(todayYear - this.official.getDob().getYear() + 1);
+            np_dobMonth.setValue(this.official.getDob().getMonth());
+        }
 
         builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             @Override
@@ -184,8 +186,10 @@ public class EditOfficialActivity extends AppCompatActivity {
         np_expYear.setMinValue(1);
         np_expYear.setMaxValue(100);
 
-        np_expYear.setValue(todayYear-this.official.getStartedOfficiating().getYear());
-        np_expMonth.setValue(this.official.getStartedOfficiating().getMonth()-1);
+        if(this.official.getStartedOfficiating().getMonth()!=null && this.official.getStartedOfficiating().getMonth()!=null) {
+            np_expYear.setValue(todayYear - this.official.getStartedOfficiating().getYear());
+            np_expMonth.setValue(this.official.getStartedOfficiating().getMonth() - 1);
+        }
 
         builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             @Override
@@ -255,12 +259,18 @@ public class EditOfficialActivity extends AppCompatActivity {
     }
 
     private void setDob(){
-        System.out.println(this.official.getDob().getMonth());
-        System.out.println(this.official.getDob().getYear());
-        this.dobView.setText(months[this.official.getDob().getMonth()-1] + ", " + this.official.getDob().getYear().toString());
+        if(this.official.getDob().getMonth() == null || this.official.getDob().getYear() == null){
+            this.dobView.setText("");
+        } else {
+            this.dobView.setText(months[this.official.getDob().getMonth() - 1] + ", " + this.official.getDob().getYear().toString());
+        }
     }
 
     private void setExp(){
-        this.startedView.setText(months[this.official.getStartedOfficiating().getMonth()-1] + ", " + this.official.getStartedOfficiating().getYear().toString());
+        if(this.official.getStartedOfficiating().getMonth() == null || this.official.getStartedOfficiating().getYear() == null){
+            this.startedView.setText("");
+        } else {
+            this.startedView.setText(months[this.official.getStartedOfficiating().getMonth() - 1] + ", " + this.official.getStartedOfficiating().getYear().toString());
+        }
     }
 }

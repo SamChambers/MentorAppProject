@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,17 +23,17 @@ import com.example.mentorapp.Template;
 
 import java.util.List;
 
-public class GamesListAdapter extends ArrayAdapter<Template> {
+public class GamesListAdapter extends ArrayAdapter<Game> {
 
     private List<Game> gamesList;
     private Context context;
-    private DBHelper TDBH;
+    private DBHelper dbh;
 
 
     public GamesListAdapter(Context context, DBHelper tdbh){
         super(context,0);
         this.context = context;
-        this.TDBH = tdbh;
+        this.dbh = tdbh;
         updateList();
     }
 
@@ -50,7 +51,19 @@ public class GamesListAdapter extends ArrayAdapter<Template> {
         }
 
         TextView nameTextView = (TextView) convertView.findViewById(R.id.text_game_name);
+        Button deleteButtonView = (Button) convertView.findViewById(R.id.game_list_button_delete_id);
         nameTextView.setText(game.getIdentifier());
+        deleteButtonView.setTag(position);
+        deleteButtonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = (int)v.getTag();
+                dbh.deleteGame(gamesList.get(position));
+                updateList();
+                notifyDataSetChanged();
+            }
+        });
+
         convertView.setTag(position);
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +84,7 @@ public class GamesListAdapter extends ArrayAdapter<Template> {
 
 
     public void updateList(){
-        this.gamesList = TDBH.allGames();
+        this.gamesList = dbh.allGames();
     }
 
     private void goToViewGame(int position){

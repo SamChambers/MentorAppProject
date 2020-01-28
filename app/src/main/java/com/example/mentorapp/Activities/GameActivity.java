@@ -38,6 +38,7 @@ public class GameActivity extends AppCompatActivity {
 
     //Holds the game info along with the evaluations
     Game game;
+    ArrayList<Evaluation> evaluationArray;
 
     DBHelper dbh;
 
@@ -52,15 +53,19 @@ public class GameActivity extends AppCompatActivity {
         this.dbh = new DBHelper(this);
 
         this.game = (Game) getIntent().getSerializableExtra("Game");
+        setEvaluationArray();
         if (this.game.getId() == null){
             Long gameId = dbh.addGame(this.game);
             this.game.setId(gameId.intValue());
             goToOptions();
         }
 
+
+
+
         //Set the pager and the adapter
         viewPager = (ViewPager) findViewById(R.id.main_viewPager);
-        this.EFA = new EvaluationFragmentAdapter(getSupportFragmentManager(), getApplicationContext(), this.game);
+        this.EFA = new EvaluationFragmentAdapter(getSupportFragmentManager(), getApplicationContext(), this.evaluationArray);
         viewPager.setAdapter(this.EFA);
 
         //Set the tabs and hook it up to the view pager
@@ -115,19 +120,21 @@ public class GameActivity extends AppCompatActivity {
                 ArrayList<String> comments = (ArrayList<String>) data.getSerializableExtra("UpdatedComments");
                 Integer category = (Integer) data.getSerializableExtra("Category");
                 Integer position = (Integer) data.getSerializableExtra("Position");
-                Integer evaluation = (Integer) data.getSerializableExtra("Evaluation");
+                Integer evaluationID = (Integer) data.getSerializableExtra("EvaluationID");
 
-                game.getEvaluationFromPosition(evaluation).getTaskFromCategory(category, position).setComments(comments);
-
+                for (Evaluation e : this.evaluationArray) {
+                    if (e.getId() == evaluationID) {
+                        e.getTaskFromCategory(category, position).setComments(comments);
+                    }
+                }
                 EvaluationFragmentAdapter tempAdapter = (EvaluationFragmentAdapter) viewPager.getAdapter();
                 tempAdapter.notifyChangeInPosition();
                 break;
             case 800:
                 this.game = (Game) data.getSerializableExtra("Game");
-                System.out.println(this.game.getEvaluationCount());
-                this.game.updateEvaluationPositions();
+                setEvaluationArray();
                 EvaluationFragmentAdapter tempAdapter2 = (EvaluationFragmentAdapter) viewPager.getAdapter();
-                tempAdapter2.setGame(this.game);
+                tempAdapter2.setGameEvaluations(this.evaluationArray);
                 tempAdapter2.notifyChangeInPosition();
                 break;
         }
@@ -171,12 +178,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void goToPresent(){
+        saveGameAndEvaluations();
         Intent intent = new Intent(this, PresentActivity.class);
         intent.putExtra("MyGame", this.game);
         startActivity(intent);
     }
 
     private void goToOptions(){
+        saveGameAndEvaluations();
         Intent intent = new Intent(this, GameOptionsActivity.class);
         intent.putExtra("MyGame", this.game);
         startActivityForResult(intent, 800);
@@ -188,8 +197,23 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void backFunction(){
+        saveGameAndEvaluations();
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
+    }
+
+    private void setEvaluationArray(){
+        this.evaluationArray = new ArrayList<>();
+        for(Integer id : this.game.getEvaluationsList()){
+            this.evaluationArray.add(this.dbh.getEvaluation(id));
+        }
+    }
+
+    private void saveGameAndEvaluations(){
+        for (Evaluation e : this.evaluationArray){
+            this.dbh.updateEvaluation(e);
+        }
+        this.dbh.updateGame(this.game);
     }
 }
