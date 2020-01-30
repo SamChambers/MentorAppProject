@@ -43,7 +43,7 @@ public class CommentsListAdapter extends ArrayAdapter<String> {
             convertView = layoutInflater.inflate(R.layout.comment_layout, null);
         }
 
-        TextView commentTextView = (TextView) convertView.findViewById(R.id.text_template_name_id);
+        TextView commentTextView = (TextView) convertView.findViewById(R.id.template_textView_templateName);
         Button deleteButtonView = (Button) convertView.findViewById(R.id.comment_button_deleteComment);
 
         commentTextView.setText(commentToShow);

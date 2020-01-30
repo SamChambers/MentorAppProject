@@ -43,8 +43,10 @@ import java.util.List;
 public class GameOptionsActivity extends AppCompatActivity {
 
     Game game;
+    ArrayList<Evaluation> evaluationArrayList;
     Context context;
     OptionsEvaluationsListAdapter optionsListAdapter;
+    DBHelper dbh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +69,15 @@ public class GameOptionsActivity extends AppCompatActivity {
             }
         });
 
-        final DBHelper dbh = new DBHelper(getApplicationContext());
+        this.dbh = new DBHelper(getApplicationContext());
 
         final ListView evaluationList = (ListView) findViewById(R.id.game_options_listView_evaluationslist_id);
-        this.optionsListAdapter = new OptionsEvaluationsListAdapter(this.context, dbh, this.game.getEvaluationsList());
+
+        this.evaluationArrayList = new ArrayList<>();
+        for(Integer id : game.getEvaluationsList()){
+            this.evaluationArrayList.add(dbh.getEvaluation(id));
+        }
+        this.optionsListAdapter = new OptionsEvaluationsListAdapter(this.context, dbh, this.evaluationArrayList);
         evaluationList.setAdapter(this.optionsListAdapter);
 
         Button addEvaluationButton = (Button) findViewById(R.id.game_options_button_addEvaluation_id);
@@ -97,7 +104,7 @@ public class GameOptionsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(this.game.getIdentifier());
+        getSupportActionBar().setTitle("Game Options");
 
         return true;
     }
@@ -116,6 +123,18 @@ public class GameOptionsActivity extends AppCompatActivity {
     }
 
     private void backFunction(){
+        ArrayList<Integer> evaluationIds = new ArrayList<>();
+        for (Evaluation e : this.evaluationArrayList){
+            Integer id;
+            if(e.getId() == null){
+                id = this.dbh.addEvaluation(e).intValue();
+            } else {
+                id = e.getId();
+            }
+            evaluationIds.add(id);
+        }
+        this.game.setEvaluationsList(evaluationIds);
+
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Game",game);
         setResult(Activity.RESULT_OK,returnIntent);
@@ -186,14 +205,14 @@ public class GameOptionsActivity extends AppCompatActivity {
                 int templatePosition = templateNames.indexOf(templateName);
                 Template selectedTemplate = templateList.get(templatePosition);
 
-                Evaluation evaluation = new Evaluation(selectedTemplate, game.getEvaluationCount());
+                Evaluation evaluation = new Evaluation(selectedTemplate);
                 evaluation.setOfficialId(selectedOfficial.getId());
                 Long evaluationId = dbh.addEvaluation(evaluation);
                 selectedOfficial.getEvaluationsList().add(evaluationId.intValue());
                 dbh.updateOfficial(selectedOfficial);
 
                 game.addEvaluation(evaluation);
-                game.updateEvaluationPositions();
+                evaluationArrayList.add(evaluation);
 
                 optionsListAdapter.notifyDataSetChanged();
 

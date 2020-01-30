@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -13,44 +15,43 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mentorapp.DataBase.DBHelper;
-import com.example.mentorapp.Helpers.TemplatesListAdapter;
+import com.example.mentorapp.Game;
+import com.example.mentorapp.Helpers.GamesListAdapter;
+import com.example.mentorapp.Helpers.OfficialsListAdapter;
+import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Template;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
-import android.view.View;
-import android.widget.ListView;
 
-public class ListTemplatesActivity extends AppCompatActivity {
+public class ListGamesActivity extends AppCompatActivity {
 
-    ListView templateListView;
+    ListView gameListView;
     Context context;
-    DBHelper DBH;
+    DBHelper TDBH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getApplicationContext();
 
-        Boolean newTemplate = (Boolean) getIntent().getSerializableExtra("NewTemplate");
-        if(newTemplate){
-            addNewTemplate();
+        Boolean newGame = (Boolean) getIntent().getSerializableExtra("NewGame");
+        if(newGame){
+            addNewGame();
         }
 
-        setContentView(R.layout.list_templates_layout);
+        setContentView(R.layout.list_games_layout);
 
-        this.DBH = new DBHelper(this);
+        this.TDBH = new DBHelper(this.context);
 
-        this.templateListView = findViewById(R.id.list_templates_id);
+        this.gameListView = findViewById(R.id.list_games_id);
 
-        templateListView.setAdapter(new TemplatesListAdapter(this,this.DBH));
-
+        gameListView.setAdapter(new GamesListAdapter(this,this.TDBH));
 
         ActionBar actionBar = getSupportActionBar();
 
-        Toolbar mToolbar = findViewById(R.id.toolbar_list_templates_id);
+        Toolbar mToolbar = findViewById(R.id.toolbar_list_games_id);
         setSupportActionBar(mToolbar);
 
 
@@ -63,24 +64,24 @@ public class ListTemplatesActivity extends AppCompatActivity {
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab_addNewGame = (FloatingActionButton) findViewById(R.id.games_fab_addNew);
+        fab_addNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                addNewTemplate();
+            public void onClick(View v) {
+                addNewGame();
             }
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.list_templates_options_menu, menu);
+        getMenuInflater().inflate(R.menu.list_games_options_menu, menu);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Templates");
+        getSupportActionBar().setTitle("Games");
 
         return true;
     }
@@ -92,8 +93,8 @@ public class ListTemplatesActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.add_template_menu_item_id){
-                addNewTemplate();
+        if (id == R.id.add_game_menu_item_id){
+                addNewGame();
                 return true;
         }
 
@@ -105,30 +106,20 @@ public class ListTemplatesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode){
-            case 200:
-                Template tempTemplate  = (Template) data.getSerializableExtra("Template");
+            case 1000:
 
-                if(tempTemplate.getId() == null){
-                    System.out.println("New template");
-                    this.DBH.addTemplate(tempTemplate);
-                } else {
-                    System.out.println("Old template");
-                    this.DBH.updateTemplate(tempTemplate);
-                }
-
-                TemplatesListAdapter TLA = (TemplatesListAdapter) this.templateListView.getAdapter();
-                TLA.updateList();
-                TLA.notifyDataSetChanged();
+                GamesListAdapter GLA = (GamesListAdapter) this.gameListView.getAdapter();
+                GLA.updateList();
+                GLA.notifyDataSetChanged();
                 break;
         }
     }
 
 
-    private void addNewTemplate(){
-        Intent intent = new Intent(context, EditTemplateActivity.class);
-        intent.putExtra("Template", new Template("New Template"));
-        int requestCode = 200;
-
+    private void addNewGame(){
+        Intent intent = new Intent(context, GameActivity.class);
+        intent.putExtra("Game", new Game());
+        int requestCode = 1000;
         startActivityForResult(intent,requestCode);
     }
 }

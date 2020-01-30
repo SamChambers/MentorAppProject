@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.mentorapp.Evaluation;
+import com.example.mentorapp.Game;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.Template;
 import com.google.gson.Gson;
@@ -44,6 +45,11 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String Evaluation_KEY_EVALUATION = "evaluation";
     private static final String[] Evaluation_COLUMNS = { Evaluation_KEY_ID, Evaluation_KEY_OFFICIAL, Evaluation_KEY_EVALUATION};
 
+    private static final String Game_TABLE_NAME = "Game";
+    private static final String Game_KEY_ID = "id";
+    private static final String Game_KEY_GAME = "game";
+    private static final String[] Game_COLUMNS = { Game_KEY_ID, Game_KEY_GAME};
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -56,10 +62,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 "official Text )";
         String Template_CREATION_TABLE = "CREATE TABLE Template (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, " + "template TEXT )";
         String Evaluation_CREATION_TABLE = "CREATE TABLE Evaluation (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "official_id INTEGER, " + "evaluation TEXT )";
+        String Game_CREATION_TABLE = "CREATE TABLE Game (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "game TEXT )";
 
         db.execSQL(Official_CREATION_TABLE);
         db.execSQL(Template_CREATION_TABLE);
         db.execSQL(Evaluation_CREATION_TABLE);
+        db.execSQL(Game_CREATION_TABLE);
     }
 
     @Override
@@ -68,6 +76,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Official_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Template_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Evaluation_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Game_TABLE_NAME);
         this.onCreate(db);
     }
 
@@ -282,6 +291,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Integer officialID = Integer.parseInt(cursor.getString(1));
         String json = cursor.getString(2);
 
+        System.out.println(json);
+
         Gson gson = new Gson();
         Evaluation evaluation = gson.fromJson(json, Evaluation.class);
         evaluation.setId(id_value);
@@ -321,6 +332,8 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(Evaluation_KEY_OFFICIAL, evaluation.getOfficialId());
         values.put(Evaluation_KEY_EVALUATION, evaluation.toJson());
 
+        System.out.println(evaluation.toJson());
+
         Long id = db.insert(Evaluation_TABLE_NAME,null, values);
         db.close();
         return id;
@@ -339,7 +352,91 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.close();
 
+        System.out.println(evaluation.toJson());
+
         return i;
     }
 
+    public void deleteGame(Game game) {
+        // Get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Game_TABLE_NAME, "id = ?", new String[] { String.valueOf(game.getId()) });
+        db.close();
+    }
+
+    public Game getGame(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(Game_TABLE_NAME, // a. table
+                Game_COLUMNS, // b. column names
+                " id = ?", // c. selections
+                new String[] { String.valueOf(id) }, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Integer id_value = Integer.parseInt(cursor.getString(0));
+        String json = cursor.getString(1);
+
+        Gson gson = new Gson();
+        Game game = gson.fromJson(json, Game.class);
+        game.setId(id_value);
+
+        return game;
+    }
+
+    public List<Game> allGames() {
+
+        List<Game> games = new LinkedList<Game>();
+        String query = "SELECT  * FROM " + Game_TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Game game = null;
+        Gson gson = new Gson();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Integer id_value = Integer.parseInt(cursor.getString(0));
+                String json = cursor.getString(1);
+
+                System.out.println(json);
+
+                game = gson.fromJson(json, Game.class);
+                game.setId(id_value);
+
+                games.add(game);
+
+            } while (cursor.moveToNext());
+        }
+
+        return games;
+    }
+
+    public Long addGame(Game game) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Game_KEY_GAME, game.toJson());
+
+        Long id = db.insert(Game_TABLE_NAME,null, values);
+        db.close();
+        return id;
+    }
+
+    public int updateGame(Game game) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Game_KEY_GAME, game.toJson());
+
+        int i = db.update(Game_TABLE_NAME, // table
+                values, // column/value
+                "id = ?", // selections
+                new String[] { String.valueOf(game.getId()) });
+
+        db.close();
+
+        return i;
+    }
 }

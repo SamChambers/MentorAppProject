@@ -361,13 +361,15 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
 
 
     private void goToCommentsPage(Integer listPosition, Integer expandedListPosition){
+        //TODO: Find a way to save the entire game when you go to the comment activity
+
         Intent intent = new Intent(this.context, ViewTaskCommentsActivity.class);
         ArrayList<String> myComments = (ArrayList<String>)data.getTaskFromCategory(listPosition,expandedListPosition).getComments();
         intent.putExtra("MyComments", myComments);
         intent.putExtra("MyDescription", data.getTaskFromCategory(listPosition,expandedListPosition).getDescription());
         intent.putExtra("Category", listPosition);
         intent.putExtra("Position", expandedListPosition);
-        intent.putExtra("Evaluation", data.getEvaluationPosition());
+        intent.putExtra("EvaluationID", data.getId());
 
         int requestCode = 100;
         ((Activity) context).startActivityForResult(intent,requestCode);

@@ -132,9 +132,8 @@ public class ViewOfficialActivity extends AppCompatActivity {
             ageView.setText("");
         } else {
             Calendar today = Calendar.getInstance();
-            System.out.println(dob.getYear());
-            Integer years = dob.getYear();
-            Integer months = today.get(Calendar.MONTH)-dob.getMonth()+1;
+            Integer years = today.get(Calendar.YEAR)-dob.getYear();
+            Integer months = today.get(Calendar.MONTH)-dob.getMonth();
             if(months < 0){
                 years -= 1;
                 months += 12;
@@ -148,7 +147,7 @@ public class ViewOfficialActivity extends AppCompatActivity {
             experienceView.setText("");
         } else {
             Calendar today = Calendar.getInstance();
-            Integer years = exp.getYear();
+            Integer years = today.get(Calendar.YEAR)-exp.getYear();
             Integer months = today.get(Calendar.MONTH)-exp.getMonth()+1;
             if(months < 0){
                 years -= 1;

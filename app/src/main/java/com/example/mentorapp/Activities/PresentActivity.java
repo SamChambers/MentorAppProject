@@ -35,6 +35,7 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.example.mentorapp.Category;
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Game;
 import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
@@ -63,14 +64,20 @@ public class PresentActivity extends AppCompatActivity {
         this.tabLayout = (TabLayout) findViewById(R.id.tabView_present_layout_id);
         this.viewPager = (ViewPager) findViewById(R.id.viewPager_present_ID);
 
+        DBHelper dbh = new DBHelper(getApplicationContext());
+        ArrayList<Evaluation> evaluationArrayList = new ArrayList<>();
+        for(Integer id : this.game.getEvaluationsList()){
+            evaluationArrayList.add(dbh.getEvaluation(id));
+        }
+
         PresentationStorage ps;
         ArrayList<PresentationStorage> presentationList = new ArrayList<>();
         if (this.game.getEvaluationCount() > 1) {
-            ps = convertEvaluationToPresentation(this.game.getEvaluationsList());
+            ps = convertEvaluationToPresentation(evaluationArrayList);
             presentationList.add(ps);
             ps.setTitle("All");
         }
-        for(Evaluation e : this.game.getEvaluationsList()) {
+        for(Evaluation e : evaluationArrayList) {
             ArrayList<Evaluation> el = new ArrayList<Evaluation>();
             el.add(e);
             ps = convertEvaluationToPresentation(el);

@@ -58,7 +58,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:imeOptions="actionDone"
-                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/text_edit_official_name"
@@ -76,8 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
                 android:text="Birthday"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,10 +85,11 @@
                 android:id="@+id/text_editOfficial_Dob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/viewOfficial_imageButton_agePicker"
-                app:layout_constraintStart_toEndOf="@+id/text_edit_official_age"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
@@ -114,19 +113,22 @@
                 android:id="@+id/text_edit_official_officating_exp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:text="Started Officiating:"
-                app:layout_constraintBaseline_toBaselineOf="@+id/text_official_officiating_exp_id"
-                app:layout_constraintEnd_toStartOf="@+id/text_official_officiating_exp_id"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_editOfficial_Started"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/viewOfficial_imageButton_expPicker"
-                app:layout_constraintStart_toEndOf="@+id/text_edit_official_officating_exp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
@@ -171,7 +173,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:imeOptions="actionDone"
-                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/text_edit_official_email"

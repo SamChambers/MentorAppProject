@@ -33,7 +33,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
     String description;
     Integer category;
     Integer position;
-    Integer evaluation;
+    Integer evaluationId;
 
     ListView commentsListView;
     TextView noCommentsTextView;
@@ -46,7 +46,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
         this.description = (String) getIntent().getSerializableExtra("MyDescription");
         this.category = (Integer) getIntent().getSerializableExtra("Category");
         this.position = (Integer) getIntent().getSerializableExtra("Position");
-        this.evaluation = (Integer) getIntent().getSerializableExtra("Evaluation");
+        this.evaluationId = (Integer) getIntent().getSerializableExtra("EvaluationID");
 
 
 
@@ -73,7 +73,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
                 returnIntent.putExtra("UpdatedComments",comments);
                 returnIntent.putExtra("Category",category);
                 returnIntent.putExtra("Position",position);
-                returnIntent.putExtra("Evaluation",evaluation);
+                returnIntent.putExtra("EvaluationID",evaluationId);
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }

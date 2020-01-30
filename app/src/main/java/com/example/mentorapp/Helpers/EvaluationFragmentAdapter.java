@@ -9,13 +9,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Game;
 import com.example.mentorapp.Helpers.EvaluationFragment;
+
+import java.util.ArrayList;
 
 //Class to load the evaluation fragments
 public class EvaluationFragmentAdapter extends FragmentPagerAdapter{
 
-    private Game game;
+    private ArrayList<Evaluation> gameEvaluations;
     private long baseId;
     private Context context;
 
@@ -23,32 +26,32 @@ public class EvaluationFragmentAdapter extends FragmentPagerAdapter{
     //Standard constructor
     public EvaluationFragmentAdapter(FragmentManager supportFragmentManager, Context applicationContext){
         super(supportFragmentManager);
-        this.game = new Game();
+        this.gameEvaluations = new ArrayList<>();
         this.context = applicationContext;
     }
 
     //Full constructor
-    public EvaluationFragmentAdapter(FragmentManager supportFragmentManager, Context applicationContext, Game game){
+    public EvaluationFragmentAdapter(FragmentManager supportFragmentManager, Context applicationContext, ArrayList<Evaluation> gameEvaluations){
         super(supportFragmentManager);
-        this.game = game;
+        this.gameEvaluations = gameEvaluations;
         this.context = applicationContext;
     }
 
     //When the fragment first gets called
     @Override
     public Fragment getItem(int position){
-        return new EvaluationFragment(game.getEvaluationFromPosition(position));
+        return new EvaluationFragment(this.gameEvaluations.get(position));
     }
 
     @Override
     public int getCount(){
-        return this.game.getEvaluationCount();
+        return this.gameEvaluations.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return this.game.getEvaluationFromPosition(position).getOfficialName(this.context);
+        return this.gameEvaluations.get(position).getOfficialName(this.context);
     }
 
     @Override
@@ -64,13 +67,10 @@ public class EvaluationFragmentAdapter extends FragmentPagerAdapter{
     public void notifyChangeInPosition(){
         baseId += getCount()*2;
         notifyDataSetChanged();
-        for (int i=0; i < game.getEvaluationCount(); ++i){
-            game.getEvaluationsList().get(i).setEvaluationPosition(i);
-        }
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGameEvaluations(ArrayList<Evaluation> gameEvaluations) {
+        this.gameEvaluations = gameEvaluations;
     }
 }
 
