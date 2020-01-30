@@ -16,17 +16,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Game;
-import com.example.mentorapp.Official.Official;
+import com.example.mentorapp.Helpers.GamesListAdapter;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Helpers.OfficialsListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
 
-public class ListOfficialsActivity extends AppCompatActivity {
+public class GameListActivity extends AppCompatActivity {
 
-    ListView officialListView;
+    ListView gameListView;
     Context context;
     DBHelper TDBH;
 
@@ -35,22 +34,22 @@ public class ListOfficialsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.context = getApplicationContext();
 
-        Boolean newOfficial = (Boolean) getIntent().getSerializableExtra("NewOfficial");
-        if(newOfficial){
-            addNewOfficial();
+        Boolean newGame = (Boolean) getIntent().getSerializableExtra("NewGame");
+        if(newGame){
+            addNewGame();
         }
 
-        setContentView(R.layout.list_officals_layout);
+        setContentView(R.layout.game_list_layout);
 
         this.TDBH = new DBHelper(this.context);
 
-        this.officialListView = findViewById(R.id.list_officials_id);
+        this.gameListView = findViewById(R.id.list_games_id);
 
-        officialListView.setAdapter(new OfficialsListAdapter(this,this.TDBH));
+        gameListView.setAdapter(new GamesListAdapter(this,this.TDBH));
 
         ActionBar actionBar = getSupportActionBar();
 
-        Toolbar mToolbar = findViewById(R.id.toolbar_list_officals_id);
+        Toolbar mToolbar = findViewById(R.id.toolbar_list_games_id);
         setSupportActionBar(mToolbar);
 
 
@@ -63,11 +62,11 @@ public class ListOfficialsActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab_addNewOfficial = (FloatingActionButton) findViewById(R.id.officials_fab_addNew);
-        fab_addNewOfficial.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab_addNewGame = (FloatingActionButton) findViewById(R.id.games_fab_addNew);
+        fab_addNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNewOfficial();
+                addNewGame();
             }
         });
 
@@ -76,11 +75,11 @@ public class ListOfficialsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.list_officials_options_menu, menu);
+        getMenuInflater().inflate(R.menu.list_games_options_menu, menu);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Officials");
+        getSupportActionBar().setTitle("Games");
 
         return true;
     }
@@ -92,9 +91,14 @@ public class ListOfficialsActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.add_official_menu_item_id){
-                addNewOfficial();
-                return true;
+        if (id == R.id.sort_games_menu_item_id){
+            // Handle sorting
+            return true;
+        }
+
+        if (id == R.id.filter_games_menu_item_id){
+            // Handle filter
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -105,21 +109,20 @@ public class ListOfficialsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode){
-            case 400:
+            case 1000:
 
-                OfficialsListAdapter OLA = (OfficialsListAdapter) this.officialListView.getAdapter();
-                OLA.updateList();
-                OLA.notifyDataSetChanged();
+                GamesListAdapter GLA = (GamesListAdapter) this.gameListView.getAdapter();
+                GLA.updateList();
+                GLA.notifyDataSetChanged();
                 break;
         }
     }
 
 
-    private void addNewOfficial(){
-        Intent intent = new Intent(context, ViewOfficialActivity.class);
-        intent.putExtra("Official", new Official("New Official"));
-        int requestCode = 400;
-
+    private void addNewGame(){
+        Intent intent = new Intent(context, GameViewActivity.class);
+        intent.putExtra("Game", new Game());
+        int requestCode = 1000;
         startActivityForResult(intent,requestCode);
     }
 }

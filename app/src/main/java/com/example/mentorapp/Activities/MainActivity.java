@@ -8,7 +8,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mentorapp.Game;
 import com.example.mentorapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,37 +73,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void newGame(){
-        Intent intent = new Intent(this, ListGamesActivity.class);
+        Intent intent = new Intent(this, GameListActivity.class);
         intent.putExtra("NewGame", Boolean.TRUE);
         startActivity(intent);
     }
 
     private void listGame(){
-        Intent intent = new Intent(this, ListGamesActivity.class);
+        Intent intent = new Intent(this, GameListActivity.class);
         intent.putExtra("NewGame", Boolean.FALSE);
         startActivity(intent);
     }
 
     private void newTemplate(){
-        Intent intent = new Intent(this, ListTemplatesActivity.class);
+        Intent intent = new Intent(this, TemplateListActivity.class);
         intent.putExtra("NewTemplate", Boolean.TRUE);
         startActivity(intent);
     }
 
     private void listTemplate(){
-        Intent intent = new Intent(this, ListTemplatesActivity.class);
+        Intent intent = new Intent(this, TemplateListActivity.class);
         intent.putExtra("NewTemplate", Boolean.FALSE);
         startActivity(intent);
     }
 
     private void listOfficial(){
-        Intent intent = new Intent(this, ListOfficialsActivity.class);
+        Intent intent = new Intent(this, OfficialListActivity.class);
         intent.putExtra("NewOfficial", Boolean.FALSE);
         startActivity(intent);
     }
 
     private void newOfficial(){
-        Intent intent = new Intent(this, ListOfficialsActivity.class);
+        Intent intent = new Intent(this, OfficialListActivity.class);
         intent.putExtra("NewOfficial", Boolean.TRUE);
         startActivity(intent);
     }

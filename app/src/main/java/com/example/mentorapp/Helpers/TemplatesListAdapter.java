@@ -14,7 +14,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mentorapp.Activities.EditTemplateActivity;
+import com.example.mentorapp.Activities.TemplateEditActivity;
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
@@ -44,7 +44,7 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.template_layout, null);
+            convertView = layoutInflater.inflate(R.layout.template_list_item_layout, null);
         }
 
         Button deleteButton = (Button) convertView.findViewById(R.id.button_delete_template);
@@ -79,7 +79,7 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
     }
 
     private void goToEditTemplate(int position){
-        Intent intent = new Intent(context, EditTemplateActivity.class);
+        Intent intent = new Intent(context, TemplateEditActivity.class);
         intent.putExtra("Template", templatesList.get(position));
         int requestCode = 200;
 

@@ -29,7 +29,7 @@ import com.example.mentorapp.Template;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class EditTemplateActivity extends AppCompatActivity {
+public class TemplateEditActivity extends AppCompatActivity {
 
     Template template;
 
@@ -46,7 +46,7 @@ public class EditTemplateActivity extends AppCompatActivity {
 
         this.template = (Template) getIntent().getSerializableExtra("Template");
 
-        setContentView(R.layout.edit_template_layout);
+        setContentView(R.layout.template_edit_2_layout);
 
         this.expandableList = findViewById(R.id.editTemplate_expandableListView);
         this.templateNameView = findViewById(R.id.comment_textView_templateName);
@@ -76,7 +76,7 @@ public class EditTemplateActivity extends AppCompatActivity {
         this.templateNameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditTemplateActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(TemplateEditActivity.this);
                 builder.setTitle("Change Title");
 
                 // Set up the input
@@ -150,7 +150,7 @@ public class EditTemplateActivity extends AppCompatActivity {
 
     private void addCategory(){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditTemplateActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(TemplateEditActivity.this);
 
         builder.setTitle("Add Category");
 
@@ -189,7 +189,7 @@ public class EditTemplateActivity extends AppCompatActivity {
     private void addTask(){
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.template_add_task_alert_layout, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditTemplateActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(TemplateEditActivity.this);
         builder.setView(dialogLayout);
         builder.setTitle("Add Task");
 

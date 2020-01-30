@@ -25,7 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //import android.widget.Toolbar;
 import java.util.Calendar;
 
-public class ViewOfficialActivity extends AppCompatActivity {
+public class OfficialViewActivity extends AppCompatActivity {
 
     Official official;
 
@@ -39,7 +39,7 @@ public class ViewOfficialActivity extends AppCompatActivity {
         this.official = (Official) getIntent().getSerializableExtra("Official");
 
 
-        setContentView(R.layout.view_official_layout);
+        setContentView(R.layout.official_view_layout);
         updateViews();
 
         Button buttonDeleteOfficialView = findViewById(R.id.button_delete_official_id);
@@ -57,7 +57,7 @@ public class ViewOfficialActivity extends AppCompatActivity {
         buttonEditOfficialView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, EditOfficialActivity.class);
+                Intent intent = new Intent(context, OfficialEditActivity.class);
                 intent.putExtra("Official", official);
                 int code = 500;
                 startActivityForResult(intent, code);
@@ -112,6 +112,15 @@ public class ViewOfficialActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.delete_official_menu_item_id){
+            DBHelper ODBH = new DBHelper(context);
+            ODBH.deleteOfficial(official);
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_OK,returnIntent);
+            finish();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -161,7 +170,7 @@ public class ViewOfficialActivity extends AppCompatActivity {
     }
 
     private void goToEditOfficial(){
-        Intent intent = new Intent(context, EditOfficialActivity.class);
+        Intent intent = new Intent(context, OfficialEditActivity.class);
         intent.putExtra("Official", this.official);
         int requestCode = 500;
 

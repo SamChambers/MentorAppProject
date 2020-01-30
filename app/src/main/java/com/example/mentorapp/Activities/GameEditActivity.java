@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.view.View;
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
@@ -29,18 +27,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
-import com.example.mentorapp.ExampleDataPump;
 import com.example.mentorapp.Game;
 import com.example.mentorapp.Helpers.OptionsEvaluationsListAdapter;
-import com.example.mentorapp.Helpers.TemplateListAdapter;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameOptionsActivity extends AppCompatActivity {
+public class GameEditActivity extends AppCompatActivity {
 
     Game game;
     ArrayList<Evaluation> evaluationArrayList;
@@ -56,7 +53,7 @@ public class GameOptionsActivity extends AppCompatActivity {
 
         this.game = (Game) getIntent().getSerializableExtra("MyGame");
 
-        setContentView(R.layout.options_layout);
+        setContentView(R.layout.game_edit_layout);
 
         ActionBar actionBar = getSupportActionBar();
         Toolbar mToolbar = findViewById(R.id.toolbar3);
@@ -80,14 +77,6 @@ public class GameOptionsActivity extends AppCompatActivity {
         this.optionsListAdapter = new OptionsEvaluationsListAdapter(this.context, dbh, this.evaluationArrayList);
         evaluationList.setAdapter(this.optionsListAdapter);
 
-        Button addEvaluationButton = (Button) findViewById(R.id.game_options_button_addEvaluation_id);
-        addEvaluationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addEvaluation();
-            }
-        });
-
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +84,13 @@ public class GameOptionsActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab_addNewEvaluation = (FloatingActionButton) findViewById(R.id.game_evaluation_fab_addNew);
+        fab_addNewEvaluation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addEvaluation();
+            }
+        });
     }
 
     @Override
@@ -144,8 +140,8 @@ public class GameOptionsActivity extends AppCompatActivity {
     private void addEvaluation(){
         final DBHelper dbh = new DBHelper(context);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.options_new_evaluation_layout, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameOptionsActivity.this);
+        View dialogLayout = inflater.inflate(R.layout.evaluation_new_options_layout, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameEditActivity.this);
         builder.setView(dialogLayout);
         builder.setTitle("Add Evaluation");
 

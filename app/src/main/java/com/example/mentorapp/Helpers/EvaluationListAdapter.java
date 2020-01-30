@@ -21,7 +21,7 @@ import android.app.AlertDialog;
 import android.text.InputType;
 import android.content.DialogInterface;
 
-import com.example.mentorapp.Activities.ViewTaskCommentsActivity;
+import com.example.mentorapp.Activities.TaskViewCommentsActivity;
 import com.example.mentorapp.Category;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.R;
@@ -64,7 +64,7 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.task_layout, null);
+            convertView = layoutInflater.inflate(R.layout.task_list_item_layout, null);
         }
 
 
@@ -363,7 +363,7 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
     private void goToCommentsPage(Integer listPosition, Integer expandedListPosition){
         //TODO: Find a way to save the entire game when you go to the comment activity
 
-        Intent intent = new Intent(this.context, ViewTaskCommentsActivity.class);
+        Intent intent = new Intent(this.context, TaskViewCommentsActivity.class);
         ArrayList<String> myComments = (ArrayList<String>)data.getTaskFromCategory(listPosition,expandedListPosition).getComments();
         intent.putExtra("MyComments", myComments);
         intent.putExtra("MyDescription", data.getTaskFromCategory(listPosition,expandedListPosition).getDescription());

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -13,44 +15,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mentorapp.DataBase.DBHelper;
-import com.example.mentorapp.Helpers.TemplatesListAdapter;
+import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Template;
+import com.example.mentorapp.Helpers.OfficialsListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
-import android.view.View;
-import android.widget.ListView;
 
-public class ListTemplatesActivity extends AppCompatActivity {
+public class OfficialListActivity extends AppCompatActivity {
 
-    ListView templateListView;
+    ListView officialListView;
     Context context;
-    DBHelper DBH;
+    DBHelper TDBH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getApplicationContext();
 
-        Boolean newTemplate = (Boolean) getIntent().getSerializableExtra("NewTemplate");
-        if(newTemplate){
-            addNewTemplate();
+        Boolean newOfficial = (Boolean) getIntent().getSerializableExtra("NewOfficial");
+        if(newOfficial){
+            addNewOfficial();
         }
 
-        setContentView(R.layout.list_templates_layout);
+        setContentView(R.layout.official_list_layout);
 
-        this.DBH = new DBHelper(this);
+        this.TDBH = new DBHelper(this.context);
 
-        this.templateListView = findViewById(R.id.list_templates_id);
+        this.officialListView = findViewById(R.id.list_officials_id);
 
-        templateListView.setAdapter(new TemplatesListAdapter(this,this.DBH));
-
+        officialListView.setAdapter(new OfficialsListAdapter(this,this.TDBH));
 
         ActionBar actionBar = getSupportActionBar();
 
-        Toolbar mToolbar = findViewById(R.id.toolbar_list_templates_id);
+        Toolbar mToolbar = findViewById(R.id.toolbar_list_officals_id);
         setSupportActionBar(mToolbar);
 
 
@@ -63,24 +62,24 @@ public class ListTemplatesActivity extends AppCompatActivity {
             }
         });
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab_addNewOfficial = (FloatingActionButton) findViewById(R.id.officials_fab_addNew);
+        fab_addNewOfficial.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                addNewTemplate();
+            public void onClick(View v) {
+                addNewOfficial();
             }
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.list_templates_options_menu, menu);
+        getMenuInflater().inflate(R.menu.list_officials_options_menu, menu);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Templates");
+        getSupportActionBar().setTitle("Officials");
 
         return true;
     }
@@ -92,8 +91,13 @@ public class ListTemplatesActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.add_template_menu_item_id){
-                addNewTemplate();
+        if (id == R.id.sort_officials_menu_item_id){
+            // Handle sorting
+            return true;
+        }
+
+        if (id == R.id.filter_officials_menu_item_id){
+             // Handle filter
                 return true;
         }
 
@@ -105,29 +109,20 @@ public class ListTemplatesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode){
-            case 200:
-                Template tempTemplate  = (Template) data.getSerializableExtra("Template");
+            case 400:
 
-                if(tempTemplate.getId() == null){
-                    System.out.println("New template");
-                    this.DBH.addTemplate(tempTemplate);
-                } else {
-                    System.out.println("Old template");
-                    this.DBH.updateTemplate(tempTemplate);
-                }
-
-                TemplatesListAdapter TLA = (TemplatesListAdapter) this.templateListView.getAdapter();
-                TLA.updateList();
-                TLA.notifyDataSetChanged();
+                OfficialsListAdapter OLA = (OfficialsListAdapter) this.officialListView.getAdapter();
+                OLA.updateList();
+                OLA.notifyDataSetChanged();
                 break;
         }
     }
 
 
-    private void addNewTemplate(){
-        Intent intent = new Intent(context, EditTemplateActivity.class);
-        intent.putExtra("Template", new Template("New Template"));
-        int requestCode = 200;
+    private void addNewOfficial(){
+        Intent intent = new Intent(context, OfficialViewActivity.class);
+        intent.putExtra("Official", new Official("New Official"));
+        int requestCode = 400;
 
         startActivityForResult(intent,requestCode);
     }

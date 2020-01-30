@@ -1,9 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/add_game_menu_item_id"
-        android:title=""
-        app:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_add"
+        android:id="@+id/sort_games_menu_item_id"
+        android:title="Sort"
+        app:showAsAction="collapseActionView"
+        />
+    <item
+        android:id="@+id/filter_games_menu_item_id"
+        android:title="Filter"
+        app:showAsAction="collapseActionView"
         />
 </menu>

@@ -5,18 +5,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -24,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mentorapp.DataBase.DBHelper;
-import com.example.mentorapp.Official.MonthYear;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 
@@ -32,10 +27,9 @@ import java.util.ArrayList;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
-import java.util.Arrays;
 import java.util.Calendar;
 
-public class EditOfficialActivity extends AppCompatActivity {
+public class OfficialEditActivity extends AppCompatActivity {
 
     Official official;
 
@@ -54,7 +48,7 @@ public class EditOfficialActivity extends AppCompatActivity {
 
         this.context = getApplicationContext();
         this.official = (Official) getIntent().getSerializableExtra("Official");
-        setContentView(R.layout.create_official_layout);
+        setContentView(R.layout.official_edit_layout);
 
         EditText nameView = findViewById(R.id.text_edit_official_name_id);
         EditText emailView = findViewById(R.id.text_edit_official_email_id);
@@ -110,7 +104,7 @@ public class EditOfficialActivity extends AppCompatActivity {
     private void pickDateDOB() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.datepicker_layout, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditOfficialActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(OfficialEditActivity.this);
         builder.setView(dialogLayout);
         builder.setTitle("Pick a date");
 
@@ -161,7 +155,7 @@ public class EditOfficialActivity extends AppCompatActivity {
     private void pickDateExp() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.datepicker_layout, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditOfficialActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(OfficialEditActivity.this);
         builder.setView(dialogLayout);
         builder.setTitle("Pick a date");
 

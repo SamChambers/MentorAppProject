@@ -13,10 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
-import com.example.mentorapp.Helpers.EvaluationFragment;
 import com.example.mentorapp.Helpers.EvaluationFragmentAdapter;
 import com.example.mentorapp.Game;
-import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -26,9 +24,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class GameActivity extends AppCompatActivity {
+public class GameViewActivity extends AppCompatActivity {
 
     //The tabs that can change the evaluee tab
     TabLayout tabLayout;
@@ -179,14 +176,14 @@ public class GameActivity extends AppCompatActivity {
 
     private void goToPresent(){
         saveGameAndEvaluations();
-        Intent intent = new Intent(this, PresentActivity.class);
+        Intent intent = new Intent(this, GamePresentActivity.class);
         intent.putExtra("MyGame", this.game);
         startActivity(intent);
     }
 
     private void goToOptions(){
         saveGameAndEvaluations();
-        Intent intent = new Intent(this, GameOptionsActivity.class);
+        Intent intent = new Intent(this, GameEditActivity.class);
         intent.putExtra("MyGame", this.game);
         startActivityForResult(intent, 800);
     }

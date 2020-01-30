@@ -26,19 +26,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
+            <ImageButton
+                android:id="@+id/button_plus_id"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:focusable="false"
+                android:src="@drawable/ic_arrow_drop_up_black_24dp" />
+
+            <ImageButton
                 android:id="@+id/button_minus_id"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:focusable="false"
-                android:text="-" />
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
 
-            <Button
-                android:id="@+id/button_comment_id"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:focusable="false"
-                android:text="Comment" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,19 +47,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button_plus_id"
+            <ImageButton
+                android:id="@+id/button_comment_id"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:focusable="false"
-                android:text="+" />
+                android:src="@drawable/ic_comment_black_24dp" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button_options_id"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:focusable="false"
-                android:text="Other" />
+                android:src="@drawable/ic_more_vert_black_24dp" />
         </LinearLayout>
 
     </LinearLayout>

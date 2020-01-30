@@ -16,34 +16,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.ViewTaskCommentsActivity"
+        <activity android:name=".Activities.TaskViewCommentsActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.PresentActivity"
+        <activity android:name=".Activities.GamePresentActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.GameOptionsActivity"
+        <activity android:name=".Activities.GameEditActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.EditTemplateActivity"
+        <activity android:name=".Activities.TemplateEditActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.ListTemplatesActivity"
+        <activity android:name=".Activities.TemplateListActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.ListOfficialsActivity"
+        <activity android:name=".Activities.OfficialListActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.EditOfficialActivity"
+        <activity android:name=".Activities.OfficialEditActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.ViewOfficialActivity"
+        <activity android:name=".Activities.OfficialViewActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.GameActivity"
+        <activity android:name=".Activities.GameViewActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
-        <activity android:name=".Activities.ListGamesActivity"
+        <activity android:name=".Activities.GameListActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
     </application>

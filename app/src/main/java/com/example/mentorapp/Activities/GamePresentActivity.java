@@ -47,7 +47,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class PresentActivity extends AppCompatActivity {
+public class GamePresentActivity extends AppCompatActivity {
 
     private Game game;
     private TabLayout tabLayout;

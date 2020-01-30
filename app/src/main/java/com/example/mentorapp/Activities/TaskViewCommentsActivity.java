@@ -27,7 +27,7 @@ import com.example.mentorapp.R;
 
 import java.util.ArrayList;
 
-public class ViewTaskCommentsActivity extends AppCompatActivity {
+public class TaskViewCommentsActivity extends AppCompatActivity {
 
     ArrayList<String> comments;
     String description;
@@ -50,7 +50,7 @@ public class ViewTaskCommentsActivity extends AppCompatActivity {
 
 
 
-        setContentView(R.layout.view_task_comments_layout);
+        setContentView(R.layout.task_view_comments_layout);
 
         this.commentsListView = (ListView) findViewById(R.id.list_templates_id);
         this.noCommentsTextView = (TextView) findViewById(R.id.text_comments_view_no_comments_id);

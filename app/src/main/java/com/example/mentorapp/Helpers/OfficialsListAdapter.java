@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mentorapp.Activities.ViewOfficialActivity;
+import com.example.mentorapp.Activities.OfficialViewActivity;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
@@ -46,7 +46,7 @@ public class OfficialsListAdapter extends ArrayAdapter<Template> {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.official_layout, null);
+            convertView = layoutInflater.inflate(R.layout.official_list_item_layout, null);
         }
 
         TextView nameTextView = (TextView) convertView.findViewById(R.id.text_official_name);
@@ -78,7 +78,7 @@ public class OfficialsListAdapter extends ArrayAdapter<Template> {
     }
 
     private void goToViewOfficial(int position){
-        Intent intent = new Intent(context, ViewOfficialActivity.class);
+        Intent intent = new Intent(context, OfficialViewActivity.class);
         intent.putExtra("Official", this.officialsList.get(position));
         ((Activity) this.context).startActivityForResult(intent, 400);
     }

@@ -1,8 +1,6 @@
 package com.example.mentorapp.Helpers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mentorapp.Activities.EditTemplateActivity;
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
-import com.example.mentorapp.Template;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +42,7 @@ public class OptionsEvaluationsListAdapter extends ArrayAdapter<Evaluation> {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.options_evaluation_layout, null);
+            convertView = layoutInflater.inflate(R.layout.evaluation_options_layout, null);
         }
 
         Button deleteButton = (Button) convertView.findViewById(R.id.options_button_delete_evaluation_id);
