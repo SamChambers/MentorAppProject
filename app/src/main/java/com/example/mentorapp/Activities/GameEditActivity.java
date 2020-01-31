@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,11 +19,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 import com.example.mentorapp.DataBase.DBHelper;
@@ -31,6 +37,8 @@ import com.example.mentorapp.Game;
 import com.example.mentorapp.Helpers.OptionsEvaluationsListAdapter;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
+import com.example.mentorapp.Tags.Tag;
+import com.example.mentorapp.Tags.TagOptions;
 import com.example.mentorapp.Template;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -67,6 +75,9 @@ public class GameEditActivity extends AppCompatActivity {
         });
 
         this.dbh = new DBHelper(getApplicationContext());
+
+        LinearLayout gameOptionsLL = findViewById(R.id.game_options_linear_layout_id);
+        setupTags(gameOptionsLL);
 
         final ListView evaluationList = (ListView) findViewById(R.id.game_options_listView_evaluationslist_id);
 
@@ -130,6 +141,31 @@ public class GameEditActivity extends AppCompatActivity {
             evaluationIds.add(id);
         }
         this.game.setEvaluationsList(evaluationIds);
+
+        EditText nameView = findViewById(R.id.game_options_editText_name_id);
+        this.game.setIdentifier(nameView.getText().toString());
+        //TODO: Make this into a date picker scenario
+        EditText dateView = findViewById(R.id.game_options_editText_date_id);
+        this.game.setDate(dateView.getText().toString());
+        LinearLayout gameOptionsLL = findViewById(R.id.game_options_linear_layout_id);
+        int tagCount = gameOptionsLL.getChildCount();
+        ConstraintLayout tagCL;
+        ArrayList<TagOptions> tags = new ArrayList<>();
+        for(int i=2; i< tagCount; ++i){
+            tagCL = (ConstraintLayout) gameOptionsLL.getChildAt(i);
+            View v;
+            int count = tagCL.getChildCount();
+            for (int j=0; j<count; j++){
+                v = tagCL.getChildAt(j);
+                System.out.println(v.getId());
+            }
+            Spinner spinner = tagCL.findViewById(R.id.game_options_tag_spinner_tagOption_id);
+            TextView name = tagCL.findViewById(R.id.game_options_tag_textView_tagName_id);
+            String tagName = name.getText().toString();
+            String tagValue = spinner.getSelectedItem().toString();
+            tags.add(new TagOptions(tagName,tagValue));
+        }
+        this.game.setTags(tags);
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Game",game);
@@ -223,6 +259,38 @@ public class GameEditActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private void setupTags(LinearLayout ll){
+        List<Tag> tagList = this.dbh.allTags();
+        System.out.println("Tag List");
+        System.out.println(tagList);
+        for (Tag tag : tagList){
+            View view = getLayoutInflater().inflate(R.layout.game_options_tag_layout,ll,false);
+            TextView tagNameView = view.findViewById(R.id.game_options_tag_textView_tagName_id);
+            Spinner tagOptionsView = view.findViewById(R.id.game_options_tag_spinner_tagOption_id);
+            tagNameView.setText(tag.getName());
+            ArrayList<String> tagOptions = tag.getOptionsList();
+            if(tag.getManditory() == Boolean.FALSE){
+                tagOptions.add(0,"");
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tagOptions);
+            tagOptionsView.setAdapter(adapter);
+            ArrayList<TagOptions> tags = this.game.getTags();
+            System.out.println(tag.getName());
+            for(TagOptions gameTag : tags){
+                System.out.println(gameTag.getTag());
+
+                if (gameTag.getTag().equals(tag.getName())){
+                    System.out.println("Found Tag");
+                    int selection = tagOptions.indexOf(gameTag.getOption());
+
+                    if (selection == 0){ selection = 0;}
+                    tagOptionsView.setSelection(selection);
+                }
+            }
+            ll.addView(view);
+        }
     }
 }
 

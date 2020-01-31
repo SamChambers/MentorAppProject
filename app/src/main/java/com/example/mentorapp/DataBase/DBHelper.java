@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Game;
 import com.example.mentorapp.Official.Official;
+import com.example.mentorapp.Tags.Tag;
 import com.example.mentorapp.Template;
 import com.google.gson.Gson;
 
@@ -50,6 +51,12 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String Game_KEY_GAME = "game";
     private static final String[] Game_COLUMNS = { Game_KEY_ID, Game_KEY_GAME};
 
+    private static final String Tag_TABLE_NAME = "Tag";
+    private static final String Tag_KEY_ID = "id";
+    private static final String Tag_KEY_NAME = "name";
+    private static final String Tag_KEY_TAG = "tag";
+    private static final String[] Tag_COLUMNS = { Tag_KEY_ID, Tag_KEY_NAME, Tag_KEY_TAG};
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -63,11 +70,13 @@ public class DBHelper extends SQLiteOpenHelper {
         String Template_CREATION_TABLE = "CREATE TABLE Template (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, " + "template TEXT )";
         String Evaluation_CREATION_TABLE = "CREATE TABLE Evaluation (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "official_id INTEGER, " + "evaluation TEXT )";
         String Game_CREATION_TABLE = "CREATE TABLE Game (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "game TEXT )";
+        String Tag_CREATION_TABLE = "CREATE TABLE Tag (" + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name Text, " + "tag TEXT )";
 
         db.execSQL(Official_CREATION_TABLE);
         db.execSQL(Template_CREATION_TABLE);
         db.execSQL(Evaluation_CREATION_TABLE);
         db.execSQL(Game_CREATION_TABLE);
+        db.execSQL(Tag_CREATION_TABLE);
     }
 
     @Override
@@ -77,6 +86,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Template_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Evaluation_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + Game_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Tag_TABLE_NAME);
         this.onCreate(db);
     }
 
@@ -434,6 +444,89 @@ public class DBHelper extends SQLiteOpenHelper {
                 values, // column/value
                 "id = ?", // selections
                 new String[] { String.valueOf(game.getId()) });
+
+        db.close();
+
+        return i;
+    }
+
+    public void deleteTag(Tag tag) {
+        // Get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Game_TABLE_NAME, "id = ?", new String[] { String.valueOf(tag.getId()) });
+        db.close();
+    }
+
+    public Tag getTag(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(Tag_TABLE_NAME, // a. table
+                Tag_COLUMNS, // b. column names
+                " id = ?", // c. selections
+                new String[] { String.valueOf(id) }, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Integer id_value = Integer.parseInt(cursor.getString(0));
+        String json = cursor.getString(1);
+
+        Gson gson = new Gson();
+        Tag tag = gson.fromJson(json, Tag.class);
+        tag.setId(id_value);
+
+        return tag;
+    }
+
+    public List<Tag> allTags() {
+
+        List<Tag> tags = new LinkedList<>();
+        String query = "SELECT  * FROM " + Tag_TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Tag tag = null;
+        Gson gson = new Gson();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Integer id_value = Integer.parseInt(cursor.getString(0));
+                String name = cursor.getString(1);
+                String json = cursor.getString(2);
+
+                tag = gson.fromJson(json, Tag.class);
+                tag.setId(id_value);
+
+                tags.add(tag);
+
+            } while (cursor.moveToNext());
+        }
+
+        return tags;
+    }
+
+    public Long addTag(Tag tag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Tag_KEY_NAME, tag.getName());
+        values.put(Tag_KEY_TAG, tag.toJson());
+
+        Long id = db.insert(Tag_TABLE_NAME,null, values);
+        db.close();
+        return id;
+    }
+
+    public int updateTag(Tag tag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Tag_KEY_TAG, tag.toJson());
+
+        int i = db.update(Tag_TABLE_NAME, // table
+                values, // column/value
+                "id = ?", // selections
+                new String[] { String.valueOf(tag.getId()) });
 
         db.close();
 

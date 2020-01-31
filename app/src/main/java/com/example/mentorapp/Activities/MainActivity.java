@@ -8,7 +8,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.R;
+import com.example.mentorapp.Tags.Tag;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +23,25 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the content view
         setContentView(R.layout.main_layout);
+
+        //TODO: Delete this when the activity is in place
+        DBHelper dbh = new DBHelper(getApplicationContext());
+        List<Tag> tags = dbh.allTags();
+        System.out.println("Tag List");
+        System.out.println(tags);
+        if (tags.size() < 2){
+            Tag locationTag = new Tag("Location");
+            locationTag.addOption("Court 1");
+            locationTag.addOption("Court 2");
+            locationTag.addOption("Court 3");
+            dbh.addTag(locationTag);
+
+            Tag ageTag = new Tag("Age Group");
+            ageTag.addOption("U10");
+            ageTag.addOption("U12");
+            ageTag.addOption("U14");
+            dbh.addTag(ageTag);
+        }
 
 
         Button toGameButton = findViewById(R.id.main_button_new_game_id);

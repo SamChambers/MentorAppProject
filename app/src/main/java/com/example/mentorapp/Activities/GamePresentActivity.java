@@ -61,8 +61,8 @@ public class GamePresentActivity extends AppCompatActivity {
 
         setContentView(R.layout.present_game_with_fragments_layout);
 
-        this.tabLayout = (TabLayout) findViewById(R.id.tabView_present_layout_id);
-        this.viewPager = (ViewPager) findViewById(R.id.viewPager_present_ID);
+        this.tabLayout = findViewById(R.id.tabView_present_layout_id);
+        this.viewPager = findViewById(R.id.viewPager_present_ID);
 
         DBHelper dbh = new DBHelper(getApplicationContext());
         ArrayList<Evaluation> evaluationArrayList = new ArrayList<>();
