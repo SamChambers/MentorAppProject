@@ -78,8 +78,14 @@ public class GameEditActivity extends AppCompatActivity {
 
         LinearLayout gameOptionsLL = findViewById(R.id.game_options_linear_layout_id);
         setupTags(gameOptionsLL);
+        TextView gameOptionsName = findViewById(R.id.game_options_editText_name_id);
+        TextView gameOptionsDate = findViewById(R.id.game_options_editText_date_id);
+        gameOptionsDate.setText(this.game.getDate());
+        gameOptionsName.setText(this.game.getIdentifier());
 
-        final ListView evaluationList = (ListView) findViewById(R.id.game_options_listView_evaluationslist_id);
+
+
+        final ListView evaluationList = findViewById(R.id.game_options_listView_evaluationslist_id);
 
         this.evaluationArrayList = new ArrayList<>();
         for(Integer id : game.getEvaluationsList()){
@@ -95,7 +101,7 @@ public class GameEditActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab_addNewEvaluation = (FloatingActionButton) findViewById(R.id.game_evaluation_fab_addNew);
+        FloatingActionButton fab_addNewEvaluation = findViewById(R.id.game_evaluation_fab_addNew);
         fab_addNewEvaluation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,8 +189,8 @@ public class GameEditActivity extends AppCompatActivity {
         builder.setView(dialogLayout);
         builder.setTitle("Add Evaluation");
 
-        final Spinner templateSpinner = (Spinner) dialogLayout.findViewById(R.id.options_spinner_template_id);
-        final Spinner officialSpinner = (Spinner) dialogLayout.findViewById(R.id.options_spinner_official_id);
+        final Spinner templateSpinner = dialogLayout.findViewById(R.id.options_spinner_template_id);
+        final Spinner officialSpinner = dialogLayout.findViewById(R.id.options_spinner_official_id);
 
         final List<Official> officialList = dbh.allOfficials();
         final ArrayList<String> officialNames = new ArrayList<>();
@@ -192,7 +198,7 @@ public class GameEditActivity extends AppCompatActivity {
             officialNames.add(official.getName());
         }
 
-        ArrayAdapter<String> officialAdapter = new ArrayAdapter<String>(context,
+        ArrayAdapter<String> officialAdapter = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_item, officialNames);
 
         officialSpinner.setAdapter(officialAdapter);
@@ -203,7 +209,7 @@ public class GameEditActivity extends AppCompatActivity {
             templateNames.add(template.getName());
         }
 
-        ArrayAdapter<String> templateAdapter = new ArrayAdapter<String>(context,
+        ArrayAdapter<String> templateAdapter = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_item, templateNames);
 
         templateSpinner.setAdapter(templateAdapter);
@@ -265,8 +271,6 @@ public class GameEditActivity extends AppCompatActivity {
 
     private void setupTags(LinearLayout ll){
         List<Tag> tagList = this.dbh.allTags();
-        System.out.println("Tag List");
-        System.out.println(tagList);
         for (Tag tag : tagList){
             View view = getLayoutInflater().inflate(R.layout.game_options_tag_layout,ll,false);
             TextView tagNameView = view.findViewById(R.id.game_options_tag_textView_tagName_id);
