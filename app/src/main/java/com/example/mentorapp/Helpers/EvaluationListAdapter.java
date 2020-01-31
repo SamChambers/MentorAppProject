@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
@@ -70,12 +71,12 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
 
 
         // Connect to the objects in the view
-        TextView descriptionView = (TextView) convertView.findViewById(R.id.text_description_id);
-        TextView scoreView = (TextView) convertView.findViewById(R.id.text_score_id);
-        Button plusButtonView = (Button) convertView.findViewById(R.id.button_plus_id);
-        Button minusButtonView = (Button) convertView.findViewById(R.id.button_minus_id);
-        Button commentButtonView = (Button) convertView.findViewById(R.id.button_comment_id);
-        final Button optionsButtonView = (Button) convertView.findViewById(R.id.button_options_id);
+        TextView descriptionView = convertView.findViewById(R.id.text_description_id);
+        TextView scoreView = convertView.findViewById(R.id.text_score_id);
+        ImageButton plusButtonView = convertView.findViewById(R.id.button_plus_id);
+        ImageButton minusButtonView = convertView.findViewById(R.id.button_minus_id);
+        ImageButton commentButtonView = convertView.findViewById(R.id.button_comment_id);
+        final ImageButton optionsButtonView = convertView.findViewById(R.id.button_options_id);
 
         // Set the description and the score
         descriptionView.setText(expandedListTask.getDescription());
@@ -101,7 +102,7 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         }
 
         // Tag the location to the buttons so they know which task they are associated with
-        Pair<Integer, Integer> locationPair = new Pair<Integer, Integer>(listPosition, expandedListPosition);
+        Pair<Integer, Integer> locationPair = new Pair(listPosition, expandedListPosition);
 
         scoreView.setTag(locationPair);
         plusButtonView.setTag(locationPair);

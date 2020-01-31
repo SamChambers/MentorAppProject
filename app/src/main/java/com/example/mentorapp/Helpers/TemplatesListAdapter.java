@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.List;
 
@@ -47,8 +47,8 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
             convertView = layoutInflater.inflate(R.layout.template_list_item_layout, null);
         }
 
-        Button deleteButton = (Button) convertView.findViewById(R.id.button_delete_template);
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.template_textView_templateName);
+        ImageButton deleteButton = convertView.findViewById(R.id.button_delete_template);
+        TextView nameTextView = convertView.findViewById(R.id.template_textView_templateName);
         nameTextView.setText(template.getName());
         convertView.setTag(position);
         deleteButton.setTag(position);
