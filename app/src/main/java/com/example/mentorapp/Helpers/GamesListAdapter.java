@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,21 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
             convertView = layoutInflater.inflate(R.layout.game_list_item_layout, null);
         }
 
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.text_game_name);
+        TextView nameTextView = (TextView) convertView.findViewById(R.id.text_game_name_id);
+        nameTextView.setText(game.getIdentifier());
+
+        ImageButton deleteButtonView = (ImageButton) convertView.findViewById(R.id.game_list_button_delete_id);
+        deleteButtonView.setTag(position);
+        deleteButtonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = (int)v.getTag();
+                dbh.deleteGame(gamesList.get(position));
+                updateList();
+                notifyDataSetChanged();
+            }
+        });
+
         convertView.setTag(position);
 
         convertView.setOnClickListener(new View.OnClickListener() {
