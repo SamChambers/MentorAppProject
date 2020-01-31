@@ -167,6 +167,8 @@ public class GameEditActivity extends AppCompatActivity {
         }
         this.game.setTags(tags);
 
+        this.dbh.updateGame(game);
+
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Game",game);
         setResult(Activity.RESULT_OK,returnIntent);

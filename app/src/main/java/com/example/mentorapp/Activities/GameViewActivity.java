@@ -129,6 +129,7 @@ public class GameViewActivity extends AppCompatActivity {
                 break;
             case 800:
                 this.game = (Game) data.getSerializableExtra("Game");
+                getSupportActionBar().setTitle(this.game.getIdentifier());
                 setEvaluationArray();
                 EvaluationFragmentAdapter tempAdapter2 = (EvaluationFragmentAdapter) viewPager.getAdapter();
                 tempAdapter2.setGameEvaluations(this.evaluationArray);
@@ -149,7 +150,7 @@ public class GameViewActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Game Title");
+        getSupportActionBar().setTitle(this.game.getIdentifier());
 
         return true;
     }
