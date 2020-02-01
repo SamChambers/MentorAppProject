@@ -62,8 +62,6 @@ public class Evaluation implements Serializable {
     public void calculateScore(){
         Float totalValue = Float.valueOf(0);
         Integer numberOfCategories = this.data.size();
-        System.out.println("Number of Categories");
-        System.out.println(numberOfCategories);
         if (numberOfCategories == 0){
             this.calculatedScore = totalValue;
             return;

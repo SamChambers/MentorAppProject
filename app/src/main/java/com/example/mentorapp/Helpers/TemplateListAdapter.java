@@ -1,14 +1,19 @@
 package com.example.mentorapp.Helpers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.text.InputType;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.mentorapp.Activities.TemplateEditActivity;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
 import com.example.mentorapp.TemplateCategory;

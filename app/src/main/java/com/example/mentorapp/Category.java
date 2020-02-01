@@ -35,6 +35,10 @@ public class Category implements Serializable {
         Float totalValue = Float.valueOf(0);
         Integer numberOfTasks = this.taskList.size();
 
+        if (numberOfTasks==0){
+            this.calculatedScore = totalValue;
+        }
+
         //Loop through all the tasks
         for(int i = 0; i < numberOfTasks; ++i){
             totalValue += this.taskList.get(i).getAggregateScore();
