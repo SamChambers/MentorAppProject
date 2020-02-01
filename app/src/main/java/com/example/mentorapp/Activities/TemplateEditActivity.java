@@ -20,6 +20,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Helpers.TemplateListAdapter;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
@@ -35,7 +36,7 @@ public class TemplateEditActivity extends AppCompatActivity {
 
     ExpandableListView expandableList;
     TextView templateNameView;
-
+    DBHelper dbh;
     Context context;
 
     @Override
@@ -43,6 +44,7 @@ public class TemplateEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.context = getApplicationContext();
+        this.dbh = new DBHelper(this.context);
 
         this.template = (Template) getIntent().getSerializableExtra("Template");
 
@@ -72,7 +74,7 @@ public class TemplateEditActivity extends AppCompatActivity {
             }
         });
 
-//        this.templateNameView.setText(this.template.getName());
+        this.templateNameView.setText(this.template.getName());
         this.templateNameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,10 +234,19 @@ public class TemplateEditActivity extends AppCompatActivity {
     }
 
     private void backFunction(){
+        saveTemplate();
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("Template",template);
         setResult(Activity.RESULT_OK,returnIntent);
         finish();
+    }
+
+    private void saveTemplate(){
+        this.template.setName(this.templateNameView.getText().toString());
+        if (this.template.getId() != null) {
+            this.dbh.updateTemplate(this.template);
+        } else {
+            this.dbh.addTemplate(this.template);
+        }
     }
 }
 

@@ -106,16 +106,6 @@ public class TemplateListActivity extends AppCompatActivity {
 
         switch (requestCode){
             case 200:
-                Template tempTemplate  = (Template) data.getSerializableExtra("Template");
-
-                if(tempTemplate.getId() == null){
-                    System.out.println("New template");
-                    this.DBH.addTemplate(tempTemplate);
-                } else {
-                    System.out.println("Old template");
-                    this.DBH.updateTemplate(tempTemplate);
-                }
-
                 TemplatesListAdapter TLA = (TemplatesListAdapter) this.templateListView.getAdapter();
                 TLA.updateList();
                 TLA.notifyDataSetChanged();
