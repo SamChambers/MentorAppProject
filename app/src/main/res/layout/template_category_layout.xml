@@ -26,18 +26,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_delete_template_category_id"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:focusable="false"
+        android:src="@android:drawable/ic_menu_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/template_edit_category_add_task"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/template_edit_category_add_task"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/template_edit_category_menu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <ImageButton
+        android:id="@+id/template_edit_category_menu"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:focusable="false" />
+        app:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

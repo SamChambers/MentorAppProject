@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -24,6 +26,7 @@ import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Helpers.TemplateListAdapter;
 import com.example.mentorapp.R;
 import com.example.mentorapp.Template;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
@@ -52,11 +55,26 @@ public class TemplateEditActivity extends AppCompatActivity {
 
         this.expandableList = findViewById(R.id.editTemplate_expandableListView);
         this.templateNameView = findViewById(R.id.comment_textView_templateName);
+
+        FloatingActionButton addCategoryFab = (FloatingActionButton) findViewById(R.id.template_edit_add_category_fab);
+        addCategoryFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addCategory();
+            }
+        });
+
+        //TODO - James: move to adapter
+        ImageButton addTaskButton = (ImageButton) findViewById(R.id.template_edit_category_add_task);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //handle add task
+            }
+        });
+
+        //TODO - James: Remove because redundant
         Button buttonAddCategory = findViewById(R.id.button_template_add_category_id);
-        Button buttonAddTask = findViewById(R.id.button_template_add_task_id);
-
-        this.expandableList.setAdapter(new TemplateListAdapter(this.context, this.template));
-
         buttonAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +82,8 @@ public class TemplateEditActivity extends AppCompatActivity {
             }
         });
 
+        //TODO - James: move to adapter
+        Button buttonAddTask = findViewById(R.id.button_template_add_task_id);
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +93,8 @@ public class TemplateEditActivity extends AppCompatActivity {
                 addTask();
             }
         });
+
+        this.expandableList.setAdapter(new TemplateListAdapter(this.context, this.template));
 
         this.templateNameView.setText(this.template.getName());
         this.templateNameView.setOnClickListener(new View.OnClickListener() {

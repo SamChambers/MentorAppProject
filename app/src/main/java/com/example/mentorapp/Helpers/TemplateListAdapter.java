@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mentorapp.R;
@@ -55,7 +55,15 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
         }
         //Connect to the title text box
         TextView taskNameTextView = (TextView) convertView.findViewById(R.id.template_text_task_description_id);
-        Button deleteTaskButton = (Button) convertView.findViewById(R.id.button_delete_template_task_id);
+        ImageButton deleteTaskButton = (ImageButton) convertView.findViewById(R.id.button_delete_template_task_id);
+        ImageButton addTaskButton = (ImageButton) convertView.findViewById(R.id.template_edit_task_menu);
+
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //handle add task
+            }
+        });
         //Set the title
         taskNameTextView.setText(task.getDescription());
 
@@ -119,7 +127,7 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
         }
         //Connect to the title text box
         TextView categoryNameTextView = (TextView) convertView.findViewById(R.id.category_textView_templateTextCategoryName);
-        Button deleteCategoryButton = (Button) convertView.findViewById(R.id.button_delete_template_category_id);
+        ImageButton deleteCategoryButton = (ImageButton) convertView.findViewById(R.id.button_delete_template_category_id);
         //Set the title
         categoryNameTextView.setText(tc.getName());
 
