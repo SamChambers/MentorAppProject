@@ -72,7 +72,7 @@ public class TemplateEditActivity extends AppCompatActivity {
             }
         });
 
-        this.templateNameView.setText(this.template.getName());
+//        this.templateNameView.setText(this.template.getName());
         this.templateNameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +114,7 @@ public class TemplateEditActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         Toolbar mToolbar = findViewById(R.id.editTemplate_toolbar);
+        mToolbar.setTitle(this.template.getName());
         setSupportActionBar(mToolbar);
 
 
