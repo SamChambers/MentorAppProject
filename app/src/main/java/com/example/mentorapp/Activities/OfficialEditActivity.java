@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,15 @@ public class OfficialEditActivity extends AppCompatActivity {
         this.context = getApplicationContext();
         this.official = (Official) getIntent().getSerializableExtra("Official");
         setContentView(R.layout.official_edit_layout);
+
+        FloatingActionButton saveOfficialFab = (FloatingActionButton) findViewById(R.id.official_edit_save_fab);
+        saveOfficialFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //handle save official
+                backFunction();
+            }
+        });
 
         EditText nameView = findViewById(R.id.text_edit_official_name_id);
         EditText emailView = findViewById(R.id.text_edit_official_email_id);
@@ -243,7 +253,7 @@ public class OfficialEditActivity extends AppCompatActivity {
         backFunction();
 
     }
-
+    
     private void backFunction(){
         saveOfficial();
         Intent returnIntent = new Intent();
