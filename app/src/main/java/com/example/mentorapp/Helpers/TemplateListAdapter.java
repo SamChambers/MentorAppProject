@@ -1,16 +1,22 @@
 package com.example.mentorapp.Helpers;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.InputType;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.mentorapp.Activities.TemplateEditActivity;
@@ -48,9 +54,10 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
+        System.out.println("GETTING CHILD VIEW");
         // Get the category title
         TemplateCategory tc = (TemplateCategory) getGroup(listPosition);
-        TemplateTask task = (TemplateTask) getChild(listPosition,expandedListPosition);
+        final TemplateTask task = (TemplateTask) getChild(listPosition,expandedListPosition);
 
         //Load the view if we need to create one
         if (convertView == null) {
@@ -60,26 +67,83 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
         }
         //Connect to the title text box
         TextView taskNameTextView = (TextView) convertView.findViewById(R.id.template_text_task_description_id);
-        Button deleteTaskButton = (Button) convertView.findViewById(R.id.button_delete_template_task_id);
+        final ImageButton optionsButton = (ImageButton) convertView.findViewById(R.id.template_edit_task_menu);
+
         //Set the title
         taskNameTextView.setText(task.getDescription());
 
         // Tag the location to the buttons so they know which task they are associated with
         Pair<Integer, Integer> locationPair = new Pair<Integer, Integer>(listPosition, expandedListPosition);
 
-        deleteTaskButton.setTag(locationPair);
+        optionsButton.setTag(locationPair);
+        optionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                //handle add task
+                PopupMenu popup = new PopupMenu(context, optionsButton);
+                final String options[] = {"Edit","Delete"};
+                for(int i=0; i < options.length; ++i) {
+                    popup.getMenu().add(options[i]);
+                }
 
-        // Set the plus button listener
-        deleteTaskButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Get the task location
-                Pair<Integer,Integer> locationPair = (Pair<Integer, Integer>) v.getTag();
-                int listPosition = locationPair.first;
-                int expandedListPosition = locationPair.second;
-                // Edit the score
-                template.getCategories().get(listPosition).getTasks().remove(expandedListPosition);
-                //Tell system it has changed
-                notifyDataSetChanged();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (String.valueOf(item.getTitle())) {
+                            case "Edit":
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                                final String description = task.getDescription();
+                                builder.setTitle("Edit Description");
+
+                                // Set up the input
+                                final EditText input = new EditText(context);
+                                input.setText(description);
+                                // Specify the type of input expected
+                                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                                builder.setView(input);
+
+                                // Set up the buttons
+                                builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String m_Text = input.getText().toString();
+                                        task.setDescription(m_Text);
+                                        notifyDataSetChanged();
+                                    }
+                                });
+                                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                builder.show();
+                                /*
+                                Toast.makeText(
+                                        context,
+                                        "You Clicked : " + item.getTitle(),
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                                 */
+                                break;
+                            case "Delete":
+                                // Get the task location
+                                Pair<Integer,Integer> locationPair = (Pair<Integer, Integer>) v.getTag();
+                                int listPosition = locationPair.first;
+                                int expandedListPosition = locationPair.second;
+                                // Edit the score
+                                template.getCategories().get(listPosition).getTasks().remove(expandedListPosition);
+                                //Tell system it has changed
+                                notifyDataSetChanged();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
             }
         });
 
@@ -89,6 +153,8 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
     // Get the total number of tasks in the category
     @Override
     public int getChildrenCount(int listPosition) {
+        System.out.println("Getting Child Count");
+        System.out.println(this.template.getCategory(listPosition).getTasks().size());
         return this.template.getCategory(listPosition).getTasks().size();
     }
 
@@ -115,7 +181,7 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         // Get the category title
-        TemplateCategory tc = (TemplateCategory) getGroup(listPosition);
+        final TemplateCategory tc = (TemplateCategory) getGroup(listPosition);
         //Load the view if we need to create one
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
@@ -123,25 +189,90 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.template_category_layout, null);
         }
         //Connect to the title text box
-        TextView categoryNameTextView = (TextView) convertView.findViewById(R.id.category_textView_templateTextCategoryName);
-        Button deleteCategoryButton = (Button) convertView.findViewById(R.id.button_delete_template_category_id);
+        TextView categoryNameTextView = convertView.findViewById(R.id.category_textView_templateTextCategoryName);
+        ImageButton addTaskCategoryButton = convertView.findViewById(R.id.template_edit_category_add_task);
+        addTaskCategoryButton.setFocusable(false);
+        final ImageButton menuCategoryButton = convertView.findViewById(R.id.template_edit_category_menu);
+        menuCategoryButton.setFocusable(false);
         //Set the title
         categoryNameTextView.setText(tc.getName());
 
+        addTaskCategoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTask(tc);
+            }
+        });
+
         // Tag the location to the buttons so they know which task they are associated with
         int location = listPosition;
+        menuCategoryButton.setTag(location);
+        menuCategoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                //handle add task
+                PopupMenu popup = new PopupMenu(context, menuCategoryButton);
+                final String options[] = {"Edit","Delete"};
+                for(int i=0; i < options.length; ++i) {
+                    popup.getMenu().add(options[i]);
+                }
 
-        deleteCategoryButton.setTag(location);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
 
-        // Set the plus button listener
-        deleteCategoryButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Get the task location
-                int listPosition = (int) v.getTag();
-                // Edit the score
-                template.getCategories().remove(listPosition);
-                //Tell system it has changed
-                notifyDataSetChanged();
+                        switch (String.valueOf(item.getTitle())) {
+                            case "Edit":
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                                final String description = tc.getName();
+                                builder.setTitle("Edit Description");
+
+                                // Set up the input
+                                final EditText input = new EditText(context);
+                                input.setText(description);
+                                // Specify the type of input expected
+                                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                                builder.setView(input);
+
+                                // Set up the buttons
+                                builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String m_Text = input.getText().toString();
+                                        tc.setName(m_Text);
+                                        notifyDataSetChanged();
+                                    }
+                                });
+                                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                builder.show();
+                                /*
+                                Toast.makeText(
+                                        context,
+                                        "You Clicked : " + item.getTitle(),
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                                 */
+                                break;
+                            case "Delete":
+                                // Get the task location
+                                int listPosition = (int) v.getTag();
+                                // Edit the score
+                                template.getCategories().remove(listPosition);
+                                //Tell system it has changed
+                                notifyDataSetChanged();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
             }
         });
 
@@ -160,5 +291,36 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+
+    private void addTask(final TemplateCategory tc){
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogLayout = inflater.inflate(R.layout.template_add_task_alert_layout, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(dialogLayout);
+        builder.setTitle(tc.getName());
+
+        final EditText description = dialogLayout.findViewById(R.id.text_template_description_id);
+        final EditText weight = dialogLayout.findViewById(R.id.text_template_weight_id);
+
+        // Set up the buttons
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String descriptionText = description.getText().toString();
+                Float weightText = Float.parseFloat(weight.getText().toString());
+                tc.addTask(descriptionText,weightText);
+                notifyDataSetChanged();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 
 }

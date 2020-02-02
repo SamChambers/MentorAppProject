@@ -21,6 +21,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/template_edit_add_category_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/editTemplate_expandableListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editTemplate_constraintLayout_inner"
         android:layout_width="0dp"
@@ -63,30 +75,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!--    eventually replaced by extended FAB -->
-    <LinearLayout
-        android:id="@+id/editTemplate_linearLayout_inner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTemplate_constraintLayout_inner">
-
-        <Button
-            android:id="@+id/button_template_add_category_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Category" />
-
-        <Button
-            android:id="@+id/button_template_add_task_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Task" />
-    </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/editTemplate_expandableListView"
@@ -100,8 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTemplate_linearLayout_inner"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/editTemplate_constraintLayout_inner">
 
     </ExpandableListView>
 
