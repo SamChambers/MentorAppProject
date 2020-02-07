@@ -45,7 +45,6 @@ public class OfficialViewActivity extends AppCompatActivity {
         setContentView(R.layout.official_view_layout);
         updateViews();
 
-        Button buttonDeleteOfficialView = findViewById(R.id.button_delete_official_id);
 
         ListView officialGamesListView = findViewById(R.id.official_view_games_list_id);
         ArrayList<Integer> officialGamesList = official.getEvaluationsList();
