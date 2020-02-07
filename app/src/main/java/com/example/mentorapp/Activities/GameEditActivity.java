@@ -245,8 +245,9 @@ public class GameEditActivity extends AppCompatActivity {
                 int templatePosition = templateNames.indexOf(templateName);
                 Template selectedTemplate = templateList.get(templatePosition);
 
-                Evaluation evaluation = new Evaluation(selectedTemplate);
+                Evaluation evaluation = new Evaluation(selectedTemplate, game.getId());
                 evaluation.setOfficialId(selectedOfficial.getId());
+                evaluation.setEvalName(game.getIdentifier());
                 Long evaluationId = dbh.addEvaluation(evaluation);
                 selectedOfficial.getEvaluationsList().add(evaluationId.intValue());
                 dbh.updateOfficial(selectedOfficial);

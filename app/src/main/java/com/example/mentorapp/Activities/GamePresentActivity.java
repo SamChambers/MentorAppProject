@@ -49,30 +49,26 @@ import java.util.ArrayList;
 
 public class GamePresentActivity extends AppCompatActivity {
 
-    private Game game;
+    private ArrayList<Evaluation> evaluationArrayList;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String gameName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.game = (Game) getIntent().getSerializableExtra("MyGame");
+        this.evaluationArrayList = (ArrayList<Evaluation>) getIntent().getSerializableExtra("MyEvaluations");
+        this.gameName = (String) getIntent().getSerializableExtra("MyGameName");
 
         setContentView(R.layout.present_game_with_fragments_layout);
 
         this.tabLayout = findViewById(R.id.tabView_present_layout_id);
         this.viewPager = findViewById(R.id.viewPager_present_ID);
 
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        ArrayList<Evaluation> evaluationArrayList = new ArrayList<>();
-        for(Integer id : this.game.getEvaluationsList()){
-            evaluationArrayList.add(dbh.getEvaluation(id));
-        }
-
         PresentationStorage ps;
         ArrayList<PresentationStorage> presentationList = new ArrayList<>();
-        if (this.game.getEvaluationCount() > 1) {
+        if (this.evaluationArrayList.size() > 1) {
             ps = convertEvaluationToPresentation(evaluationArrayList);
             presentationList.add(ps);
             ps.setTitle("All");
@@ -134,7 +130,7 @@ public class GamePresentActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(this.game.getIdentifier());
+        getSupportActionBar().setTitle(this.gameName);
 
         return true;
     }

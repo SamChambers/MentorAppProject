@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mentorapp.DataBase.DBHelper;
+import com.example.mentorapp.Helpers.OfficialEvaluationsListAdapter;
 import com.example.mentorapp.Official.MonthYear;
 import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
@@ -23,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class OfficialViewActivity extends AppCompatActivity {
@@ -43,27 +46,11 @@ public class OfficialViewActivity extends AppCompatActivity {
         updateViews();
 
         Button buttonDeleteOfficialView = findViewById(R.id.button_delete_official_id);
-        Button buttonEditOfficialView = findViewById(R.id.button_edit_official_id);
-        buttonDeleteOfficialView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DBHelper ODBH = new DBHelper(context);
-                ODBH.deleteOfficial(official);
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
-            }
-        });
-        buttonEditOfficialView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, OfficialEditActivity.class);
-                intent.putExtra("Official", official);
-                int code = 500;
-                startActivityForResult(intent, code);
-            }
-        });
 
+        ListView officialGamesListView = findViewById(R.id.official_view_games_list_id);
+        ArrayList<Integer> officialGamesList = official.getEvaluationsList();
+        OfficialEvaluationsListAdapter oela = new OfficialEvaluationsListAdapter(OfficialViewActivity.this,this.official);
+        officialGamesListView.setAdapter(oela);
 
         ActionBar actionBar = getSupportActionBar();
         Toolbar mToolbar = findViewById(R.id.toolbar_view_official_id);

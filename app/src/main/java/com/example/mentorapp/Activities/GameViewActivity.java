@@ -178,7 +178,8 @@ public class GameViewActivity extends AppCompatActivity {
     private void goToPresent(){
         saveGameAndEvaluations();
         Intent intent = new Intent(this, GamePresentActivity.class);
-        intent.putExtra("MyGame", this.game);
+        intent.putExtra("MyEvaluations", this.evaluationArray);
+        intent.putExtra("MyGameName", this.game.getIdentifier());
         startActivity(intent);
     }
 

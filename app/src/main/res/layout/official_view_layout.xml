@@ -30,6 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout11"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -143,13 +144,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button_edit_official_id"
+    <ListView
+        android:id="@+id/official_view_games_list_id"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        app:layout_constraintBottom_toTopOf="@+id/button_delete_official_id"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewOfficial_fab_editOfficial"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

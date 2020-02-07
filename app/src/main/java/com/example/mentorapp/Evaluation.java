@@ -19,29 +19,34 @@ public class Evaluation implements Serializable {
     private Integer OfficialId;
     private String templateName;
     private Date creationDate;
+    private Integer gameId;
+
 
     // Internal Variables
     private List<Category> data;
     private List<String> categories;
     private Float calculatedScore;
+    private String evalName;
 
     //Basic constructor
     public Evaluation(){
         this.data = new ArrayList<Category>();
         this.calculatedScore = Float.valueOf(0);
         this.categories = new ArrayList<String>();
+        this.evalName = "";
         setCreationDate(new Date());
     }
 
-    //Full constructor
-    public Evaluation(List<Category> data){
+    public Evaluation(List<Category> data, Integer gameId){
         this.data = data;
         this.calculateScore();
         this.updateCategories();
+        this.evalName = "";
+        this.gameId = gameId;
         setCreationDate(new Date());
     }
 
-    public Evaluation(Template template){
+    public Evaluation(Template template, Integer gameId){
         this.data = new ArrayList<>();
         for(TemplateCategory tc:template.getCategories()){
             Category cat = new Category(tc.getName());
@@ -55,6 +60,9 @@ public class Evaluation implements Serializable {
         this.templateName = template.getName();
         this.calculateScore();
         this.updateCategories();
+        //TODO: Make this in the create evaluation from game options and edit game name from options
+        this.evalName = "Sample Eval Name";
+        this.gameId = gameId;
         setCreationDate(new Date());
     }
 
@@ -203,5 +211,13 @@ public class Evaluation implements Serializable {
 
     public String getTemplateName() {
         return templateName;
+    }
+
+    public String getEvalName() {
+        return evalName;
+    }
+
+    public void setEvalName(String evalName) {
+        this.evalName = evalName;
     }
 }
