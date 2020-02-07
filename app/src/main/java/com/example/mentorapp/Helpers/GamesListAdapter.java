@@ -15,9 +15,11 @@ import androidx.annotation.Nullable;
 
 import com.example.mentorapp.Activities.GameViewActivity;
 import com.example.mentorapp.DataBase.DBHelper;
+import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Game;
 import com.example.mentorapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamesListAdapter extends ArrayAdapter<Game> {
@@ -38,7 +40,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
 
-        Game game = this.gamesList.get(position);
+        final Game game = this.gamesList.get(position);
 
         // If we need to make a new view, load it
         if (convertView == null) {
@@ -56,6 +58,11 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
             @Override
             public void onClick(View v) {
                 int position = (int)v.getTag();
+                ArrayList<Integer> evalList = game.getEvaluationsList();
+                for (Integer evalId : evalList){
+                    Evaluation eval = dbh.getEvaluation(evalId);
+                    dbh.deleteEvaluation(eval);
+                }
                 dbh.deleteGame(gamesList.get(position));
                 updateList();
                 notifyDataSetChanged();

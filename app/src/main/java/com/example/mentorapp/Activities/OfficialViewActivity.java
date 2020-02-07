@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mentorapp.DataBase.DBHelper;
+import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Helpers.OfficialEvaluationsListAdapter;
 import com.example.mentorapp.Official.MonthYear;
 import com.example.mentorapp.Official.Official;
@@ -99,17 +100,25 @@ public class OfficialViewActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.delete_official_menu_item_id){
-            DBHelper ODBH = new DBHelper(context);
-            ODBH.deleteOfficial(official);
-            Intent returnIntent = new Intent();
-            setResult(Activity.RESULT_OK,returnIntent);
-            finish();
+            deleteOfficial();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void deleteOfficial(){
+        DBHelper ODBH = new DBHelper(context);
+        for (Integer evalId : official.getEvaluationsList()){
+            Evaluation eval = ODBH.getEvaluation(evalId);
+            eval.setOfficialId(null);
+            ODBH.updateEvaluation(eval);
+        }
+        ODBH.deleteOfficial(official);
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
+    }
 
     private void updateViews(){
 

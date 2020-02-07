@@ -112,6 +112,10 @@ public class DBHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
 
+        if (cursor.getCount() != 1){
+            return null;
+        }
+
         Integer id_value = Integer.parseInt(cursor.getString(0));
         String name = cursor.getString(1);
         Integer dob_year = cursor.getString(2) == null ? null : Integer.parseInt(cursor.getString(2));
