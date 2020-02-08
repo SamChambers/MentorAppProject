@@ -54,7 +54,6 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        System.out.println("GETTING CHILD VIEW");
         // Get the category title
         TemplateCategory tc = (TemplateCategory) getGroup(listPosition);
         final TemplateTask task = (TemplateTask) getChild(listPosition,expandedListPosition);
@@ -66,11 +65,14 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.template_task_layout, null);
         }
         //Connect to the title text box
-        TextView taskNameTextView = (TextView) convertView.findViewById(R.id.template_text_task_description_id);
-        final ImageButton optionsButton = (ImageButton) convertView.findViewById(R.id.template_edit_task_menu);
+        TextView taskNameTextView = convertView.findViewById(R.id.template_text_task_description_id);
+        final ImageButton optionsButton = convertView.findViewById(R.id.template_edit_task_menu);
+        TextView taskWeightView = convertView.findViewById(R.id.template_edit_task_weight_id);
 
         //Set the title
         taskNameTextView.setText(task.getDescription());
+
+        taskWeightView.setText(task.getWeight().toString());
 
         // Tag the location to the buttons so they know which task they are associated with
         Pair<Integer, Integer> locationPair = new Pair<Integer, Integer>(listPosition, expandedListPosition);
@@ -190,12 +192,14 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
         }
         //Connect to the title text box
         TextView categoryNameTextView = convertView.findViewById(R.id.category_textView_templateTextCategoryName);
+        TextView categoryWeightTextView = convertView.findViewById(R.id.template_edit_category_weight_id);
         ImageButton addTaskCategoryButton = convertView.findViewById(R.id.template_edit_category_add_task);
         addTaskCategoryButton.setFocusable(false);
         final ImageButton menuCategoryButton = convertView.findViewById(R.id.template_edit_category_menu);
         menuCategoryButton.setFocusable(false);
         //Set the title
         categoryNameTextView.setText(tc.getName());
+        categoryWeightTextView.setText(tc.getWeight().toString());
 
         addTaskCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override

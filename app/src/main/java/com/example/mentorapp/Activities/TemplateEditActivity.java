@@ -161,7 +161,7 @@ public class TemplateEditActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String m_Text = input.getText().toString();
-                template.addCategory(m_Text);
+                template.addCategory(m_Text, Float.valueOf(1));
                 TemplateListAdapter tla = (TemplateListAdapter) expandableList.getExpandableListAdapter();
                 tla.notifyDataSetChanged();
 

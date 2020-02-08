@@ -54,7 +54,7 @@ public class OfficialEvaluationsListAdapter extends ArrayAdapter<Game> {
         }
 
         TextView nameTextView = convertView.findViewById(R.id.official_evaluation_list_text_evaluation_id);
-        nameTextView.setText(evaluation.getEvalName());
+        nameTextView.setText(this.dbh.getGame(evaluation.getGameId()).getIdentifier());
 
         TextView dateTextView = convertView.findViewById(R.id.official_evaluation_list_date_id);
         dateTextView.setText(evaluation.getCreationDate().toString());
@@ -85,7 +85,7 @@ public class OfficialEvaluationsListAdapter extends ArrayAdapter<Game> {
         evaluationArrayList.add(evaluation);
         Intent intent = new Intent(context, GamePresentActivity.class);
         intent.putExtra("MyEvaluations", evaluationArrayList);
-        intent.putExtra("MyGameName", evaluation.getEvalName());
+        intent.putExtra("MyGameName", this.dbh.getGame(evaluation.getGameId()).getIdentifier());
         ((Activity)this.context).startActivity(intent);
     }
 

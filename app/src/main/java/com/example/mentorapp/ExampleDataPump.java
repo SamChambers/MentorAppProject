@@ -32,15 +32,15 @@ public class ExampleDataPump {
     public static Template getTemplate(){
         Template template = new Template("DataPump Template");
 
-        template.addCategory("Positioning");
+        template.addCategory("Positioning", Float.valueOf(1));
         template.getCategory(0).addTask("Dynamic Plays");
         template.getCategory(0).addTask("Set Pieces");
 
-        template.addCategory("Game management");
+        template.addCategory("Game management", Float.valueOf(1));
         template.getCategory(1).addTask("First 18 min");
         template.getCategory(1).addTask("Last 2 min");
 
-        template.addCategory("Conditioning");
+        template.addCategory("Conditioning", Float.valueOf(1));
         template.getCategory(2).addTask("Sprints");
         template.getCategory(2).addTask("Endurance");
 

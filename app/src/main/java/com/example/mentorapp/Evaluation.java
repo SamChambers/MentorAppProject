@@ -26,14 +26,12 @@ public class Evaluation implements Serializable {
     private List<Category> data;
     private List<String> categories;
     private Float calculatedScore;
-    private String evalName;
 
     //Basic constructor
     public Evaluation(){
         this.data = new ArrayList<Category>();
         this.calculatedScore = Float.valueOf(0);
         this.categories = new ArrayList<String>();
-        this.evalName = "";
         setCreationDate(new Date());
     }
 
@@ -41,7 +39,6 @@ public class Evaluation implements Serializable {
         this.data = data;
         this.calculateScore();
         this.updateCategories();
-        this.evalName = "";
         this.gameId = gameId;
         setCreationDate(new Date());
     }
@@ -60,8 +57,6 @@ public class Evaluation implements Serializable {
         this.templateName = template.getName();
         this.calculateScore();
         this.updateCategories();
-        //TODO: Make this in the create evaluation from game options and edit game name from options
-        this.evalName = "Sample Eval Name";
         this.gameId = gameId;
         setCreationDate(new Date());
     }
@@ -69,6 +64,7 @@ public class Evaluation implements Serializable {
     // Calculate the score for the game
     public void calculateScore(){
         Float totalValue = Float.valueOf(0);
+        Float totalWeight = Float.valueOf(0);
         Integer numberOfCategories = this.data.size();
         if (numberOfCategories == 0){
             this.calculatedScore = totalValue;
@@ -77,9 +73,20 @@ public class Evaluation implements Serializable {
 
         //Loop through all the categories
         for(int i = 0; i < numberOfCategories; ++i){
-            totalValue += this.data.get(i).getScore();
+            Category cat = this.data.get(i);
+            cat.updateScore();
+            Float catWeight = cat.getWeight();
+            System.out.println("Score= "+cat.getScore().toString());
+            totalValue += cat.getScore()*catWeight;
+            totalWeight += catWeight;
+
+
+
         }
-        this.calculatedScore = totalValue/numberOfCategories;
+        System.out.println("SCORE VARIABLES");
+        System.out.println(totalValue);
+        System.out.println(totalWeight);
+        this.calculatedScore = totalValue/totalWeight;
 
     }
 
@@ -194,6 +201,7 @@ public class Evaluation implements Serializable {
     }
 
     public String toJson(){
+        calculateScore();
         Gson gson = new Gson();
         return gson.toJson(this);
     }
@@ -212,14 +220,6 @@ public class Evaluation implements Serializable {
 
     public String getTemplateName() {
         return templateName;
-    }
-
-    public String getEvalName() {
-        return evalName;
-    }
-
-    public void setEvalName(String evalName) {
-        this.evalName = evalName;
     }
 
     public Integer getGameId() {

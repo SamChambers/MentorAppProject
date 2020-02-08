@@ -31,12 +31,12 @@ public class Category implements Serializable {
 
     //Update the interval score variable
     public void updateScore(){
-        Task task;
         Float totalValue = Float.valueOf(0);
         Integer numberOfTasks = this.taskList.size();
 
         if (numberOfTasks==0){
             this.calculatedScore = totalValue;
+            return;
         }
 
         //Loop through all the tasks
@@ -102,4 +102,11 @@ public class Category implements Serializable {
         this.categoryTitle = categoryName;
     }
 
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
 }

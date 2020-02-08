@@ -38,8 +38,8 @@ public class Template implements Serializable {
         return this.categories.get(position);
     }
 
-    public void addCategory(String name){
-        this.categories.add(new TemplateCategory(name));
+    public void addCategory(String name, Float weight){
+        this.categories.add(new TemplateCategory(name, weight));
     }
 
     public void addTask(int categoryPosition, String description){
