@@ -205,7 +205,8 @@ public class GameViewActivity extends AppCompatActivity {
     private void setEvaluationArray(){
         this.evaluationArray = new ArrayList<>();
         for(Integer id : this.game.getEvaluationsList()){
-            this.evaluationArray.add(this.dbh.getEvaluation(id));
+            Evaluation eval = this.dbh.getEvaluation(id);
+            this.evaluationArray.add(eval);
         }
     }
 

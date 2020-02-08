@@ -343,6 +343,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public Long addEvaluation(Evaluation evaluation) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+
+        if (evaluation.getId() != null){
+            System.out.println("\n\nYOU ARE ADDING AN OFFICIAL WITH AN ID\n\n");
+        }
+
+
         values.put(Evaluation_KEY_OFFICIAL, evaluation.getOfficialId());
         values.put(Evaluation_KEY_EVALUATION, evaluation.toJson());
 

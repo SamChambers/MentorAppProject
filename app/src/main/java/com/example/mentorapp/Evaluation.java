@@ -85,6 +85,7 @@ public class Evaluation implements Serializable {
 
     // Get score
     public Float getScore(){
+        calculateScore();
         return this.calculatedScore;
     }
 
@@ -219,5 +220,13 @@ public class Evaluation implements Serializable {
 
     public void setEvalName(String evalName) {
         this.evalName = evalName;
+    }
+
+    public Integer getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(Integer gameId) {
+        this.gameId = gameId;
     }
 }

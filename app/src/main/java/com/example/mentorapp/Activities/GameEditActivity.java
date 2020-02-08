@@ -249,6 +249,7 @@ public class GameEditActivity extends AppCompatActivity {
                 evaluation.setOfficialId(selectedOfficial.getId());
                 evaluation.setEvalName(game.getIdentifier());
                 Long evaluationId = dbh.addEvaluation(evaluation);
+                evaluation.setId(evaluationId.intValue());
                 selectedOfficial.getEvaluationsList().add(evaluationId.intValue());
                 dbh.updateOfficial(selectedOfficial);
 

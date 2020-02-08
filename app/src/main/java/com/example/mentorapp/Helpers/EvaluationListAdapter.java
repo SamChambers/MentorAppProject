@@ -74,9 +74,13 @@ public class EvaluationListAdapter extends BaseExpandableListAdapter {
         TextView descriptionView = convertView.findViewById(R.id.text_description_id);
         TextView scoreView = convertView.findViewById(R.id.text_score_id);
         ImageButton plusButtonView = convertView.findViewById(R.id.button_plus_id);
+        plusButtonView.setFocusable(false);
         ImageButton minusButtonView = convertView.findViewById(R.id.button_minus_id);
+        minusButtonView.setFocusable(false);
         ImageButton commentButtonView = convertView.findViewById(R.id.button_comment_id);
+        commentButtonView.setFocusable(false);
         final ImageButton optionsButtonView = convertView.findViewById(R.id.button_options_id);
+        optionsButtonView.setFocusable(false);
 
         // Set the description and the score
         descriptionView.setText(expandedListTask.getDescription());
