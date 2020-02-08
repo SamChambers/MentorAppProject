@@ -103,10 +103,6 @@ public class TemplateEditActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
         ActionBar actionBar = getSupportActionBar();
         Toolbar mToolbar = findViewById(R.id.editTemplate_toolbar);
         mToolbar.setTitle(this.template.getName());
@@ -145,23 +141,22 @@ public class TemplateEditActivity extends AppCompatActivity {
     }
 
     private void addCategory(){
-
+        LayoutInflater inflater = LayoutInflater.from(TemplateEditActivity.this);
+        View dialogLayout = inflater.inflate(R.layout.template_add_category_alert_layout, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(TemplateEditActivity.this);
+        builder.setView(dialogLayout);
+        builder.setTitle("Add category");
 
-        builder.setTitle("Add Category");
-
-        // Set up the input
-        final EditText input = new EditText(context);
-        // Specify the type of input expected
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        final EditText description = dialogLayout.findViewById(R.id.text_template_category_description_id);
+        final EditText weight = dialogLayout.findViewById(R.id.text_template_category_weight_id);
 
         // Set up the buttons
         builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String m_Text = input.getText().toString();
-                template.addCategory(m_Text, Float.valueOf(1));
+                String descriptionText = description.getText().toString();
+                Float weightText = Float.parseFloat(weight.getText().toString());
+                template.addCategory(descriptionText, weightText);
                 TemplateListAdapter tla = (TemplateListAdapter) expandableList.getExpandableListAdapter();
                 tla.notifyDataSetChanged();
 
@@ -174,11 +169,7 @@ public class TemplateEditActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog mAlertDialog = builder.create();
-        mAlertDialog.show();
-
-
-
+        builder.show();
 
     }
 
