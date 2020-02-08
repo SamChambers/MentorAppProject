@@ -93,24 +93,26 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
 
                         switch (String.valueOf(item.getTitle())) {
                             case "Edit":
+                                LayoutInflater inflater = LayoutInflater.from(context);
+                                View dialogLayout = inflater.inflate(R.layout.template_add_task_alert_layout, null);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setView(dialogLayout);
+                                builder.setTitle("Edit Task");
 
-                                final String description = task.getDescription();
-                                builder.setTitle("Edit Description");
+                                final EditText description = dialogLayout.findViewById(R.id.text_template_description_id);
+                                final EditText weight = dialogLayout.findViewById(R.id.text_template_weight_id);
 
-                                // Set up the input
-                                final EditText input = new EditText(context);
-                                input.setText(description);
-                                // Specify the type of input expected
-                                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                                builder.setView(input);
+                                description.setText(task.getDescription());
+                                weight.setText(task.getWeight().toString());
 
                                 // Set up the buttons
                                 builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        String m_Text = input.getText().toString();
-                                        task.setDescription(m_Text);
+                                        String descriptionText = description.getText().toString();
+                                        Float weightText = Float.parseFloat(weight.getText().toString());
+                                        task.setDescription(descriptionText);
+                                        task.setWeight(weightText);
                                         notifyDataSetChanged();
                                     }
                                 });
@@ -226,25 +228,29 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
 
                         switch (String.valueOf(item.getTitle())) {
                             case "Edit":
+
+                                LayoutInflater inflater = LayoutInflater.from(context);
+                                View dialogLayout = inflater.inflate(R.layout.template_add_category_alert_layout, null);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setView(dialogLayout);
+                                builder.setTitle("Edit Category");
 
-                                final String description = tc.getName();
-                                builder.setTitle("Edit Description");
+                                final EditText description = dialogLayout.findViewById(R.id.text_template_category_description_id);
+                                final EditText weight = dialogLayout.findViewById(R.id.text_template_category_weight_id);
 
-                                // Set up the input
-                                final EditText input = new EditText(context);
-                                input.setText(description);
-                                // Specify the type of input expected
-                                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                                builder.setView(input);
+                                description.setText(tc.getName());
+                                weight.setText(tc.getWeight().toString());
 
                                 // Set up the buttons
-                                builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        String m_Text = input.getText().toString();
-                                        tc.setName(m_Text);
+                                        String descriptionText = description.getText().toString();
+                                        Float weightText = Float.parseFloat(weight.getText().toString());
+                                        tc.setName(descriptionText);
+                                        tc.setWeight(weightText);
                                         notifyDataSetChanged();
+
                                     }
                                 });
                                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -255,6 +261,8 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
                                 });
 
                                 builder.show();
+
+
                                 /*
                                 Toast.makeText(
                                         context,
