@@ -17,6 +17,7 @@ import com.example.mentorapp.Activities.GameViewActivity;
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Game;
+import com.example.mentorapp.Official.Official;
 import com.example.mentorapp.R;
 
 import java.util.ArrayList;
@@ -61,6 +62,9 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
                 ArrayList<Integer> evalList = game.getEvaluationsList();
                 for (Integer evalId : evalList){
                     Evaluation eval = dbh.getEvaluation(evalId);
+                    Official off = dbh.getOfficial(eval.getOfficialId());
+                    off.getEvaluationsList().remove(evalId);
+                    dbh.updateOfficial(off);
                     dbh.deleteEvaluation(eval);
                 }
                 dbh.deleteGame(gamesList.get(position));
