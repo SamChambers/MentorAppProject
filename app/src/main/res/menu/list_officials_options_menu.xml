@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--
     <item
         android:id="@+id/sort_officials_menu_item_id"
         android:title="Sort"
@@ -10,4 +11,5 @@
         android:title="Filter"
         app:showAsAction="collapseActionView"
         />
+        -->
 </menu>

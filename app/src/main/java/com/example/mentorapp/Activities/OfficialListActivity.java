@@ -90,7 +90,7 @@ public class OfficialListActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+    /*
         if (id == R.id.sort_officials_menu_item_id){
             // Handle sorting
             return true;
@@ -101,6 +101,8 @@ public class OfficialListActivity extends AppCompatActivity {
                 return true;
         }
 
+
+     */
         return super.onOptionsItemSelected(item);
     }
 
