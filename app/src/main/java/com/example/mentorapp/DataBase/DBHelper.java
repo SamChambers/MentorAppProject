@@ -302,10 +302,15 @@ public class DBHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Integer id_value = Integer.parseInt(cursor.getString(0));
-        Integer officialID = Integer.parseInt(cursor.getString(1));
+        String officialString = cursor.getString(1);
+        Integer officialID;
+        if (officialString == null){
+            officialID = null;
+        } else {
+            officialID = Integer.parseInt(officialString);
+        }
         String json = cursor.getString(2);
 
-        System.out.println(json);
 
         Gson gson = new Gson();
         Evaluation evaluation = gson.fromJson(json, Evaluation.class);

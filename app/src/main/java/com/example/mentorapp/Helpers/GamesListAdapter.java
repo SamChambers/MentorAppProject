@@ -50,10 +50,10 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
             convertView = layoutInflater.inflate(R.layout.game_list_item_layout, null);
         }
 
-        TextView nameTextView = (TextView) convertView.findViewById(R.id.text_game_name_id);
+        TextView nameTextView = convertView.findViewById(R.id.text_game_name_id);
         nameTextView.setText(game.getIdentifier());
 
-        ImageButton deleteButtonView = (ImageButton) convertView.findViewById(R.id.game_list_button_delete_id);
+        ImageButton deleteButtonView = convertView.findViewById(R.id.game_list_button_delete_id);
         deleteButtonView.setTag(position);
         deleteButtonView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -199,7 +199,7 @@ public class GameEditActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> officialAdapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, officialNames);
+                R.layout.spinner_item_layout, officialNames);
 
         officialSpinner.setAdapter(officialAdapter);
 
@@ -210,7 +210,7 @@ public class GameEditActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> templateAdapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, templateNames);
+                R.layout.spinner_item_layout, templateNames);
 
         templateSpinner.setAdapter(templateAdapter);
 
