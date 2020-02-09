@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.EditText;
@@ -184,6 +185,10 @@ public class TemplateListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
+
+        ExpandableListView eLV = (ExpandableListView) parent;
+        eLV.expandGroup(listPosition);
+
         // Get the category title
         final TemplateCategory tc = (TemplateCategory) getGroup(listPosition);
         //Load the view if we need to create one
