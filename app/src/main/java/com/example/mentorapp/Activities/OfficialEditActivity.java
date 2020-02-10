@@ -33,7 +33,7 @@ import java.util.Calendar;
 public class OfficialEditActivity extends AppCompatActivity {
 
     Official official;
-
+    Official originalOfficial;
 
     TextView dobView;
     TextView startedView;
@@ -49,14 +49,14 @@ public class OfficialEditActivity extends AppCompatActivity {
 
         this.context = getApplicationContext();
         this.official = (Official) getIntent().getSerializableExtra("Official");
+        this.originalOfficial = (Official) getIntent().getSerializableExtra("Official");
         setContentView(R.layout.official_edit_layout);
 
         FloatingActionButton saveOfficialFab = (FloatingActionButton) findViewById(R.id.official_edit_save_fab);
         saveOfficialFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //handle save official
-                backFunction();
+                saveOfficial();
             }
         });
 
@@ -68,6 +68,7 @@ public class OfficialEditActivity extends AppCompatActivity {
         startedView = findViewById(R.id.text_editOfficial_Started);
 
         nameView.setText(this.official.getName());
+        emailView.setText(this.official.getEmail());
 
         imageButton_dobPicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,14 +224,17 @@ public class OfficialEditActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void saveOfficial(){
-
+    private void updateOfficial(){
         EditText nameView = findViewById(R.id.text_edit_official_name_id);
         EditText emailView = findViewById(R.id.text_edit_official_email_id);
 
         official.setEmail(String.valueOf(emailView.getText()));
         official.setName(String.valueOf(nameView.getText()));
+    }
+
+    private void saveOfficial(){
+
+        updateOfficial();
 
         System.out.println("Started officiating");
         System.out.println(this.official.getStartedOfficiating().getYear());
@@ -255,10 +259,45 @@ public class OfficialEditActivity extends AppCompatActivity {
     }
     
     private void backFunction(){
-        saveOfficial();
+
+        updateOfficial();
+
+        if (this.official.getName().equals(this.originalOfficial.getName()) ||
+        this.official.getStartedOfficiating().getMonth().equals(this.originalOfficial.getStartedOfficiating().getMonth()) ||
+                this.official.getStartedOfficiating().getYear().equals(this.originalOfficial.getStartedOfficiating().getYear()) ||
+        this.official.getDob().getYear().equals(this.originalOfficial.getDob().getYear()) ||
+        this.official.getDob().getMonth().equals(this.originalOfficial.getDob().getMonth()) ||
+        this.official.getEmail().equals(this.originalOfficial.getEmail())){
+            AlertDialog.Builder builder = new AlertDialog.Builder(OfficialEditActivity.this);
+
+            final String description = "Do you want to save?";
+            builder.setTitle(description);
+
+            // Set up the buttons
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    saveOfficial();
+                    back();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    back();
+                }
+            });
+
+            builder.show();
+        } else {
+            back();
+        }
+    }
+
+    private void back(){
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("Official",official);
-        setResult(Activity.RESULT_OK,returnIntent);
+        returnIntent.putExtra("Official", official);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 

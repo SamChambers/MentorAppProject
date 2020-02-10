@@ -1,7 +1,9 @@
 package com.example.mentorapp.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -60,9 +62,7 @@ public class OfficialViewActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                backFunction();
             }
         });
 
@@ -100,7 +100,27 @@ public class OfficialViewActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.delete_official_menu_item_id){
-            deleteOfficial();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(OfficialViewActivity.this);
+
+            final String description = "Delete '" + official.getName() + "'?";
+            builder.setTitle(description);
+
+            // Set up the buttons
+            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteOfficial();
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.show();
             return true;
         }
 
@@ -180,10 +200,21 @@ public class OfficialViewActivity extends AppCompatActivity {
             case 500:
                 Official returnedOfficial = (Official) data.getExtras().getSerializable("Official");
                 DBHelper ODBH = new DBHelper(context);
-                this.official = ODBH.getOfficial(returnedOfficial.getId());
+                Integer offID = returnedOfficial.getId();
+                if (offID == null){
+                    backFunction();
+                    return;
+                }
+                this.official = ODBH.getOfficial(offID);
                 updateViews();
                 break;
         }
+    }
+
+    private void backFunction(){
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 }
 

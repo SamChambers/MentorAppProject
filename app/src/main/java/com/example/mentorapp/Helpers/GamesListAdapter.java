@@ -1,7 +1,9 @@
 package com.example.mentorapp.Helpers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.mentorapp.Activities.GameViewActivity;
+import com.example.mentorapp.Activities.OfficialViewActivity;
 import com.example.mentorapp.DataBase.DBHelper;
 import com.example.mentorapp.Evaluation;
 import com.example.mentorapp.Game;
@@ -58,18 +61,27 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
         deleteButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = (int)v.getTag();
-                ArrayList<Integer> evalList = game.getEvaluationsList();
-                for (Integer evalId : evalList){
-                    Evaluation eval = dbh.getEvaluation(evalId);
-                    Official off = dbh.getOfficial(eval.getOfficialId());
-                    off.getEvaluationsList().remove(evalId);
-                    dbh.updateOfficial(off);
-                    dbh.deleteEvaluation(eval);
-                }
-                dbh.deleteGame(gamesList.get(position));
-                updateList();
-                notifyDataSetChanged();
+                final int position = (int)v.getTag();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                final String description = "Delete '" + game.getIdentifier() + "'?";
+                builder.setTitle(description);
+
+                // Set up the buttons
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteGame(position);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
@@ -102,5 +114,23 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
         ((Activity) this.context).startActivityForResult(intent,1000);
     }
 
+
+    private void deleteGame(int position){
+        Game game = this.gamesList.get(position);
+        ArrayList<Integer> evalList = game.getEvaluationsList();
+        for (Integer evalId : evalList){
+            Evaluation eval = dbh.getEvaluation(evalId);
+            Integer offID = eval.getOfficialId();
+            if (offID != null) {
+                Official off = dbh.getOfficial(eval.getOfficialId());
+                off.getEvaluationsList().remove(evalId);
+                dbh.updateOfficial(off);
+            }
+            dbh.deleteEvaluation(eval);
+        }
+        dbh.deleteGame(gamesList.get(position));
+        updateList();
+        notifyDataSetChanged();
+    }
 
 }

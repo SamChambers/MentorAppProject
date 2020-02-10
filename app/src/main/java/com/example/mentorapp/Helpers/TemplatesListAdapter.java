@@ -1,12 +1,17 @@
 package com.example.mentorapp.Helpers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.InputType;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.List;
@@ -63,10 +68,28 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = (int)v.getTag();
-                TDBH.deleteTemplate(templatesList.get(position));
-                updateList();
-                notifyDataSetChanged();
+                final int position = (int)v.getTag();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                final String description = "Delete '" + templatesList.get(position).getName() + "'?";
+                builder.setTitle(description);
+
+                // Set up the buttons
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteTemplate(position);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
@@ -88,6 +111,12 @@ public class TemplatesListAdapter extends ArrayAdapter<Template> {
 
     public void updateList(){
         templatesList = TDBH.allTemplates();
+    }
+
+    private void deleteTemplate(int position){
+        TDBH.deleteTemplate(templatesList.get(position));
+        updateList();
+        notifyDataSetChanged();
     }
 
 }
