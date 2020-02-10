@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.view.View;
 //import android.app.ActionBar;
 //import android.widget.Toolbar;
@@ -23,7 +21,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -278,7 +275,7 @@ public class GameEditActivity extends AppCompatActivity {
             Spinner tagOptionsView = view.findViewById(R.id.game_options_tag_spinner_tagOption_id);
             tagNameView.setText(tag.getName());
             ArrayList<String> tagOptions = tag.getOptionsList();
-            if(tag.getManditory() == Boolean.FALSE){
+            if(tag.getMandatory() == Boolean.FALSE){
                 tagOptions.add(0,"");
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, tagOptions);

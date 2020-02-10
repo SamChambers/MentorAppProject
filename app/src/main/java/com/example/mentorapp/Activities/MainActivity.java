@@ -24,26 +24,6 @@ public class MainActivity extends AppCompatActivity {
         //Set the content view
         setContentView(R.layout.main_layout);
 
-        //TODO: Delete this when the activity is in place
-        DBHelper dbh = new DBHelper(getApplicationContext());
-        List<Tag> tags = dbh.allTags();
-        System.out.println("Tag List");
-        System.out.println(tags);
-        if (tags.size() < 2){
-            Tag locationTag = new Tag("Location");
-            locationTag.addOption("Court 1");
-            locationTag.addOption("Court 2");
-            locationTag.addOption("Court 3");
-            dbh.addTag(locationTag);
-
-            Tag ageTag = new Tag("Age Group");
-            ageTag.addOption("U10");
-            ageTag.addOption("U12");
-            ageTag.addOption("U14");
-            dbh.addTag(ageTag);
-        }
-
-
         Button toGameButton = findViewById(R.id.main_button_new_game_id);
         toGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button tagsButton = findViewById(R.id.main_button_tags_id);
+        tagsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoTags();
+            }
+        });
+
 
     }
 
@@ -128,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
     private void newOfficial(){
         Intent intent = new Intent(this, OfficialListActivity.class);
         intent.putExtra("NewOfficial", Boolean.TRUE);
+        startActivity(intent);
+    }
+
+    private void gotoTags(){
+        Intent intent = new Intent(this, TagEditActivity.class);
         startActivity(intent);
     }
 

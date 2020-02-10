@@ -46,6 +46,9 @@
         <activity android:name=".Activities.GameListActivity"
             android:theme="@style/AppThemeNoToolbar">
         </activity>
+        <activity android:name=".Activities.TagEditActivity"
+            android:theme="@style/AppThemeNoToolbar">
+        </activity>
     </application>
 
 </manifest>

@@ -9,13 +9,13 @@ public class Tag {
     private Integer id;
     private String name;
     private ArrayList<String> optionsList;
-    private Boolean manditory;
+    private Boolean mandatory;
 
     public Tag(String name){
         this.id = null;
         this.name = name;
         this.optionsList = new ArrayList<>();
-        this.manditory = Boolean.FALSE;
+        this.mandatory = Boolean.FALSE;
     }
 
     public void addOption(String option){
@@ -56,14 +56,14 @@ public class Tag {
     }
 
     public void makeManditory(){
-        this.manditory = Boolean.TRUE;
+        this.mandatory = Boolean.TRUE;
     }
 
     public void notManditory(){
-        this.manditory = Boolean.FALSE;
+        this.mandatory = Boolean.FALSE;
     }
 
-    public Boolean getManditory() {
-        return manditory;
+    public Boolean getMandatory() {
+        return mandatory;
     }
 }

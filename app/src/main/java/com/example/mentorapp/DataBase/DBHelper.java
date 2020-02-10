@@ -57,6 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String Tag_KEY_TAG = "tag";
     private static final String[] Tag_COLUMNS = { Tag_KEY_ID, Tag_KEY_NAME, Tag_KEY_TAG};
 
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -468,8 +469,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void deleteTag(Tag tag) {
         // Get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Game_TABLE_NAME, "id = ?", new String[] { String.valueOf(tag.getId()) });
+        db.delete(Tag_TABLE_NAME, "id = ?", new String[] { String.valueOf(tag.getId()) });
         db.close();
+        System.out.println("Deleted Tag");
     }
 
     public Tag getTag(int id) {
